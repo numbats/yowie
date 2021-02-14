@@ -287,7 +287,12 @@ wages_demog_hs <- wages_demog_hs %>%
 
 # rename and select the wages in tidy
 wages_hs2020 <- wages_demog_hs %>%
-  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_locf, is_ext_id, is_ext_obs)
+  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_locf, is_ext_id, is_ext_obs) %>%
+  mutate(hgc = as.factor(hgc),
+         year = as.integer(year),
+         age_1979 = as.integer(age_1979),
+         yr_hgc = as.integer(yr_hgc),
+         number_of_jobs = as.integer(number_of_jobs))
 
 # save it to an rda object
 usethis::use_data(wages_hs2020, overwrite = TRUE)
@@ -302,7 +307,10 @@ demographic_nlsy79 <- full_demographics %>%
          race,
          hgc,
          hgc_i,
-         yr_hgc)
+         yr_hgc) %>%
+  mutate(age_1979 = as.integer(age_1979),
+         hgc = as.factor(hgc),
+         yr_hgc = as.integer(yr_hgc))
 # save it to an rda object
 usethis::use_data(demographic_nlsy79, overwrite = TRUE)
 
@@ -331,8 +339,6 @@ wages_dropout_mean <- wages_hs_dropout %>%
 wages_hs_dropout <- left_join(wages_hs_dropout, wages_dropout_mean, by = "id")
 wages_hs_dropout <- wages_hs_dropout %>%
   mutate(is_ext_id = ifelse(is.na(is_ext_id), FALSE, is_ext_id))
-
-
 
 # save it to an rda object
 usethis::use_data(wages_hs_dropout, overwrite = TRUE)
