@@ -5,6 +5,7 @@ library(tidyr)
 library(dplyr)
 library(stringr)
 library(zoo)
+library(rstatix)
 
 # READ THE DATA
 
@@ -59,11 +60,14 @@ demog_tidy <- categories_qnames %>%
 
 ## tidy the grade completed in each year
 demog_education <- new_data_qnames %>%
+  as_tibble() %>%
+  rename(HGC_2018 = `Q3-4_2018`) %>%
   select(CASEID_1979,
          starts_with("HGCREV"),
          "HGC_2012",
          "HGC_2014",
-         "HGC_2016") %>%
+         "HGC_2016",
+         "HGC_2018") %>%
   pivot_longer(!CASEID_1979,
                names_to = "var",
                values_to = "grade") %>%
@@ -125,7 +129,7 @@ get_hour <- function(year){
 # getting the hours of work for all years
 hours <- list()
 for(ayear in c(1979:1994, 1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010,
-               2012, 2014, 2016)) {
+               2012, 2014, 2016, 2018)) {
   hours[[ayear]] <- get_hour(ayear)
 }
 hours_all <- bind_rows(!!!hours)
@@ -145,7 +149,7 @@ get_rate <- function(year) {
 # getting the rates per hour for all years
 rates <- list()
 for(ayear in c(1979:1994, 1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010,
-               2012, 2014, 2016)) {
+               2012, 2014, 2016, 2018)) {
   rates[[ayear]] <- get_rate(ayear)
 }
 rates_all <- bind_rows(!!!rates)
@@ -212,20 +216,34 @@ wages_demog <- wages_demog %>%
 # filter only the id with high school education
 wages_demog_hs <- wages_demog  %>% filter(grepl("GRADE", hgc))
 
-# replace the obs with mean_hourly_wage > 100 to be NA
-# since we will impute the missing values with the last observation carried forward (locf) for each id
+# identify the extreme mean hourly wage in each id
+# if the mean hourly wage is extreme, we will replace it with NA
+# impute the NA with the last observation carried forward (locf) for each id
 # we give the flag for that locf observation
-wages_demog_hs <- wages_demog_hs %>%
-  mutate(mean_hourly_wage = ifelse(mean_hourly_wage > 100, NA, mean_hourly_wage),
-         is_locf = ifelse(is.na(mean_hourly_wage), TRUE, FALSE))
 
+# identify the extreme mean hourly wage in each id
+wages_demog_ext <- wages_demog_hs %>%
+  group_by(id) %>%
+  identify_outliers("mean_hourly_wage") %>%
+  filter(is.extreme == TRUE) %>%
+  select(year, id, is.extreme)
+# join the extreme column to wages_demog_hs
+wages_demog_hs <- left_join(wages_demog_hs, wages_demog_ext, by = c("id", "year"))
+# give the FALSE flag to non-extreme value
+wages_demog_hs <- wages_demog_hs %>%
+  mutate(is.extreme = ifelse(is.na(is.extreme), FALSE,
+                             is.extreme))
+# make the extreme values as NA and give the flag to that observation
+# since we're gonna do locf
+wages_demog_hs <- wages_demog_hs %>%
+  mutate(mean_hourly_wage = ifelse(is.extreme == TRUE, NA, mean_hourly_wage),
+         is_locf = ifelse(is.na(mean_hourly_wage), TRUE, FALSE))
 # doing locf
 for_locf <- wages_demog_hs %>%
   select(id, year, mean_hourly_wage) %>%
   group_by(id) %>%
   na.locf()
-
-# join it back to the data
+# join back the locf value to wages_demog_hs
 wages_demog_hs <- left_join(wages_demog_hs, for_locf, by = c("id", "year")) %>%
   select(-mean_hourly_wage.x) %>%
   rename(mean_hourly_wage = mean_hourly_wage.y)
@@ -237,28 +255,41 @@ keep_me <- keep_me %>% filter(n > 4)
 wages_demog_hs <- wages_demog_hs %>%
   filter(id %in% keep_me$id)
 
-# calculate the IQR to create the extreme value flag
-IQR_cut_off <- IQR(wages_demog_hs$mean_hourly_wage, na.rm = TRUE)*1.5
-q1 <- quantile(wages_demog_hs$mean_hourly_wage, 0.25, na.rm = TRUE)
-q3 <- quantile(wages_demog_hs$mean_hourly_wage, 0.75, na.rm = TRUE)
+# Add the extreme value flag
 
-lower_limit <- q1 - IQR_cut_off
-upper_limit <- q3 + IQR_cut_off
+# Add the extreme value flag for the ID that has extreme mean
+wages_demog_mean <- wages_demog_hs %>%
+  group_by(id) %>%
+  summarise(mean_yearly_wages = mean(mean_hourly_wage)) %>%
+  identify_outliers("mean_yearly_wages") %>%
+  filter(is.extreme == TRUE) %>%
+  rename(is_ext_id = is.extreme) %>%
+  select(id, is_ext_id)
+# join back to wages_demog_hs
+wages_demog_hs <- left_join(wages_demog_hs, wages_demog_mean, by = "id")
+# give the flag to non-extreme id
+wages_demog_hs <- wages_demog_hs %>%
+  mutate(is_ext_id = ifelse(is.na(is_ext_id), FALSE, is_ext_id))
+
+# Add the extreme value flag for the observation that is extreme
+extreme_obs <- wages_demog_hs %>%
+  select(-is.extreme) %>%
+  group_by(id) %>%
+  identify_outliers("mean_hourly_wage") %>%
+  filter(is.extreme == TRUE) %>%
+  rename(is_ext_obs = is.extreme) %>%
+  select(id, year, is_ext_obs)
+
+wages_demog_hs <- left_join(wages_demog_hs, extreme_obs, by = c("id", "year"))
 
 wages_demog_hs <- wages_demog_hs %>%
-  mutate(is_extreme_val = ifelse(mean_hourly_wage < lower_limit |
-                                   mean_hourly_wage > upper_limit, TRUE,
-                                 FALSE)) %>%
-  mutate(flag = case_when(is_wm == TRUE & is_extreme_val == FALSE ~ 1,
-                          is_wm == TRUE & is_extreme_val == TRUE ~ 2,
-                          is_wm == FALSE & is_extreme_val == FALSE ~ 3,
-                          is_wm == FALSE & is_extreme_val == TRUE ~ 4))
+  mutate(is_ext_obs = ifelse(is.na(is_ext_obs), FALSE, is_ext_obs))
 
+# rename and select the wages in tidy
 wages_hs2020 <- wages_demog_hs %>%
-  select(id, year, mean_hourly_wage,
-         age_1979, gender, race, hgc, hgc_i,
-         yr_hgc, number_of_jobs, total_hours,
-         is_wm, is_extreme_val, is_locf, flag)
+  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_locf, is_ext_id, is_ext_obs)
 
-
+# save it to an rda object
 usethis::use_data(wages_hs2020, overwrite = TRUE)
+
+
