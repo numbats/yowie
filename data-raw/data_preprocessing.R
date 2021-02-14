@@ -294,7 +294,6 @@ usethis::use_data(wages_hs2020, overwrite = TRUE)
 
 
 # CREATE THE DATASET FOR THE DOMEGRAPHIC INFORMATION
-
 demographic_nlsy79 <- full_demographics %>%
   mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
   select(id,
@@ -304,9 +303,40 @@ demographic_nlsy79 <- full_demographics %>%
          hgc,
          hgc_i,
          yr_hgc)
-
 # save it to an rda object
 usethis::use_data(demographic_nlsy79, overwrite = TRUE)
+
+# CREATE THE DATASET FOR THE HIGH SCHOOL DROP-OUT
+wages_hs_dropout <- wages_hs2020 %>%
+  mutate(dob = 1979 - age_1979,
+         age_hgc = yr_hgc - dob) %>%
+  filter((hgc %in% c("9TH GRADE",
+                     "10TH GRADE",
+                     "11TH GRADE")) |
+           (hgc == "12TH GRADE" &
+              age_hgc >= 19)) %>%
+  select(-dob,
+         -age_hgc,
+         -is_ext_id)
+
+# create the flag for extreme id in this dataset since the distribution od dataset changed
+wages_dropout_mean <- wages_hs_dropout %>%
+  group_by(id) %>%
+  summarise(mean_yearly_wages = mean(mean_hourly_wage)) %>%
+  identify_outliers("mean_yearly_wages") %>%
+  filter(is.extreme == TRUE) %>%
+  rename(is_ext_id = is.extreme) %>%
+  select(id, is_ext_id)
+#join back to the data
+wages_hs_dropout <- left_join(wages_hs_dropout, wages_dropout_mean, by = "id")
+wages_hs_dropout <- wages_hs_dropout %>%
+  mutate(is_ext_id = ifelse(is.na(is_ext_id), FALSE, is_ext_id))
+
+
+
+# save it to an rda object
+usethis::use_data(wages_hs_dropout, overwrite = TRUE)
+
 
 
 
