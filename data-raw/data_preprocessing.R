@@ -293,3 +293,21 @@ wages_hs2020 <- wages_demog_hs %>%
 usethis::use_data(wages_hs2020, overwrite = TRUE)
 
 
+# CREATE THE DATASET FOR THE DOMEGRAPHIC INFORMATION
+
+demographic_nlsy79 <- full_demographics %>%
+  mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
+  select(id,
+         age_1979,
+         gender,
+         race,
+         hgc,
+         hgc_i,
+         yr_hgc)
+
+# save it to an rda object
+usethis::use_data(demographic_nlsy79, overwrite = TRUE)
+
+
+
+
