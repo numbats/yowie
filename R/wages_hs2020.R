@@ -7,9 +7,9 @@
 #' the highest grade completed is high school
 #' and participated at least 5 years in the survey.
 #'
-#' @source [NLSY79 Database](https://www.nlsinfo.org/content/cohorts/nlsy79/get-data)
+#' @source [The NLSY79 Database](https://www.nlsinfo.org/content/cohorts/nlsy79/get-data)
 #'
-#' @format A data frame with 103994 rows and 15 variables:
+#' @format A data frame with 103,994 rows and 15 variables:
 #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}

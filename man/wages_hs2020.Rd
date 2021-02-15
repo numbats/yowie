@@ -5,7 +5,7 @@
 \alias{wages_hs2020}
 \title{Wages Data from National Longitudinal Survey of Youth}
 \format{
-A data frame with 103994 rows and 15 variables:
+A data frame with 103,994 rows and 15 variables:
 \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}
 \item{year}{The year the observation was taken. This could be the \code{index} of the data.}
@@ -33,7 +33,7 @@ FALSE = The id is not extreme.}
 }
 }
 \source{
-\href{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}{NLSY79 Database}
+\href{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}{The NLSY79 Database}
 }
 \usage{
 wages_hs2020
