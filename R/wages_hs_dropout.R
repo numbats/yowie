@@ -4,7 +4,8 @@
 #' with several demographic variables from National Longitudinal Survey of Youth (NLSY)
 #' from Round 1 (1979 survey year) to Round 28 (2018 survey year).
 #' The cohort provided in this data set are high school dropout i.e the cohort who only completed
-#' either 9th, 10th, 11th grade, or at least 19 years old when completed high school.
+#' either 9th, 10th, 11th grade, or at least 19 years old when completed high school,
+#' and participated at least 5 years in the survey.
 #'
 #' @source [The NLSY79 Database](https://www.nlsinfo.org/content/cohorts/nlsy79/get-data)
 #'

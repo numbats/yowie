@@ -1,0 +1,12 @@
+base
+yowie
+dplyr
+brolgar
+ggplot2
+patchwork
+tidyr
+naniar
+nlme
+mgcv
+modelr
+tsibble
