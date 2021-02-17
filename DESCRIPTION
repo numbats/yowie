@@ -27,5 +27,8 @@ Suggests:
     rmarkdown,
     dplyr,
     patchwork,
-    tidyr
+    tidyr,
+    ggmosaic
+Remotes:
+    haleyjeppson/ggmosaic
 VignetteBuilder: knitr

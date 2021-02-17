@@ -30,7 +30,7 @@ This package provides the `wages_hs2020` data set, which is a longitudinal data 
 
 Another aim of this vignette is to provide the example of the usage of wages data in longitudinal data analysis, in this case using `brolgar`, an R package to analyze and visualize longitudinal data (Tierney, Cook, and Prvan, 2020).
 
-## Explore the data feature
+## Explore the Data Feature
 
 `brolgar` can only be used if the data frame is in a `tsibble` form. Hence, we should transform the data into this object first. The `key` would be the `id` of the subject, and the `index` is the `year` variable.  
 
@@ -82,7 +82,7 @@ last_time <- wages_hs2020 %>%
 first_time + last_time
 ```
 
-### Summarize the data feature
+### Summarize the Data Feature
 
 We can also summarize the mean hourly wage using the `features` function. Here, we want to display the minimum, median, and maximum value of mean hourly wage of each ID. 
 
@@ -101,7 +101,7 @@ ggplot(wages_feat_long) +
 ```
 
 
-## Sample some subjects and visualize it
+## Sample Some Subjects and Visualize It
 
 Creating a line plot of the wages of all IDs might be too messy since there are 5931 IDs. Thus, we can take some sample of ID's randomly using `brolgar`'s `facet_sample` function. 
 

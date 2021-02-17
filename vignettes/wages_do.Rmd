@@ -1,0 +1,68 @@
+---
+title: "The NLSY79 Wages Data of High School Dropouts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The NLSY79 Wages Data of High School Dropout}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+```{r library}
+library(yowie)
+library(dplyr)
+library(ggplot2)
+library(ggmosaic)
+
+```
+
+This vignette provides a brief example of the usage of `wages_hs_dropuot` data. 
+
+## Demographic Profile of High School Dropouts
+
+Here, we would like to visualize the demographic profile of high school dropout cohort in the NLSY 1979 by gender and race. 
+
+
+```{r}
+ggplot(wages_hs_dropout) +
+  geom_mosaic(aes(x = product(race),
+                  fill = gender)) 
+```
+
+## Comparing The Wages of Dropouts Group and Other Groups
+
+In this section, we would like to compare the summary statistics of high school dropouts , those who completed high school without being dropped out, and those who never attended high school.
+
+**High school dropouts cohort**
+
+```{r}
+summary(wages_hs_dropout$mean_hourly_wage)
+```
+
+**Completed high school without being dropped out cohort**
+
+```{r}
+hs_never_dropout <- wages_hs2020 %>%
+  mutate(dob = 1979 - age_1979,
+         age_hgc = yr_hgc - dob) %>%
+  filter(hgc == "12TH GRADE" & age_hgc < 19)
+summary(hs_never_dropout$mean_hourly_wage)
+```
+
+**Never attended high school cohort**
+```{r}
+not_attend_hs <- wages_hs2020 %>%
+  filter(hgc_i < 9)
+summary(not_attend_hs$mean_hourly_wage)
+```
+
+
+
