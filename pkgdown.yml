@@ -2,6 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  wages_hs2020: wages_hs2020.html
-last_built: 2021-02-16T11:35Z
+  wages_demographic: wages_demographic.html
+  wages_do: wages_do.html
+  wages_hs: wages_hs.html
+last_built: 2021-02-17T04:33Z
 
