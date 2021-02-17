@@ -1,16 +1,16 @@
 Package: yowie
-Title: Refreshed Wages Data from NLSY 
+Title: Longitudinal Wages Data from The NLSY79  
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Dewi",
            family = "Amaliah",
            role = c("aut", "cre"),
-           email = "first.last@example.com"),
+           email = "dlamaleeah@gmail.com"),
        person(given = "Di",
            family = "Cook",
            role = c("aut"),
            email = "dicook@monash.edu")) 
-Description: What the package does (one paragraph).
+Description: This package provides longitudinal wages data sets along with several demographic variables from The National Longitudinal Survey of Youth (NLSY) from survey year 1979 to 2018. There are three data sets in this package: 1. The wages data from the cohort whose highest grade completed is up to 12th grade; 2. The high school dropouts, and; 3. The demographic data of the NLSY79 cohort. 
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
