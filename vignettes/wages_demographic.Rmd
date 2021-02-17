@@ -1,0 +1,59 @@
+---
+title: "Demographic Data of The NLSY79 Cohort"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Demographic Data of The NLSY79 Cohort}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+```{r setup}
+library(yowie)
+library(dplyr)
+library(ggplot2)
+```
+
+The aim of this vignette is to provide an example of how the demographic data that is provided in the package could be analyzed. 
+
+## Profile of The NLSY79's Subjects
+
+In this example, we would like to plot the distribution of the cohort by their race and gender. 
+
+```{r}
+ggplot(demographic_nlsy79) +
+  geom_bar(aes(x = race,
+               fill = gender),
+           position = "dodge") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+## Join the Demographic Data and Wages Information
+
+In this example, we want to observe whether there is a difference of the median of mean hourly wage of the high school cohort from different gender. We can do this by firstly calculate the median of mean hourly wage in `wages_hs2020` table and join it with `demographic_nlsy79`.
+
+```{r}
+med_wages <- wages_hs2020 %>%
+  group_by(id) %>%
+  summarise(median_wages = median(mean_hourly_wage))
+
+med_wages_hs <- left_join(med_wages, 
+                          demographic_nlsy79,
+                          by = "id")
+
+ggplot(med_wages_hs) +
+  geom_density(aes(x = median_wages, 
+                   colour = gender,
+                   fill = gender),
+               alpha = 0.3)
+```
+

@@ -8,7 +8,6 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-options(rmarkdown.html_vignettes.check_title = FALSE)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
