@@ -2,7 +2,7 @@
 title: "The NLSY79 Wages Data of High School Dropouts"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{The NLSY79 Wages Data of High School Dropout}
+  %\VignetteIndexEntry{The NLSY79 Wages Data of High School Dropouts}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
