@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# yowie
+# yowie <a href='https://numbats.github.io/yowie/'><img src='man/figures/logo.png' align="right" height="138.5" /></a>
 
 <!-- badges: start -->
 

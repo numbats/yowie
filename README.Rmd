@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# yowie
+# yowie <a href='https://numbats.github.io/yowie/'><img src='man/figures/logo.png' align="right" height="138.5" /></a>
+
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/numbats/yowie/workflows/R-CMD-check/badge.svg)](https://github.com/numbats/yowie/actions)
