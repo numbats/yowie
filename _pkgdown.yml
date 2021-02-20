@@ -1,3 +1,21 @@
+url: https://numbats.github.io/yowie/
+
 template:
   params:
-    bootswatch: cerulean
+    bootswatch: flatly
+
+authors:
+  Dewi Amaliah:
+    href: https://datain360.com
+  Di Cook:
+    href: http://dicook.org
+
+reference:
+- title: Datasets
+  desc: >
+    Data sets contained in this package.
+  contents:
+  - demographic_nlsy79
+  - wages_hs2020
+  - wages_hs_dropout
+
