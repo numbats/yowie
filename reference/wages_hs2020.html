@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wages Data from National Longitudinal Survey of Youth — wages_hs2020 • yowie</title>
+<title>Wages Data from the National Longitudinal Survey of Youth (NLSY79) — wages_hs2020 • yowie</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,12 +46,13 @@
 
 
 
-<meta property="og:title" content="Wages Data from National Longitudinal Survey of Youth — wages_hs2020" />
+<meta property="og:title" content="Wages Data from the National Longitudinal Survey of Youth (NLSY79) — wages_hs2020" />
 <meta property="og:description" content="A data set contains longitudinal data of mean hourly wages along
-with several demographic variables from National Longitudinal Survey of Youth (NLSY)
+with several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
+held by the U.S. Bureau of Labor Statistics
 from Round 1 (1979 survey year) to Round 28 (2018 survey year).
-The cohort provided in this data set are those with maximum highest grade completed is
-high school and participated at least 5 years in the survey." />
+The cohort provided in this data set are those highest grade completed is up to 12th grade
+and participated at least 5 rounds of surveys." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -138,17 +139,18 @@ high school and participated at least 5 years in the survey." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wages Data from National Longitudinal Survey of Youth</h1>
+    <h1>Wages Data from the National Longitudinal Survey of Youth (NLSY79)</h1>
     <small class="dont-index">Source: <a href='https://github.com/numbats/yowie/blob/master/R/wages_hs2020.R'><code>R/wages_hs2020.R</code></a></small>
     <div class="hidden name"><code>wages_hs2020.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>A data set contains longitudinal data of mean hourly wages along
-with several demographic variables from National Longitudinal Survey of Youth (NLSY)
+with several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
+held by the U.S. Bureau of Labor Statistics
 from Round 1 (1979 survey year) to Round 28 (2018 survey year).
-The cohort provided in this data set are those with maximum highest grade completed is
-high school and participated at least 5 years in the survey.</p>
+The cohort provided in this data set are those highest grade completed is up to 12th grade
+and participated at least 5 rounds of surveys.</p>
     </div>
 
     <pre class="usage"><span class='va'>wages_hs2020</span></pre>
@@ -159,7 +161,12 @@ high school and participated at least 5 years in the survey.</p>
     <p>A data frame with 103,994 rows and 15 variables:</p><dl>
 <dt>id</dt><dd><p>A unique individual's ID number. This is the <code>key</code> of the data.</p></dd>
 <dt>year</dt><dd><p>The year the observation was taken. This could be the <code>index</code> of the data.</p></dd>
-<dt>mean_hourly_wage</dt><dd><p>The mean of the hourly wages the individual gets at each of their different jobs.</p></dd>
+<dt>mean_hourly_wage</dt><dd><p>The mean of the hourly wages the individual gets at each of their different jobs.
+The value could be a weighted or an arithmetic mean.
+The weighted mean is used when the information of hours of work as the weight is available.
+The mean hourly wage could also be a predicted value,
+if the original value is considered influential as the result of robust
+linear regression as the part of data cleaning.</p></dd>
 <dt>age_1979</dt><dd><p>The age of the subject in 1979.</p></dd>
 <dt>gender</dt><dd><p>Gender of the subject, FEMALE and MALE.</p></dd>
 <dt>race</dt><dd><p>Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.</p></dd>
@@ -169,28 +176,21 @@ high school and participated at least 5 years in the survey.</p>
 <dt>number_of_jobs</dt><dd><p>Number of jobs that an individual has.</p></dd>
 <dt>total_hours</dt><dd><p>The number of hours the individual usually works per week.</p></dd>
 <dt>is_wm</dt><dd><p>Whether the mean hourly wage is calculated by weighted
-using the hour work as the weightor regular/arithmetic mean.
+using the hour work as the weight or regular/arithmetic mean.
 TRUE = is weighted mean. FALSE = is regular mean.</p></dd>
-<dt>is_locf</dt><dd><p>Whether the mean hourly wage is derived from the previous's year value
-(last observation carried forward) because mean hourly wage in
-that year is extreme (Q3 + 3xIQR or below Q1 - 3xIQR).
-TRUE = is locf. FALSE = is not locf.</p></dd>
-<dt>is_ext_id</dt><dd><p>Whether the id's average of mean hourly wage is much
-higher that other ids (extreme). TRUE = The id is extreme.
-FALSE = The id is not extreme.</p></dd>
-<dt>is_ext_obs</dt><dd><p>Whether the mean hourly wage is extreme. TRUE = The id is extreme.
-FALSE = The id is not extreme.</p></dd>
+<dt>is_pred</dt><dd><p>Whether the mean hourly wage is a predicted value of the robust linear model
+since the original wage data is influential value.</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><a href='https://www.nlsinfo.org/content/cohorts/nlsy79/get-data'>The NLSY79 Database</a></p>
+    <p>The U.S. Bureau of Labor Statistics. (2021, January 6). <em>National Longitudinal Survey of Youth 1979</em>. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># show the data</span>
 <span class='va'>wages_hs2020</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 103,994 x 15</span><span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 103,994 x 13</span><span>
 #&gt;       id  year mean_hourly_wage age_1979 gender race  hgc   hgc_i yr_hgc
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>     2  </span><span style='text-decoration: underline;'>1</span><span>979             3.85       20 FEMALE NON-… 12TH…    12   </span><span style='text-decoration: underline;'>1</span><span>985
@@ -203,9 +203,8 @@ FALSE = The id is not extreme.</p></dd>
 #&gt; </span><span style='color: #555555;'> 8</span><span>     2  </span><span style='text-decoration: underline;'>1</span><span>986             7.69       20 FEMALE NON-… 12TH…    12   </span><span style='text-decoration: underline;'>1</span><span>985
 #&gt; </span><span style='color: #555555;'> 9</span><span>     2  </span><span style='text-decoration: underline;'>1</span><span>987             8.79       20 FEMALE NON-… 12TH…    12   </span><span style='text-decoration: underline;'>1</span><span>985
 #&gt; </span><span style='color: #555555;'>10</span><span>     2  </span><span style='text-decoration: underline;'>1</span><span>988             6.67       20 FEMALE NON-… 12TH…    12   </span><span style='text-decoration: underline;'>1</span><span>985
-#&gt; </span><span style='color: #555555;'># … with 103,984 more rows, and 6 more variables: number_of_jobs </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   total_hours </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, is_wm </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, is_locf </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, is_ext_id </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   is_ext_obs </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'><span class='co'># turn the data into a tsibble object</span>
+#&gt; </span><span style='color: #555555;'># … with 103,984 more rows, and 4 more variables: number_of_jobs </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   total_hours </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, is_wm </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, is_pred </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span></div><div class='input'><span class='co'># turn the data into a tsibble object</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/njtierney/brolgar'>brolgar</a></span><span class='op'>)</span>
 <span class='va'>wages</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tsibble.tidyverts.org/reference/as-tsibble.html'>as_tsibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>wages_hs2020</span>,
                     key <span class='op'>=</span> <span class='va'>id</span>,
