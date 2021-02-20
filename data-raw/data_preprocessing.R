@@ -4,8 +4,9 @@ library(readr)
 library(tidyr)
 library(dplyr)
 library(stringr)
-library(zoo)
-library(rstatix)
+library(MASS)
+library(broom)
+library(purrr)
 
 # READ THE DATA
 
@@ -22,7 +23,7 @@ source(here::here("data-raw/wages-high-school-demo.R"))
 
 ## tidy the date of birth data
 dob_tidy <- new_data_qnames %>%
-  select(CASEID_1979,
+  dplyr::select(CASEID_1979,
          starts_with("Q1-3_A~")) %>%
   mutate(dob_year = case_when(
     # if the years recorded in both sets match, take 79 data
@@ -45,14 +46,14 @@ dob_tidy <- new_data_qnames %>%
       (`Q1-3_A~Y_1979` == `Q1-3_A~Y_1981`) & (`Q1-3_A~M_1979` == `Q1-3_A~M_1981`) ~ FALSE,
       is.na(`Q1-3_A~M_1981`) | is.na(`Q1-3_A~Y_1981`) ~ FALSE))
 dob_tidy <- dob_tidy %>%
-  select(CASEID_1979,
+  dplyr::select(CASEID_1979,
          dob_month,
          dob_year,
          dob_conflict)
 
 ## tidy the sex and race data
 demog_tidy <- categories_qnames %>%
-  select(CASEID_1979,
+  dplyr::select(CASEID_1979,
          SAMPLE_RACE_78SCRN,
          SAMPLE_SEX_1979) %>%
   rename(gender = SAMPLE_SEX_1979,
@@ -62,7 +63,7 @@ demog_tidy <- categories_qnames %>%
 demog_education <- new_data_qnames %>%
   as_tibble() %>%
   rename(HGC_2018 = `Q3-4_2018`) %>%
-  select(CASEID_1979,
+  dplyr::select(CASEID_1979,
          starts_with("HGCREV"),
          "HGC_2012",
          "HGC_2014",
@@ -73,7 +74,7 @@ demog_education <- new_data_qnames %>%
                values_to = "grade") %>%
   separate("var", c("var", "year"), sep = -4) %>%
   filter(!is.na(grade)) %>%
-  select(-var)
+  dplyr::select(-var)
 
 ## getting the highest education completed
 highest_year <- demog_education %>%
@@ -82,7 +83,7 @@ highest_year <- demog_education %>%
   filter(hgc_i == grade) %>%
   filter(year == first(year)) %>%
   rename(yr_hgc = year) %>%
-  select(CASEID_1979, yr_hgc, hgc_i) %>%
+  dplyr::select(CASEID_1979, yr_hgc, hgc_i) %>%
   ungroup() %>%
   mutate('hgc' = ifelse(hgc_i == 0, "NONE",
                         ifelse(hgc_i == 1, "1ST GRADE",
@@ -110,12 +111,12 @@ year_A <- c(1979:1987, 1993)
 get_hour <- function(year){
   if(year %in% year_A){
     temp <- new_data_qnames %>%
-      select(CASEID_1979,
+      dplyr::select(CASEID_1979,
              starts_with("QES-52A") &
                ends_with(as.character(year)))}
   else{
     temp <- new_data_qnames %>%
-      select(CASEID_1979,
+      dplyr::select(CASEID_1979,
              starts_with("QES-52D") &
                ends_with(as.character(year)))}
   temp %>%
@@ -138,7 +139,7 @@ hours_all <- bind_rows(!!!hours)
 # function to get the rates per hour
 get_rate <- function(year) {
   new_data_qnames %>%
-    select(CASEID_1979,
+    dplyr::select(CASEID_1979,
            starts_with("HRP") &
              ends_with(as.character(year))) %>%
     pivot_longer(!CASEID_1979, names_to = "job", values_to = "rate_per_hour") %>%
@@ -200,7 +201,7 @@ mean_hourly_wage <-
   rename(mean_hourly_wage = wages) %>%
   mutate(is_wm = ifelse(flag1 == 1, TRUE,
                         FALSE)) %>%
-  select(-flag1)
+  dplyr::select(-flag1)
 
 ## CREATING THE WAGES_HS2020 DATASET
 
@@ -216,78 +217,76 @@ wages_demog <- wages_demog %>%
 # filter only the id with high school education
 wages_demog_hs <- wages_demog  %>% filter(grepl("GRADE", hgc))
 
-# identify the extreme mean hourly wage in each id
-# if the mean hourly wage is extreme, we will replace it with NA
-# impute the NA with the last observation carried forward (locf) for each id
-# we give the flag for that locf observation
-
-# identify the extreme mean hourly wage in each id
-wages_demog_ext <- wages_demog_hs %>%
-  group_by(id) %>%
-  identify_outliers("mean_hourly_wage") %>%
-  filter(is.extreme == TRUE) %>%
-  select(year, id, is.extreme)
-# join the extreme column to wages_demog_hs
-wages_demog_hs <- left_join(wages_demog_hs, wages_demog_ext, by = c("id", "year"))
-# give the FALSE flag to non-extreme value
-wages_demog_hs <- wages_demog_hs %>%
-  mutate(is.extreme = ifelse(is.na(is.extreme), FALSE,
-                             is.extreme))
-# make the extreme values as NA and give the flag to that observation
-# since we're gonna do locf
-wages_demog_hs <- wages_demog_hs %>%
-  mutate(mean_hourly_wage = ifelse(is.extreme == TRUE, NA, mean_hourly_wage),
-         is_locf = ifelse(is.na(mean_hourly_wage), TRUE, FALSE))
-# doing locf
-for_locf <- wages_demog_hs %>%
-  select(id, year, mean_hourly_wage) %>%
-  group_by(id) %>%
-  na.locf()
-# join back the locf value to wages_demog_hs
-wages_demog_hs <- left_join(wages_demog_hs, for_locf, by = c("id", "year")) %>%
-  select(-mean_hourly_wage.x) %>%
-  rename(mean_hourly_wage = mean_hourly_wage.y)
-
 # calculate the number of observation
-keep_me <- wages_demog_hs %>% count(id)
-# filter out the id with low number of observation
-keep_me <- keep_me %>% filter(n > 4)
+keep_me <- wages_demog_hs %>%
+  count(id) %>%
+  filter(n > 4)
+
 wages_demog_hs <- wages_demog_hs %>%
   filter(id %in% keep_me$id)
 
-# Add the extreme value flag
-
-# Add the extreme value flag for the ID that has extreme mean
-wages_demog_mean <- wages_demog_hs %>%
+# nest the data by id to build a robust linear model
+by_id <- wages_demog_hs %>%
+  dplyr::select(id, year, mean_hourly_wage) %>%
   group_by(id) %>%
-  summarise(mean_yearly_wages = mean(mean_hourly_wage)) %>%
-  identify_outliers("mean_yearly_wages") %>%
-  filter(is.extreme == TRUE) %>%
-  rename(is_ext_id = is.extreme) %>%
-  select(id, is_ext_id)
-# join back to wages_demog_hs
-wages_demog_hs <- left_join(wages_demog_hs, wages_demog_mean, by = "id")
-# give the flag to non-extreme id
+  nest()
+
+# build a robust linear model
+id_rlm <- by_id %>%
+  mutate(model = map(.x = data,
+                     .f = function(x){
+                       rlm(mean_hourly_wage ~ year, data = x)
+                     }))
+# extract the property of the regression model
+id_aug <- id_rlm %>%
+  mutate(augmented = map(model, broom::augment)) %>%
+  unnest(augmented)
+
+# extract the weight of each observation
+id_w <- id_rlm %>%
+  mutate(w = map(.x = model,
+                 .f = function(x){
+                   x$w
+                 })) %>%
+  unnest(w) %>%
+  dplyr::select(w)
+
+# bind the property of each observation with their weight
+id_aug_w <- cbind(id_aug, id_w) %>%
+  dplyr::select(`id...1`,
+                year,
+                mean_hourly_wage,
+                .fitted,
+                .resid,
+                .hat,
+                .sigma,
+                w) %>%
+  rename(id = `id...1`)
+
+# if the weight < 1, the mean_hourly_wage is replaced by the model's fitted/predicted value.
+# and add the flag whether the observation is predicted value or not.
+# since the fitted value is sometimes <0, and wages value could never be negative,
+# we keep the mean hourly wage value even its weight < 1.
+
+wages_rlm_dat <- id_aug_w %>%
+  mutate(wages_rlm = ifelse(w != 1 & .fitted >= 0, .fitted,
+                            mean_hourly_wage)) %>%
+  mutate(is_pred = ifelse(w != 1 & .fitted >= 0, TRUE,
+                          FALSE)) %>%
+  dplyr::select(id, year, wages_rlm, is_pred)
+
+# join back the `wages_rlm_dat` to `wages_demog_hs`
+
+wages_demog_hs <- left_join(wages_demog_hs, wages_rlm_dat, by = c("id", "year"))
+
+# select out the old value of mean hourly wage and change it with the wages_rlm value
 wages_demog_hs <- wages_demog_hs %>%
-  mutate(is_ext_id = ifelse(is.na(is_ext_id), FALSE, is_ext_id))
-
-# Add the extreme value flag for the observation that is extreme
-extreme_obs <- wages_demog_hs %>%
-  select(-is.extreme) %>%
-  group_by(id) %>%
-  identify_outliers("mean_hourly_wage") %>%
-  filter(is.extreme == TRUE) %>%
-  rename(is_ext_obs = is.extreme) %>%
-  select(id, year, is_ext_obs)
-
-wages_demog_hs <- left_join(wages_demog_hs, extreme_obs, by = c("id", "year"))
-
-wages_demog_hs <- wages_demog_hs %>%
-  mutate(is_ext_obs = ifelse(is.na(is_ext_obs), FALSE, is_ext_obs))
+  dplyr::select(-mean_hourly_wage) %>%
+  rename(mean_hourly_wage = wages_rlm)
 
 # rename and select the wages in tidy
 wages_hs2020 <- wages_demog_hs %>%
-  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_locf, is_ext_id, is_ext_obs) %>%
+  dplyr::select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_pred) %>%
   mutate(hgc = as.factor(hgc),
          year = as.integer(year),
          age_1979 = as.integer(age_1979),
@@ -301,7 +300,7 @@ usethis::use_data(wages_hs2020, overwrite = TRUE)
 # CREATE THE DATASET FOR THE DOMEGRAPHIC INFORMATION
 demographic_nlsy79 <- full_demographics %>%
   mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
-  select(id,
+  dplyr::select(id,
          age_1979,
          gender,
          race,
@@ -323,22 +322,8 @@ wages_hs_dropout <- wages_hs2020 %>%
                      "11TH GRADE")) |
            (hgc == "12TH GRADE" &
               age_hgc >= 19)) %>%
-  select(-dob,
-         -age_hgc,
-         -is_ext_id)
-
-# create the flag for extreme id in this dataset since the distribution od dataset changed
-wages_dropout_mean <- wages_hs_dropout %>%
-  group_by(id) %>%
-  summarise(mean_yearly_wages = mean(mean_hourly_wage)) %>%
-  identify_outliers("mean_yearly_wages") %>%
-  filter(is.extreme == TRUE) %>%
-  rename(is_ext_id = is.extreme) %>%
-  select(id, is_ext_id)
-#join back to the data
-wages_hs_dropout <- left_join(wages_hs_dropout, wages_dropout_mean, by = "id")
-wages_hs_dropout <- wages_hs_dropout %>%
-  mutate(is_ext_id = ifelse(is.na(is_ext_id), FALSE, is_ext_id))
+  dplyr::select(-dob,
+         -age_hgc)
 
 # save it to an rda object
 usethis::use_data(wages_hs_dropout, overwrite = TRUE)

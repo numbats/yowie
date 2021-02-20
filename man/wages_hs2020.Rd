@@ -3,13 +3,18 @@
 \docType{data}
 \name{wages_hs2020}
 \alias{wages_hs2020}
-\title{Wages Data from National Longitudinal Survey of Youth}
+\title{Wages Data from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
 A data frame with 103,994 rows and 15 variables:
 \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}
 \item{year}{The year the observation was taken. This could be the \code{index} of the data.}
-\item{mean_hourly_wage}{The mean of the hourly wages the individual gets at each of their different jobs.}
+\item{mean_hourly_wage}{The mean of the hourly wages the individual gets at each of their different jobs.
+The value could be a weighted or an arithmetic mean.
+The weighted mean is used when the information of hours of work as the weight is available.
+The mean hourly wage could also be a predicted value,
+if the original value is considered influential as the result of robust
+linear regression as the part of data cleaning. }
 \item{age_1979}{The age of the subject in 1979.}
 \item{gender}{Gender of the subject, FEMALE and MALE.}
 \item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
@@ -19,31 +24,25 @@ A data frame with 103,994 rows and 15 variables:
 \item{number_of_jobs}{Number of jobs that an individual has.}
 \item{total_hours}{The number of hours the individual usually works per week.}
 \item{is_wm}{Whether the mean hourly wage is calculated by weighted
-using the hour work as the weightor regular/arithmetic mean.
+using the hour work as the weight or regular/arithmetic mean.
 TRUE = is weighted mean. FALSE = is regular mean.}
-\item{is_locf}{Whether the mean hourly wage is derived from the previous's year value
-(last observation carried forward) because mean hourly wage in
-that year is extreme (Q3 + 3xIQR or below Q1 - 3xIQR).
-TRUE = is locf. FALSE = is not locf.}
-\item{is_ext_id}{Whether the id's average of mean hourly wage is much
-higher that other ids (extreme). TRUE = The id is extreme.
-FALSE = The id is not extreme.}
-\item{is_ext_obs}{Whether the mean hourly wage is extreme. TRUE = The id is extreme.
-FALSE = The id is not extreme.}
+\item{is_pred}{Whether the mean hourly wage is a predicted value of the robust linear model
+since the original wage data is influential value.}
 }
 }
 \source{
-\href{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}{The NLSY79 Database}
+The U.S. Bureau of Labor Statistics. (2021, January 6). \emph{National Longitudinal Survey of Youth 1979}. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 }
 \usage{
 wages_hs2020
 }
 \description{
 A data set contains longitudinal data of mean hourly wages along
-with several demographic variables from National Longitudinal Survey of Youth (NLSY)
+with several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
+held by the U.S. Bureau of Labor Statistics
 from Round 1 (1979 survey year) to Round 28 (2018 survey year).
-The cohort provided in this data set are those with maximum highest grade completed is
-high school and participated at least 5 years in the survey.
+The cohort provided in this data set are those highest grade completed is up to 12th grade
+and participated at least 5 rounds of surveys.
 }
 \examples{
 # show the data

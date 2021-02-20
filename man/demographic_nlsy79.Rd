@@ -3,7 +3,7 @@
 \docType{data}
 \name{demographic_nlsy79}
 \alias{demographic_nlsy79}
-\title{Demographic Data from National Longitudinal Survey of Youth}
+\title{Demographic Data from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
 A data frame contains 12,686 rows and 7 variables:
 \describe{
@@ -17,13 +17,13 @@ A data frame contains 12,686 rows and 7 variables:
 }
 }
 \source{
-\href{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}{The NLSY79 Database}
+The U.S. Bureau of Labor Statistics. (2021, January 6). \emph{National Longitudinal Survey of Youth 1979}. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 }
 \usage{
 demographic_nlsy79
 }
 \description{
-A data set contains demographic information from The NLSY 1979.
+A data set contains demographic information of the NLSY79 cohort.
 The cohort included 12,686 respondents ages 14-22 when first interviewed in 1979.
 }
 \keyword{datasets}
