@@ -5,5 +5,8 @@ articles:
   wages_demographic: wages_demographic.html
   wages_do: wages_do.html
   wages_hs: wages_hs.html
-last_built: 2021-02-20T13:55Z
+last_built: 2021-02-20T14:17Z
+urls:
+  reference: https://numbats.github.io/yowie//reference
+  article: https://numbats.github.io/yowie//articles
 
