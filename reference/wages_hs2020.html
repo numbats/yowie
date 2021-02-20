@@ -47,12 +47,12 @@
 
 
 <meta property="og:title" content="Wages Data from the National Longitudinal Survey of Youth (NLSY79) — wages_hs2020" />
-<meta property="og:description" content="A data set contains longitudinal data of mean hourly wages along
-with several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
-held by the U.S. Bureau of Labor Statistics
-from Round 1 (1979 survey year) to Round 28 (2018 survey year).
-The cohort provided in this data set are those highest grade completed is up to 12th grade
-and participated at least 5 rounds of surveys." />
+<meta property="og:description" content="A data set contains longitudinal data of mean hourly wages along with several
+demographic variables of Americans from the National Longitudinal Survey of Youth
+(NLSY79) held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
+to Round 28 (2018 survey year). The cohort provided in this data set is
+the highest grade completed, up to 12th grade, and participated in
+at least five rounds of surveys." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -145,12 +145,12 @@ and participated at least 5 rounds of surveys." />
     </div>
 
     <div class="ref-description">
-    <p>A data set contains longitudinal data of mean hourly wages along
-with several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
-held by the U.S. Bureau of Labor Statistics
-from Round 1 (1979 survey year) to Round 28 (2018 survey year).
-The cohort provided in this data set are those highest grade completed is up to 12th grade
-and participated at least 5 rounds of surveys.</p>
+    <p>A data set contains longitudinal data of mean hourly wages along with several
+demographic variables of Americans from the National Longitudinal Survey of Youth
+(NLSY79) held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
+to Round 28 (2018 survey year). The cohort provided in this data set is
+the highest grade completed, up to 12th grade, and participated in
+at least five rounds of surveys.</p>
     </div>
 
     <pre class="usage"><span class='va'>wages_hs2020</span></pre>
@@ -161,12 +161,13 @@ and participated at least 5 rounds of surveys.</p>
     <p>A data frame with 103,994 rows and 15 variables:</p><dl>
 <dt>id</dt><dd><p>A unique individual's ID number. This is the <code>key</code> of the data.</p></dd>
 <dt>year</dt><dd><p>The year the observation was taken. This could be the <code>index</code> of the data.</p></dd>
-<dt>mean_hourly_wage</dt><dd><p>The mean of the hourly wages the individual gets at each of their different jobs.
-The value could be a weighted or an arithmetic mean.
-The weighted mean is used when the information of hours of work as the weight is available.
-The mean hourly wage could also be a predicted value,
-if the original value is considered influential as the result of robust
-linear regression as the part of data cleaning.</p></dd>
+<dt>mean_hourly_wage</dt><dd><p>The mean of the hourly wages the individual gets at
+each of their different jobs. The value could be a
+weighted or an arithmetic mean. The weighted mean is used
+when the information of hours of work as the weight
+is available. The mean hourly wage could also be a predicted
+value if the original value is considered influential
+by the robust linear regression as part of data cleaning.</p></dd>
 <dt>age_1979</dt><dd><p>The age of the subject in 1979.</p></dd>
 <dt>gender</dt><dd><p>Gender of the subject, FEMALE and MALE.</p></dd>
 <dt>race</dt><dd><p>Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.</p></dd>
@@ -175,11 +176,10 @@ linear regression as the part of data cleaning.</p></dd>
 <dt>yr_hgc</dt><dd><p>The year when the highest grade completed.</p></dd>
 <dt>number_of_jobs</dt><dd><p>Number of jobs that an individual has.</p></dd>
 <dt>total_hours</dt><dd><p>The number of hours the individual usually works per week.</p></dd>
-<dt>is_wm</dt><dd><p>Whether the mean hourly wage is calculated by weighted
-using the hour work as the weight or regular/arithmetic mean.
-TRUE = is weighted mean. FALSE = is regular mean.</p></dd>
-<dt>is_pred</dt><dd><p>Whether the mean hourly wage is a predicted value of the robust linear model
-since the original wage data is influential value.</p></dd>
+<dt>is_wm</dt><dd><p>Whether the mean hourly wage is weighted mean, using the hour work
+as the weight, or regular/arithmetic mean. TRUE = is weighted mean.
+FALSE = is regular mean.</p></dd>
+<dt>is_pred</dt><dd><p>Whether the mean hourly wage is a predicted value or not.</p></dd>
 
 </dl>
 
