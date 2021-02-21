@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -106,7 +106,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/numbats/yowie">yowie</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
-<p>The aim of this vignette is to provide an example of how the demographic data that is provided in the package could be analyzed.</p>
+<p>The aim of this vignette is to provide a brief example of how the demographic data that is provided in the package could be analyzed.</p>
 <div id="profile-of-the-nlsy79s-subjects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#profile-of-the-nlsy79s-subjects" class="anchor"></a>Profile of The NLSY79’s Subjects</h2>
@@ -118,12 +118,12 @@
            position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></code></pre></div>
-<p><img src="wages_demographic_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="wages_demographic_files/figure-html/unnamed-chunk-2-1.png" width="700"> We can learn that most subjects were not Black, nor Hispanic. There were more males participated in survey in each type of race, except in Hispanic group.</p>
 </div>
 <div id="join-the-demographic-data-and-wages-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#join-the-demographic-data-and-wages-information" class="anchor"></a>Join the Demographic Data and Wages Information</h2>
-<p>In this example, we want to observe whether there is a difference of the median of mean hourly wage of the high school cohort from different gender. We can do this by firstly calculate the median of mean hourly wage in <code>wages_hs2020</code> table and join it with <code>demographic_nlsy79</code>.</p>
+<p>In this example, we want to observe whether there is a difference in the median of the high school cohort’s mean hourly wage from a different gender. We can do this by firstly calculate the median of mean hourly wage in the <code>wages_hs2020</code> table and join it with <code>demographic_nlsy79</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">med_wages</span> <span class="op">&lt;-</span> <span class="va">wages_hs2020</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -139,6 +139,7 @@
                    fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>,
                alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></code></pre></div>
 <p><img src="wages_demographic_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p>It can be seen from the plot that the median of the mean hourly wage of both groups is positively skewed, which means that some subjects had an exceptionally higher wage than others. Further, generally, male and female in this cohort tend to have the same amount of median of mean hourly wage.</p>
 </div>
   </div>
 
