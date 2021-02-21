@@ -81,6 +81,7 @@ last_time <- wages_hs2020 %>%
 
 first_time + last_time
 ```
+
 Most of the subjects participated in the first round of the survey, which was in 1979. They also keep participating in the study until the last round the survey held, which was in 2018. 
 
 ### Summarize the Data Feature
@@ -100,6 +101,7 @@ ggplot(wages_feat_long) +
   geom_density(aes(x = value, colour = feature, fill = feature), alpha = 0.3) +
   theme_bw() 
 ```
+
 The distribution of min, median, and a max of the mean hourly wage is right-skewed, which means that some subjects earned too high hourly wages. Further, some IDs have minimum wages that are higher than others' maximum wages.
 
 ## Sample Some Subjects and Visualize It
@@ -118,6 +120,7 @@ ggplot(wages_hs2020,
   ylab("mean hourly wage") +
   theme_bw()
 ```
+
 From the plot, we can learn that the mean hourly wages fluctuated over the time, however, generally it increased since 1979. 
 
 

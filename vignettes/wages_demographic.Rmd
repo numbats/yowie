@@ -36,6 +36,7 @@ ggplot(demographic_nlsy79) +
   theme_bw() +
   theme(legend.position = "bottom")
 ```
+
 We can learn that most subjects were not Black, nor Hispanic. There were more males participated in survey in each type of race, except in Hispanic group. 
 
 

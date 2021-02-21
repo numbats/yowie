@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-The yowie R package provides longitudinal wages data sets and several demographic variables from the National Longitudinal Survey of Youth (NLSY79) from 1979 to 2018. There are three data sets in this package: The wages data from the cohort whose highest grade completed is up to 12th grade; The wages data of the high school dropouts and; The demographic data of the NLSY79 cohort.
+The aim of this package is to provides longitudinal wages data sets and several demographic variables from the National Longitudinal Survey of Youth from 1979 to 2018. There are three data sets in this package: The wages data from the cohort whose highest grade completed is up to high school; The wages data of the high school dropouts and; The demographic data of the cohort in the survey year 1979.
 }
 \seealso{
 Useful links:
