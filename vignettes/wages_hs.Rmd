@@ -26,9 +26,7 @@ library(tidyr)
 ```
 
 
-This package provides the `wages_hs2020` data set, which is a longitudinal data of mean hourly wages along with several demographic variables from National Longitudinal Survey of Youth (NLSY) from Round 1 (1979 survey year) to Round 28 (2018 survey year). The cohort provided in this data set are those with maximum highest grade completed is high school and participated at least 5 years in the survey. Further, the mean hourly wage is computed using a weighted average of hourly wage of different jobs with the hours of work for each job as the weight. However, when the information of hours of work is absent, we only use the arithmetic average. 
-
-Another aim of this vignette is to provide the example of the usage of wages data in longitudinal data analysis, in this case using `brolgar`, an R package to analyze and visualize longitudinal data (Tierney, Cook, and Prvan, 2020).
+The  aim of this vignette is to provide examples of the usage of wages data in longitudinal data analysis. In this case, we use `brolgar`, an R package, to analyze and visualize longitudinal data (Tierney, Cook, and Prvan, 2020).
 
 ## Explore the Data Feature
 
@@ -44,7 +42,7 @@ wages_hs2020 <- as_tsibble(x = wages_hs2020,
 
 ### Visualize the number of observation per ID 
 
-Using `brolgar`'s `features` function, we can extract the number of observation of each ID and plot it using `ggplot2`.  
+Using `brolgar`'s `features` function, we can extract the number of observations of each ID and plot it using `ggplot2`.  
 
 ```{r}
 wages_hs2020 %>% 
@@ -57,9 +55,11 @@ wages_hs2020 %>%
   ylab("Count of ID")
 ```
 
+We can learn that the subjects have different number of observations, however most of them completed 27 rounds of surveys. 
+
 ### When is the first and the last time the subject attend the survey?
 
-Further, we can explore the distribution year when the IDs' first time and last time in the study. 
+We can also explore the distribution year of the IDs' first time and last time participated in the survey. 
 
 ```{r first-last-plot}
 
@@ -81,6 +81,7 @@ last_time <- wages_hs2020 %>%
 
 first_time + last_time
 ```
+Most of the subjects participated in the first round of the survey, which was in 1979. They also keep participating in the study until the last round the survey held, which was in 2018. 
 
 ### Summarize the Data Feature
 
@@ -99,7 +100,7 @@ ggplot(wages_feat_long) +
   geom_density(aes(x = value, colour = feature, fill = feature), alpha = 0.3) +
   theme_bw() 
 ```
-
+The distribution of min, median, and a max of the mean hourly wage is right-skewed, which means that some subjects earned too high hourly wages. Further, some IDs have minimum wages that are higher than others' maximum wages.
 
 ## Sample Some Subjects and Visualize It
 
@@ -117,7 +118,7 @@ ggplot(wages_hs2020,
   ylab("mean hourly wage") +
   theme_bw()
 ```
-
+From the plot, we can learn that the mean hourly wages fluctuated over the time, however, generally it increased since 1979. 
 
 
 

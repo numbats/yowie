@@ -2,7 +2,7 @@ url: https://numbats.github.io/yowie/
 
 template:
   params:
-    bootswatch: flatly
+    bootswatch: cerulean
 
 authors:
   Dewi Amaliah:

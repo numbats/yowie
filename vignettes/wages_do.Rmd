@@ -35,6 +35,8 @@ ggplot(wages_hs_dropout) +
                fill = gender)) 
 ```
 
+From the demographic data, we learn that most of high school dropouts are male. 
+
 ## Comparing The Wages of Dropouts Group and Other Groups
 
 In this section, we would like to compare the summary statistics of high school dropouts , those who completed high school without being dropped out, and those who never attended high school.
