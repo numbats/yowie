@@ -46,7 +46,7 @@ at least five rounds of surveys.
 }
 \examples{
 # show the data
-wages_hs2020
+head(wages_hs2020)
 # turn the data into a tsibble object
 library(brolgar)
 wages <- as_tsibble(x = wages_hs2020,
