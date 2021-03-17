@@ -42,8 +42,8 @@ A data set contains longitudinal data of mean hourly wages along with
 several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
 held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
 to Round 28 (2018 survey year). The cohort provided in this data set is high school
-dropouts, i.e., the cohort who only completed either 9th, 10th, 11th grade,
-or aged at least 19 years old when completed high school and participated
+dropouts, i.e., the male aged between 14 and 17 years and only completed either
+9th, 10th, 11th grade, or aged at least 19 years old when completed high school and participated
 in at least five rounds of surveys.
 }
 \examples{

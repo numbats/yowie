@@ -322,6 +322,8 @@ wages_hs_dropout <- wages_hs2020 %>%
                      "11TH GRADE")) |
            (hgc == "12TH GRADE" &
               age_hgc >= 19)) %>%
+  filter(age_1979 <= 17,
+         gender == "MALE") %>%
   dplyr::select(-dob,
          -age_hgc)
 
