@@ -269,9 +269,9 @@ id_aug_w <- cbind(id_aug, id_w) %>%
 # we keep the mean hourly wage value even its weight < 1.
 
 wages_rlm_dat <- id_aug_w %>%
-  mutate(wages_rlm = ifelse(w < 0.3  & .fitted >= 0, .fitted,
+  mutate(wages_rlm = ifelse(w < 0.12  & .fitted >= 0, .fitted,
                             mean_hourly_wage)) %>%
-  mutate(is_pred = ifelse(w  < 0.3 & .fitted >= 0, TRUE,
+  mutate(is_pred = ifelse(w  < 0.12 & .fitted >= 0, TRUE,
                           FALSE)) %>%
   dplyr::select(id, year, wages_rlm, is_pred)
 
