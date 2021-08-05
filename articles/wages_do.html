@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">yowie</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -113,10 +113,10 @@
 <p>Here, we would like to visualize the demographic profile of high school dropout cohort in the NLSY 1979 by gender and race.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">wages_hs_dropout</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>,
-               fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">race</span>,
+               fill <span class="op">=</span> <span class="va">race</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <p><img src="wages_do_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
-<p>From the demographic data, we learn that most of high school dropouts are male.</p>
+<p>From the demographic data, we learn that most of high school dropouts are non-black, non-hispanic.</p>
 </div>
 <div id="comparing-the-wages-of-dropouts-group-and-other-groups" class="section level2">
 <h2 class="hasAnchor">
@@ -126,23 +126,27 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">wages_hs_dropout</span><span class="op">$</span><span class="va">mean_hourly_wage</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   0.020   4.680   7.262   9.266  11.546 192.300</span></code></pre></div>
+<span class="co">#&gt;    0.01    4.70    7.68   10.12   12.71  363.78</span></code></pre></div>
 <p><strong>Completed high school without being dropped out cohort</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hs_never_dropout</span> <span class="op">&lt;-</span> <span class="va">wages_hs2020</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dob <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="va">age_1979</span>,
          age_hgc <span class="op">=</span> <span class="va">yr_hgc</span> <span class="op">-</span> <span class="va">dob</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc</span> <span class="op">==</span> <span class="st">"12TH GRADE"</span> <span class="op">&amp;</span> <span class="va">age_hgc</span> <span class="op">&lt;</span> <span class="fl">19</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc</span> <span class="op">==</span> <span class="st">"12TH GRADE"</span> <span class="op">&amp;</span> <span class="va">age_hgc</span> <span class="op">&lt;</span> <span class="fl">19</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_1979</span> <span class="op">&lt;=</span> <span class="fl">17</span>,
+         <span class="va">gender</span> <span class="op">==</span> <span class="st">"MALE"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">hs_never_dropout</span><span class="op">$</span><span class="va">mean_hourly_wage</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   0.230   4.535   7.000   9.298  11.000  70.000</span></code></pre></div>
+<span class="co">#&gt;   0.190   4.427   7.050  10.910  11.660  96.150</span></code></pre></div>
 <p><strong>Never attended high school cohort</strong></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_attend_hs</span> <span class="op">&lt;-</span> <span class="va">wages_hs2020</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">&lt;</span> <span class="fl">9</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">&lt;</span> <span class="fl">9</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age_1979</span> <span class="op">&lt;=</span> <span class="fl">17</span>,
+         <span class="va">gender</span> <span class="op">==</span> <span class="st">"MALE"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">not_attend_hs</span><span class="op">$</span><span class="va">mean_hourly_wage</span><span class="op">)</span>
 <span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">#&gt;   0.080   4.000   5.680   7.073   8.722  46.150</span></code></pre></div>
+<span class="co">#&gt;   0.080   4.000   5.777   7.675   9.295  50.000</span></code></pre></div>
 </div>
   </div>
 
@@ -157,7 +161,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://datain360.com">Dewi Amaliah</a>, <a href="http://dicook.org">Di Cook</a>.</p>
+  <p>Developed by <a href="https://datain360.com">Dewi Amaliah</a>, <a href="http://dicook.org">Di Cook</a>, Emi Tanaka.</p>
 </div>
 
 <div class="pkgdown">
