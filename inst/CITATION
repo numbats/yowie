@@ -3,8 +3,8 @@ citHeader("To cite yowie in publications, please use:")
 citEntry(
   entry    = "misc",
   title    = "yowie: Longitudinal Wages Data from the NLSY79",
-  author   = "Dewi Amaliah and Dianne Cook",
+  author   = "Dewi Amaliah, Dianne Cook, and Emi Tanaka",
   year     = "2021",
   url      = "https://numbats.github.io/yowie/",
-  textVersion = "Amaliah, D and Cook D (2021). yowie: Longitudinal Wages Data from the NLSY79. https://numbats.github.io/yowie/"
+  textVersion = "Amaliah, D., Cook D., Tanaka, E. (2021). yowie: Longitudinal Wages Data from the NLSY79. https://numbats.github.io/yowie/"
 )

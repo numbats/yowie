@@ -222,6 +222,7 @@ keep_me <- wages_demog_hs %>%
   count(id) %>%
   filter(n > 4)
 
+# keep the id who participated at least 5 years in the survey
 wages_demog_hs <- wages_demog_hs %>%
   filter(id %in% keep_me$id)
 
@@ -263,10 +264,10 @@ id_aug_w <- cbind(id_aug, id_w) %>%
                 w) %>%
   rename(id = `id...1`)
 
-# if the weight < 1, the mean_hourly_wage is replaced by the model's fitted/predicted value.
+# if the weight < 0.12, the mean_hourly_wage is replaced by the model's fitted/predicted value.
 # and add the flag whether the observation is predicted value or not.
-# since the fitted value is sometimes <0, and wages value could never be negative,
-# we keep the mean hourly wage value even its weight < 1.
+# since the fitted value is sometimes < 0, and wages value could never be negative,
+# we keep the mean hourly wage value even its weight < 0.12.
 
 wages_rlm_dat <- id_aug_w %>%
   mutate(wages_rlm = ifelse(w < 0.12  & .fitted >= 0, .fitted,

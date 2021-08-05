@@ -24,6 +24,7 @@ Useful links:
 Authors:
 \itemize{
   \item Di Cook \email{dicook@monash.edu}
+  \item Emi Tanaka \email{emi.tanaka@monash.edu}
 }
 
 }

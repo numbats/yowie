@@ -22,7 +22,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-The aim of this vignette is to provide a brief example of how the demographic data that is provided in the package could be analyzed. 
+The aim of this vignette is to provide a brief example of how the demographic data of the NLSY79 cohort that is provided in the package could be analyzed. 
 
 ## Profile of The NLSY79's Subjects
 
@@ -37,7 +37,7 @@ ggplot(demographic_nlsy79) +
   theme(legend.position = "bottom")
 ```
 
-We can learn that most subjects were not Black, nor Hispanic. There were more males participated in survey in each type of race, except in Hispanic group. 
+We can learn that most subjects were not Black, nor Hispanic. There were more males participated in the survey in each type of race, except in Hispanic group. In Hispanic group, there are equal number of males and females participated in the survey. 
 
 
 ## Join the Demographic Data and Wages Information
@@ -57,7 +57,10 @@ ggplot(med_wages_hs) +
   geom_density(aes(x = median_wages, 
                    colour = gender,
                    fill = gender),
-               alpha = 0.3)
+               alpha = 0.3) +
+  ggtitle("Median distribution of mean hourly wages of the high school cohort of the NLSY79 by gender") +
+  theme(plot.title = element_text(size = 9)) +
+  xlab("median of of mean hourly wage")
 ```
 
-It can be seen from the plot that the median of the mean hourly wage of both groups is positively skewed, which means that some subjects had an exceptionally higher wage than others. Further, generally, male and female in this cohort tend to have the same amount of median of mean hourly wage.   
+In this figure, we plot the median of high school cohort's mean hourly wages. It can be seen from the plot the median of the mean hourly wage of both groups is positively skewed, which means that some subjects had an exceptionally higher wage than others. Further, generally, males in this cohort tend to earn more wages then females, reflected by males' higher median of wages. 
