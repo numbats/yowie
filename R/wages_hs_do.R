@@ -1,16 +1,18 @@
-#' Wages Data from the National Longitudinal Survey of Youth (NLSY79)
+#' Wages Data of High School Dropout from the National Longitudinal Survey of Youth (NLSY79)
 #'
-#' A data set contains longitudinal data of mean hourly wages along with several
-#' demographic variables of Americans from the National Longitudinal Survey of Youth
-#' (NLSY79) held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
-#' to Round 28 (2018 survey year). The cohort provided in this data set is
-#' the highest grade completed, up to 12th grade, and participated in
-#' at least five rounds of surveys.
+#' A data set contains longitudinal data of mean hourly wages along with
+#' several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
+#' held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
+#' to Round 28 (2018 survey year). The cohort provided in this data set is high school
+#' dropouts, i.e., the male aged between 14 and 17 years and only completed either
+#' 9th, 10th, 11th grade, or aged at least 19 years old when completed high school and participated
+#' in at least five rounds of surveys.
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A data frame with 103,994 rows and 15 variables:
-#' \describe{
+#' @format A data frame contains 97,087 rows and 15 variables:
+#'
+#' #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}
 #'   \item{mean_hourly_wage}{The mean of the hourly wages the individual gets at
@@ -33,22 +35,9 @@
 #'                FALSE = is regular mean.}
 #'   \item{is_pred}{Whether the mean hourly wage is a predicted value or not.}
 #' }
-#'
 #' @examples
-#' # show the data
-#' head(wages_hs2020)
-#' # turn the data into a tsibble object
-#' library(brolgar)
-#' wages <- as_tsibble(x = wages_hs2020,
-#'                     key = id,
-#'                     index = year,
-#'                     regular = FALSE)
-#' # create the spaghetti plot of the data
-#' library(ggplot2)
-#' ggplot(wages) +
-#'     geom_line(aes(x = year,
-#'                   y = mean_hourly_wage,
-#'                   group = id), alpha = 0.1)
-#'
-
-"wages_hs2020"
+#' # saving the data into a new object
+#' library(yowie)
+#' library(tsibble)
+#' wages_hs_do %>% key_data()
+"wages_hs_do"

@@ -16,4 +16,4 @@
 #'  \item{yr_hgc}{The year when the highest grade completed.}
 #' }
 #'
-"demographic_nlsy79"
+"demog_nlsy79"
