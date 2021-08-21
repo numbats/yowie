@@ -38,17 +38,15 @@
 #' # data summary
 #' wages_hs
 #'
-#' # turn the data into a tsibble object
-#' library(brolgar)
-#' wages <- as_tsibble(x = wages_hs2020,
-#'                     key = id,
-#'                     index = year,
-#'                     regular = FALSE)
-#' # create the spaghetti plot of the data
 #' library(ggplot2)
-#' ggplot(wages) +
+#' library(dplyr)
+#' wages_hs_ids <- key_data(wages_hs) %>% select(id)
+#' wages_hs %>%
+#'   dplyr::filter(id %in% sample_n(wages_hs_ids, 10)$id) %>%
+#'   ggplot() +
 #'     geom_line(aes(x = year,
 #'                   y = mean_hourly_wage,
-#'                   group = id), alpha = 0.1)
-#'
-"wages_hs"
+#'                   group = id), alpha = 0.8)
+#' @docType data
+#' @name wages_hs
+NULL

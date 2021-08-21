@@ -16,4 +16,6 @@
 #'  \item{yr_hgc}{The year when the highest grade completed.}
 #' }
 #'
-"demog_nlsy79"
+#' @docType data
+#' @name demog_nlsy79
+NULL

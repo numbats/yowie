@@ -40,4 +40,6 @@
 #' library(yowie)
 #' library(tsibble)
 #' wages_hs_do %>% key_data()
-"wages_hs_do"
+#' @docType data
+#' @name wages_hs_do
+NULL

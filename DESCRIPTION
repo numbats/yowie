@@ -26,11 +26,9 @@ Depends:
     R (>= 3.5.0),
     tsibble (>= 1.0.1)
 Suggests:
-    brolgar,
     ggplot2,
     knitr,
     rmarkdown,
     dplyr,
-    patchwork,
     tidyr
 VignetteBuilder: knitr
