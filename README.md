@@ -64,4 +64,4 @@ ggplot(wages_hs2020,
 
 ## About the package name
 
-A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in Australian foklore akin to Big Foot or Sasquatch in north America. In terms of the package it can be considered an acronym: Years of Wages to Investigate and Explore.
+A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in Australian foklore akin to Big Foot or Sasquatch in north America. In terms of the package it can be considered an acronym: Years Of Wages to Investigate and Explore.
