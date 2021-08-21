@@ -8,8 +8,8 @@
 [![R-CMD-check](https://github.com/numbats/yowie/workflows/R-CMD-check/badge.svg)](https://github.com/numbats/yowie/actions)
 <!-- badges: end -->
 
-The goal of `yowie` is to provide longitudinal wages data sets along
-with several demographic variables of Americans from [the National
+The `yowie` package provides longitudinal wages data sets along
+with several demographic variables from the US [National
 Longitudinal Survey of Youth
 (NLSY79)](https://www.nlsinfo.org/content/cohorts/nlsy79) from Round 1
 (the survey year 1979) to Round 28 (the survey year 2018). The NLSY79 is
@@ -61,3 +61,7 @@ ggplot(wages_hs2020,
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+## About the package name
+
+A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in Australian foklore akin to Big Foot or Sasquatch in north America. In terms of the package it can be considered an acronym: Years of Wages to Investigate and Explore.
