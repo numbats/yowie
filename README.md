@@ -8,8 +8,8 @@
 [![R-CMD-check](https://github.com/numbats/yowie/workflows/R-CMD-check/badge.svg)](https://github.com/numbats/yowie/actions)
 <!-- badges: end -->
 
-The `yowie` package provides longitudinal wages data sets along
-with several demographic variables from the US [National
+The goal of `yowie` is to provide longitudinal wages data sets along
+with several demographic variables of Americans from [the National
 Longitudinal Survey of Youth
 (NLSY79)](https://www.nlsinfo.org/content/cohorts/nlsy79) from Round 1
 (the survey year 1979) to Round 28 (the survey year 2018). The NLSY79 is
@@ -40,17 +40,18 @@ Here is the example of plotting some samples of subjects in
 
 ``` r
 library(yowie)
+#> Loading required package: tsibble
+#> 
+#> Attaching package: 'tsibble'
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, union
 library(brolgar)
 library(ggplot2)
 
 set.seed(20210217)
 
-wages_hs2020 <- as_tsibble(x = wages_hs2020,
-                    key = id,
-                    index = year,
-                    regular = FALSE)
-
-ggplot(wages_hs2020, 
+ggplot(wages_hs, 
        aes(x = year,
                 y = mean_hourly_wage,
                 group = id)) +
@@ -64,4 +65,7 @@ ggplot(wages_hs2020,
 
 ## About the package name
 
-A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in Australian foklore akin to Big Foot or Sasquatch in north America. In terms of the package it can be considered an acronym: Years Of Wages to Investigate and Explore.
+A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in
+Australian foklore akin to Big Foot or Sasquatch in north America. In
+terms of the package it can be considered an acronym: Years Of Wages to
+Investigate and Explore.

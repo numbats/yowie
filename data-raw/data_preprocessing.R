@@ -7,6 +7,7 @@ library(stringr)
 library(MASS)
 library(broom)
 library(purrr)
+library(tsibble)
 
 # READ THE DATA
 
@@ -294,12 +295,17 @@ wages_hs2020 <- wages_demog_hs %>%
          yr_hgc = as.integer(yr_hgc),
          number_of_jobs = as.integer(number_of_jobs))
 
+wages_hs <- as_tsibble(x = wages_hs2020,
+                       key = id,
+                       index = year,
+                       regular = FALSE)
+
 # save it to an rda object
-usethis::use_data(wages_hs2020, overwrite = TRUE)
+usethis::use_data(wages_hs, overwrite = TRUE)
 
 
 # CREATE THE DATASET FOR THE DOMEGRAPHIC INFORMATION
-demographic_nlsy79 <- full_demographics %>%
+demog_nlsy79 <- full_demographics %>%
   mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
   dplyr::select(id,
          age_1979,
@@ -311,8 +317,11 @@ demographic_nlsy79 <- full_demographics %>%
   mutate(age_1979 = as.integer(age_1979),
          hgc = as.factor(hgc),
          yr_hgc = as.integer(yr_hgc))
+
+
+
 # save it to an rda object
-usethis::use_data(demographic_nlsy79, overwrite = TRUE)
+usethis::use_data(demog_nlsy79, overwrite = TRUE)
 
 # CREATE THE DATASET FOR THE HIGH SCHOOL DROP-OUT
 wages_hs_dropout <- wages_hs2020 %>%
@@ -328,8 +337,13 @@ wages_hs_dropout <- wages_hs2020 %>%
   dplyr::select(-dob,
          -age_hgc)
 
+wages_hs_do <- as_tsibble(x = wages_hs_dropout,
+                          key = id,
+                          index = year,
+                          regular = FALSE)
+
 # save it to an rda object
-usethis::use_data(wages_hs_dropout, overwrite = TRUE)
+usethis::use_data(wages_hs_do, overwrite = TRUE)
 
 
 

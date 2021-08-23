@@ -48,12 +48,7 @@ library(ggplot2)
 
 set.seed(20210217)
 
-wages_hs2020 <- as_tsibble(x = wages_hs2020,
-                    key = id,
-                    index = year,
-                    regular = FALSE)
-
-ggplot(wages_hs2020, 
+ggplot(wages_hs, 
        aes(x = year,
                 y = mean_hourly_wage,
                 group = id)) +
@@ -63,7 +58,9 @@ ggplot(wages_hs2020,
   theme_bw()
 ```
 
+## About the package name
 
+A [yowie](https://en.wikipedia.org/wiki/Yowie) is a mythical creature in Australian foklore akin to Big Foot or Sasquatch in north America. In terms of the package it can be considered an acronym: Years Of Wages to Investigate and Explore.
 
 
 
