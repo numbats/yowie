@@ -29,7 +29,7 @@ The aim of this vignette is to provide a brief example of how the demographic da
 In this example, we would like to plot the distribution of the cohort by their race and gender. 
 
 ```{r}
-ggplot(demographic_nlsy79) +
+ggplot(demog_nlsy79) +
   geom_bar(aes(x = race,
                fill = gender),
            position = "dodge") +
@@ -45,12 +45,12 @@ We can learn that most subjects were not Black, nor Hispanic. There were more ma
 In this example, we want to observe whether there is a difference in the median of the high school cohort's mean hourly wage from a different gender. We can do this by firstly calculate the median of mean hourly wage in the `wages_hs2020` table and join it with `demographic_nlsy79`.
 
 ```{r}
-med_wages <- wages_hs2020 %>%
+med_wages <- wages_hs %>%
   group_by(id) %>%
   summarise(median_wages = median(mean_hourly_wage))
 
 med_wages_hs <- left_join(med_wages, 
-                          demographic_nlsy79,
+                          demog_nlsy79,
                           by = "id")
 
 ggplot(med_wages_hs) +

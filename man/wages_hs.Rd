@@ -5,7 +5,7 @@
 \alias{wages_hs}
 \title{Wages Data from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
-A data frame with 103,994 rows and 15 variables:
+A tsibble with 103,994 rows and 15 variables:
 \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}
 \item{year}{The year the observation was taken. This could be the \code{index} of the data.}
@@ -47,6 +47,7 @@ wages_hs
 
 library(ggplot2)
 library(dplyr)
+library(tsibble)
 wages_hs_ids <- key_data(wages_hs) \%>\% select(id)
 wages_hs \%>\%
   dplyr::filter(id \%in\% sample_n(wages_hs_ids, 10)$id) \%>\%

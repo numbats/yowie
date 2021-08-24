@@ -5,7 +5,7 @@
 \alias{wages_hs_do}
 \title{Wages Data of High School Dropout from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
-A data frame contains 97,087 rows and 15 variables:
+A tsibble contains 97,087 rows and 15 variables:
 
 #' \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}

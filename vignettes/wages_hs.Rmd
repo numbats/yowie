@@ -21,31 +21,19 @@ library(yowie)
 library(dplyr)
 library(brolgar)
 library(ggplot2)
-library(patchwork)
 library(tidyr)
 ```
-
 
 The  aim of this vignette is to provide examples of the usage of wages data in longitudinal data analysis. In this case, we use `brolgar`, an R package, to analyze and visualize longitudinal data (Tierney, Cook, and Prvan, 2020).
 
 ## Explore the Data Feature
-
-`brolgar` can only be used if the data frame is in a `tsibble` form. Hence, we should transform the data into this object first. The `key` would be the `id` of the subject, and the `index` is the `year` variable.  
-
-```{r tsibble}
-wages_hs2020 <- as_tsibble(x = wages_hs2020,
-                    key = id,
-                    index = year,
-                    regular = FALSE)
-```
-
 
 ### Visualize the number of observation per ID 
 
 Using `brolgar`'s `features` function, we can extract the number of observations of each ID and plot it using `ggplot2`.  
 
 ```{r}
-wages_hs2020 %>% 
+wages_hs %>% 
   features(mean_hourly_wage, n_obs) %>%
   ggplot(aes(x = n_obs)) +
   geom_bar() +
@@ -61,9 +49,8 @@ We can learn that the subjects have different number of observations, however mo
 
 We can also explore the distribution year of the IDs' first time and last time participated in the survey. 
 
-```{r first-last-plot}
-
- first_time <- wages_hs2020 %>%
+```{r first-plot}
+first_time <- wages_hs %>%
   features(year, list(min = min)) %>%
   ggplot(aes(x = min)) +
   geom_histogram(binwidth = 1) +
@@ -71,7 +58,12 @@ We can also explore the distribution year of the IDs' first time and last time p
   scale_x_continuous(breaks = seq(1979, 2108, 5)) +
   theme_bw()
 
-last_time <- wages_hs2020 %>%
+first_time
+```
+
+
+```{r last-plot}
+last_time <- wages_hs %>%
   features(year, list(max = max))%>%
   ggplot(aes(x = max)) +
   geom_histogram(binwidth = 1) +
@@ -79,7 +71,7 @@ last_time <- wages_hs2020 %>%
   scale_x_continuous(breaks = seq(1979, 2108, 5)) +
   theme_bw()
 
-first_time + last_time
+last_time
 ```
 
 Most of the subjects participated in the first round of the survey, which was in 1979. They also keep participating in the study until the last round the survey held, which was in 2018. 
@@ -89,7 +81,7 @@ Most of the subjects participated in the first round of the survey, which was in
 We can also summarize the mean hourly wage using the `features` function. Here, we want to display the minimum, median, and maximum value of mean hourly wage of each ID. 
 
 ```{r three-feat}
-wages_three_feat <- wages_hs2020 %>%
+wages_three_feat <- wages_hs %>%
   features(mean_hourly_wage, 
            feat_three_num
            )
@@ -111,7 +103,7 @@ Creating a line plot of the wages of all IDs might be too messy since there are 
 ```{r sample}
 set.seed(202102)
 
-ggplot(wages_hs2020, 
+ggplot(wages_hs, 
        aes(x = year,
                 y = mean_hourly_wage,
                 group = id)) +

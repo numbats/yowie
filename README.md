@@ -40,12 +40,6 @@ Here is the example of plotting some samples of subjects in
 
 ``` r
 library(yowie)
-#> Loading required package: tsibble
-#> 
-#> Attaching package: 'tsibble'
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, union
 library(brolgar)
 library(ggplot2)
 

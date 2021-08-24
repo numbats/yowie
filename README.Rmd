@@ -41,7 +41,7 @@ devtools::install_github("numbats/yowie")
 
 Here is the example of plotting some samples of subjects in `wages_hs2020` using `brolgar` (Tierney, Cook, and Prvan, 2020). 
 
-```{r}
+```{r, message=FALSE}
 library(yowie)
 library(brolgar)
 library(ggplot2)

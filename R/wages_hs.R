@@ -9,7 +9,7 @@
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A data frame with 103,994 rows and 15 variables:
+#' @format A tsibble with 103,994 rows and 15 variables:
 #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}
@@ -40,6 +40,7 @@
 #'
 #' library(ggplot2)
 #' library(dplyr)
+#' library(tsibble)
 #' wages_hs_ids <- key_data(wages_hs) %>% select(id)
 #' wages_hs %>%
 #'   dplyr::filter(id %in% sample_n(wages_hs_ids, 10)$id) %>%
@@ -49,4 +50,5 @@
 #'                   group = id), alpha = 0.8)
 #' @docType data
 #' @name wages_hs
+#' @import tsibble
 NULL

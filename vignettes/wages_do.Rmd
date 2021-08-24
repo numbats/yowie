@@ -30,9 +30,10 @@ Here, we would like to visualize the demographic profile of high school dropout 
 
 
 ```{r}
-ggplot(wages_hs_dropout) +
+ggplot(wages_hs_do) +
   geom_bar(aes(x = race,
-               fill = race)) 
+               fill = race)) +
+  theme(legend.position = "bottom")
 ```
 
 From the demographic data, we learn that most of high school dropouts are non-black, non-hispanic. 
@@ -44,13 +45,13 @@ In this section, we would like to compare the summary statistics of high school 
 **High school dropouts cohort**
 
 ```{r}
-summary(wages_hs_dropout$mean_hourly_wage)
+summary(wages_hs_do$mean_hourly_wage)
 ```
 
 **Completed high school without being dropped out cohort**
 
 ```{r}
-hs_never_dropout <- wages_hs2020 %>%
+hs_never_dropout <- wages_hs %>%
   mutate(dob = 1979 - age_1979,
          age_hgc = yr_hgc - dob) %>%
   filter(hgc == "12TH GRADE" & age_hgc < 19) %>%
@@ -61,7 +62,7 @@ summary(hs_never_dropout$mean_hourly_wage)
 
 **Never attended high school cohort**
 ```{r}
-not_attend_hs <- wages_hs2020 %>%
+not_attend_hs <- wages_hs %>%
   filter(hgc_i < 9) %>%
   filter(age_1979 <= 17,
          gender == "MALE")

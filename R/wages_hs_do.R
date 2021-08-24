@@ -10,7 +10,7 @@
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A data frame contains 97,087 rows and 15 variables:
+#' @format A tsibble contains 97,087 rows and 15 variables:
 #'
 #' #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
@@ -42,4 +42,5 @@
 #' wages_hs_do %>% key_data()
 #' @docType data
 #' @name wages_hs_do
+#' @import tsibble
 NULL
