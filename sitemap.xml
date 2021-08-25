@@ -4,24 +4,18 @@
     <loc>https://numbats.github.io/yowie//index.html</loc>
   </url>
   <url>
-    <loc>https://numbats.github.io/yowie//reference/demographic_nlsy79.html</loc>
+    <loc>https://numbats.github.io/yowie//reference/demog_nlsy79.html</loc>
   </url>
   <url>
-    <loc>https://numbats.github.io/yowie//reference/wages_hs2020.html</loc>
+    <loc>https://numbats.github.io/yowie//reference/wages_hs.html</loc>
   </url>
   <url>
-    <loc>https://numbats.github.io/yowie//reference/wages_hs_dropout.html</loc>
+    <loc>https://numbats.github.io/yowie//reference/wages_hs_do.html</loc>
   </url>
   <url>
     <loc>https://numbats.github.io/yowie//reference/yowie-package.html</loc>
   </url>
   <url>
-    <loc>https://numbats.github.io/yowie//articles/wages_demographic.html</loc>
-  </url>
-  <url>
-    <loc>https://numbats.github.io/yowie//articles/wages_do.html</loc>
-  </url>
-  <url>
-    <loc>https://numbats.github.io/yowie//articles/wages_hs.html</loc>
+    <loc>https://numbats.github.io/yowie//articles/intro.html</loc>
   </url>
 </urlset>

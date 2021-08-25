@@ -6,15 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Citation and Authors • yowie</title>
+<title>Demographic Data from the National Longitudinal Survey of Youth (NLSY79) — demog_nlsy79 • yowie</title>
 
 <!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -40,13 +40,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="Citation and Authors" />
+<meta property="og:title" content="Demographic Data from the National Longitudinal Survey of Youth (NLSY79) — demog_nlsy79" />
+<meta property="og:description" content="A data set contains demographic information of the NLSY79 cohort.
+The cohort included 12,686 respondents ages 14-22 when first interviewed in 1979." />
 <meta property="og:image" content="https://numbats.github.io/yowie/logo.png" />
 
 
@@ -66,7 +68,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-citation-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -78,7 +80,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">yowie</a>
+        <a class="navbar-link" href="../index.html">yowie</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
@@ -86,13 +88,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -102,7 +104,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/intro.html">Introduction to yowie</a>
+      <a href="../articles/intro.html">Introduction to yowie</a>
     </li>
   </ul>
 </li>
@@ -125,43 +127,44 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Citation</h1>
-      <small class="dont-index">Source: <a href='https://github.com/numbats/yowie/blob/master/inst/CITATION'><code>inst/CITATION</code></a></small>
+    <h1>Demographic Data from the National Longitudinal Survey of Youth (NLSY79)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/numbats/yowie/blob/master/R/demog_nlsy79.R'><code>R/demog_nlsy79.R</code></a></small>
+    <div class="hidden name"><code>demog_nlsy79.Rd</code></div>
     </div>
 
-    <p>Amaliah, D., Cook D., Tanaka, E. (2021). yowie: Longitudinal Wages Data from the NLSY79. https://numbats.github.io/yowie/</p>
-    <pre>@Misc{,
-  title = {yowie: Longitudinal Wages Data from the NLSY79},
-  author = {Dewi Amaliah and Dianne Cook and Emi Tanaka},
-  year = {2021},
-  url = {https://numbats.github.io/yowie/},
-}</pre>
-
-    <div class="page-header">
-      <h1>Authors</h1>
+    <div class="ref-description">
+    <p>A data set contains demographic information of the NLSY79 cohort.
+The cohort included 12,686 respondents ages 14-22 when first interviewed in 1979.</p>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong><a href='https://datain360.com'>Dewi Amaliah</a></strong>. Author, maintainer. 
-        </p>
-      </li>
-      <li>
-        <p><strong><a href='http://dicook.org'>Di Cook</a></strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Emi Tanaka</strong>. Author. 
-        </p>
-      </li>
-    </ul>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame contains 12,686 rows and 7 variables:</p><dl>
+<dt>id</dt><dd><p>A unique individual's ID number.</p></dd>
+<dt>age_1979</dt><dd><p>The age of the subject in 1979.</p></dd>
+<dt>gender</dt><dd><p>Gender of the subject, FEMALE and MALE.</p></dd>
+<dt>race</dt><dd><p>Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.</p></dd>
+<dt>hgc</dt><dd><p>Highest grade completed.</p></dd>
+<dt>hgc_i</dt><dd><p>Integer of highest grade completed.</p></dd>
+<dt>yr_hgc</dt><dd><p>The year when the highest grade completed.</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>The U.S. Bureau of Labor Statistics. (2021, January 6). <em>National Longitudinal Survey of Youth 1979</em>. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data</p>
 
   </div>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
+  </div>
 </div>
-
 
 
       <footer>
