@@ -1,0 +1,123 @@
+---
+title: "Introduction to yowie"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to yowie}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+`yowie` (**Y**ears **O**f **W**ages to **I**nvestigate and **E**xplore) is an R data package that contains three datasets from [the National Longitudinal Survey of Youth (NLSY79)](https://www.nlsinfo.org/content/cohorts/nlsy79) from Round 1 (the survey year 1979) to Round 28 (the survey year 2018). Those three data sets are:
+
+-  `wages_hs`: A tsibble contains longitudinal wages data and several demographics variables from the cohort whose highest grade completed are up to 12th grade.
+-  `wages_hs_do`: The subset of `wages_hs` that only contains male high school dropouts. This data adopts the wages data in Applied Longitudinal Data Analysis (Singer and Willett, 2003). 
+-  `demog_nlsy79`: A tibble contains demographic data of the NLSY79 cohort.
+
+As its name, the wages data in this package could be used to do exploratory data analysis, particularly in longitudinal data analysis. Hence, these datasets could be useful for education (learning and teaching statistics and data science) and research. This vignette will be divided into two sections. Section 1 will explore the demographic profiles of `wages_hs`. Section 2 will provide minimal examples of `wages_hs` visualisation using `ggplot2`. 
+
+
+## Demographic profile 
+
+Understanding the demographic profile of the sample is important before explore the data and extract insight from it. `demog_nlsy79` provides the demographic profiles of the NLSY79 samples. However, `wages_hs` does not include all the samples from the NLSY79 cohort, instead it is a subset for the samples whose highest education completed is up to 12th grade and participated in at least 5 rounds of survey. Hence, in this section, we will explore the demographic profile of this subset. 
+
+```{r setup, message=FALSE}
+library(yowie)
+library(ggplot2)
+library(forcats)
+library(janitor)
+library(kableExtra)
+library(dplyr)
+```
+
+```{r}
+# subset demog_nlsy79 who only included in wages_hs
+wages_hs_demog <- filter(demog_nlsy79, id %in% wages_hs$id)
+
+# create cross tabulations from demographic data  
+gender_race_table <- wages_hs_demog %>%
+  tabyl(gender, race) %>%
+  adorn_totals(c("row", "col")) %>%
+  adorn_percentages("row") %>%
+  adorn_pct_formatting(digits = 2) %>%
+  adorn_ns(position = "front") %>%
+  mutate(gender = ifelse(gender == "MALE", "Male",
+                         ifelse(gender == "FEMALE", "Female", "Total")))
+
+# styling the table 
+kable(gender_race_table,
+      caption = "Gender and Race Distribution of the NLSY79 Samples",
+      col.names = c("Gender", "Hispanic", "Black", "Non-Black, Non-Hispanic", "Total")) %>%
+  kable_styling(latex_options = "striped") %>%
+  add_header_above(c(" " = 1, "Race" = 3, " " = 1))
+```
+
+
+There are more males as well as non-black and non-hispanic in the `wages_hs`. It is also worth noting that sample participated in the survey in various rounds. Most samples participated in 27 rounds of surveys. 
+
+
+```{r}
+# count the number of rounds that every id taken
+wages_hs_df <- as_tibble(wages_hs) %>%
+  group_by(id) %>%
+  count()
+
+# create the bar plot 
+wages_hs_df %>%
+  ggplot(aes(x = n)) +
+  geom_bar() +
+  xlab("number of rounds") +
+  ggtitle("Distribution of survey taken by the cohort")
+```
+
+
+## Minimal examples of data exploration 
+
+```{r, message=FALSE}
+ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = gender)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(color = "black") +
+  facet_wrap(~gender) +
+  scale_color_manual(values = c("#04B4AE", "#BF00FF")) +
+  theme(legend.position = "none")
+```
+```{r, message=FALSE}
+ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = race)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(color = "black", se = TRUE) +
+  facet_wrap(~race) +
+  scale_color_manual(values = c("#FACC2E", "#04B45F", "#58ACFA")) +
+  theme(legend.position = "none")
+```
+
+```{r, message = FALSE}
+wages_hgc_new <- wages_hs %>%
+  mutate(hgc_regroup = fct_collapse(hgc, `ungraded` = "UNGRADED",
+                                    `8TH grade or less` = c("1ST GRADE", "3RD GRADE",
+                                                                 "4TH GRADE", "5TH GRADE",
+                                                                 "6TH GRADE", "7TH GRADE",
+                                                                 "8TH GRADE"),
+                                    `9TH to 11TH grade` = c("9TH GRADE",
+                                                            "10TH GRADE",
+                                                            "11TH GRADE"),
+                                    `12TH grade` = "12TH GRADE")) %>%
+  filter(hgc_regroup != "ungraded") %>%
+  mutate(hgc_regroup = factor(hgc_regroup, levels = c("ungraded", "8TH grade or less", "9TH to 11TH grade", "12TH grade")))
+
+
+ggplot(wages_hgc_new, aes(x = year, y = log(mean_hourly_wage), color = hgc_regroup)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(color = "black", se = TRUE) +
+  scale_colour_brewer("", palette="Dark2") +
+  facet_wrap(~hgc_regroup) +
+  theme(legend.position = "none")
+```
+
+##  More on Data Exploration 
