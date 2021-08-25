@@ -18,10 +18,10 @@ follows the lives of a sample of American youth born between 1957-64.
 The cohort originally included 12,686 respondents ages 14-22 when first
 interviewed in 1979. There are three data sets provided in this package:
 
-  - `wages_hs2020`: The wages data from the cohort whose highest grade
+  - `wages_hs`: The wages data from the cohort whose highest grade
     completed is up to 12th grade.
-  - `wages_hs_dropout`: The wages data of the high school dropouts.
-  - `demographic_nlsy79`: The demographic data of the NLSY79 cohort.
+  - `wages_hs_do`: The wages data of the high school dropouts.
+  - `demog_nlsy79`: The demographic data of the NLSY79 cohort.
 
 ## Installation
 
@@ -35,8 +35,8 @@ devtools::install_github("numbats/yowie")
 
 ## Example
 
-Here is the example of plotting some samples of subjects in
-`wages_hs2020` using `brolgar` (Tierney, Cook, and Prvan, 2020).
+Here is the example of plotting some samples of subjects in `wages_hs`
+using `brolgar` (Tierney, Cook, and Prvan, 2020).
 
 ``` r
 library(yowie)
