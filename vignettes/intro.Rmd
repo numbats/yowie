@@ -80,24 +80,37 @@ wages_hs_df %>%
 
 ## Minimal examples of data exploration 
 
+This section shows the examples of `wages_hs` visualisation data based on gender, race, and education level using `ggplot2`.  
+
 ```{r, message=FALSE}
 ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = gender)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black") +
   facet_wrap(~gender) +
   scale_color_manual(values = c("#04B4AE", "#BF00FF")) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  ggtitle("Wages based on gender, overlaid by GAM smoother") +
+  ylab("log of mean hourly wage")
 ```
+
+The plot above implies that the wages experience a positive trend in both males and females. However, males tend to earn more than females. In the following example, mean hourly wage (logged) is plotted against the race. We can see that the association between year and wages in the three race groups is pretty similar with 
+non-black,non-hispanic has a slightly higher slope compared to hispanic and black. 
+
 ```{r, message=FALSE}
 ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = race)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black", se = TRUE) +
   facet_wrap(~race) +
   scale_color_manual(values = c("#FACC2E", "#04B45F", "#58ACFA")) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  ggtitle("Wages based on race, overlaid by GAM smoother") +
+  ylab("log of mean hourly wage")
 ```
 
+Lastly, the following plot shows that the three levels of highest education complete have a generally increasing trend of wages. However, in 2008-2010, respondent who completed 9th to 11th grade experience a flat trend. Also, the slope of GAM smoother in 12th grade group is higher compared to the other groups. 
+
 ```{r, message = FALSE}
+# collapse the hgc into new levels
 wages_hgc_new <- wages_hs %>%
   mutate(hgc_regroup = fct_collapse(hgc, `ungraded` = "UNGRADED",
                                     `8TH grade or less` = c("1ST GRADE", "3RD GRADE",
@@ -111,13 +124,26 @@ wages_hgc_new <- wages_hs %>%
   filter(hgc_regroup != "ungraded") %>%
   mutate(hgc_regroup = factor(hgc_regroup, levels = c("ungraded", "8TH grade or less", "9TH to 11TH grade", "12TH grade")))
 
-
+# create the plot of wages vs year facet by education
 ggplot(wages_hgc_new, aes(x = year, y = log(mean_hourly_wage), color = hgc_regroup)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black", se = TRUE) +
   scale_colour_brewer("", palette="Dark2") +
   facet_wrap(~hgc_regroup) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  ggtitle("Wages based on education, overlaid by GAM smoother") +
+  ylab("log of mean hourly wage")
 ```
 
-##  More on Data Exploration 
+##  Data cleaning and more examples of data exploration
+
+More examples of data exploration and the data cleaning process from the NLSY79 database to this package could be found here. 
+
+## Reference 
+
+
+Singer, Judith D, & Willett, John B. (2003). Applied longitudinal data analysis. Oxford Univ. Pr. https://doi.org/10.1093/acprof:oso/9780195152968.001.0001
+
+
+The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
+
