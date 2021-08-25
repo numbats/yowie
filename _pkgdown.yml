@@ -15,7 +15,7 @@ reference:
   desc: >
     Data sets contained in this package.
   contents:
-  - demographic_nlsy79
-  - wages_hs2020
-  - wages_hs_dropout
+  - demog_nlsy79
+  - wages_hs
+  - wages_hs_do
 
