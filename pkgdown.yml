@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   intro: intro.html
-last_built: 2021-08-25T08:43Z
+last_built: 2021-08-25T09:56Z
 urls:
   reference: https://numbats.github.io/yowie//reference
   article: https://numbats.github.io/yowie//articles
