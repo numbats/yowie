@@ -18,6 +18,6 @@ reference:
     Data sets contained in this package.
   contents:
   - demog_nlsy79
-  - wages_hs
+  - wages
   - wages_hs_do
 

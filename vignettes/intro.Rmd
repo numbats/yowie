@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 `yowie` (**Y**ears **O**f **W**ages to **I**nvestigate and **E**xplore) is an R data package that contains three datasets from [the National Longitudinal Survey of Youth (NLSY79)](https://www.nlsinfo.org/content/cohorts/nlsy79) from Round 1 (the survey year 1979) to Round 28 (the survey year 2018). Those three data sets are:
 
--  `wages_hs`: A tsibble contains longitudinal wages data and several demographics variables from the cohort whose highest grade completed are up to 12th grade.
+-  `wages`: A tsibble contains longitudinal wages data and several demographics variables from the cohort whose highest grade completed are up to 12th grade.
 -  `wages_hs_do`: The subset of `wages_hs` that only contains male high school dropouts. This data adopts the wages data in Applied Longitudinal Data Analysis (Singer and Willett, 2003). 
 -  `demog_nlsy79`: A tibble contains demographic data of the NLSY79 cohort.
 
@@ -26,7 +26,7 @@ As its name, the wages data in this package could be used to do exploratory data
 
 ## Demographic profile 
 
-Understanding the demographic profile of the sample is important before explore the data and extract insight from it. `demog_nlsy79` provides the demographic profiles of the NLSY79 samples. However, `wages_hs` does not include all the samples from the NLSY79 cohort, instead it is a subset for the samples whose highest education completed is up to 12th grade and participated in at least 5 rounds of survey. Hence, in this section, we will explore the demographic profile of this subset. 
+Understanding the demographic profile of the sample is important before exploring the data and extracting insight from it. The `demog_nlsy79` data contains all of the NLSY79 cohort demographic profiles. The `wages` data contains a subset of the respondents' longitudinal profiles. Only respondents who reported at least 5 times and with some levels of high school education but not further studies. In this section, we will explore the demographic profile of this subset. 
 
 ```{r setup, message=FALSE}
 library(yowie)
@@ -38,8 +38,8 @@ library(dplyr)
 ```
 
 ```{r}
-# subset demog_nlsy79 who only included in wages_hs
-wages_hs_demog <- filter(demog_nlsy79, id %in% wages_hs$id)
+# subset demog_nlsy79 who only included in wages
+wages_hs_demog <- filter(demog_nlsy79, id %in% wages$id)
 
 # create cross tabulations from demographic data  
 gender_race_table <- wages_hs_demog %>%
@@ -65,7 +65,7 @@ There are more males as well as non-black and non-hispanic in the `wages_hs`. It
 
 ```{r}
 # count the number of rounds that every id taken
-wages_hs_df <- as_tibble(wages_hs) %>%
+wages_hs_df <- as_tibble(wages) %>%
   group_by(id) %>%
   count()
 
@@ -83,7 +83,7 @@ wages_hs_df %>%
 This section shows the examples of `wages_hs` visualisation data based on gender, race, and education level using `ggplot2`.  
 
 ```{r, message=FALSE}
-ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = gender)) +
+ggplot(wages, aes(x = year, y = log(wage), color = gender)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black") +
   facet_wrap(~gender) +
@@ -97,7 +97,7 @@ The plot above implies that the wages experience a positive trend in both males 
 non-black,non-hispanic has a slightly higher slope compared to hispanic and black. 
 
 ```{r, message=FALSE}
-ggplot(wages_hs, aes(x = year, y = log(mean_hourly_wage), color = race)) +
+ggplot(wages, aes(x = year, y = log(wage), color = race)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black", se = TRUE) +
   facet_wrap(~race) +
@@ -111,7 +111,7 @@ Lastly, the following plot shows that the three levels of highest education comp
 
 ```{r, message = FALSE}
 # collapse the hgc into new levels
-wages_hgc_new <- wages_hs %>%
+wages_hgc_new <- wages %>%
   mutate(hgc_regroup = fct_collapse(hgc, `ungraded` = "UNGRADED",
                                     `8TH grade or less` = c("1ST GRADE", "3RD GRADE",
                                                                  "4TH GRADE", "5TH GRADE",
@@ -125,7 +125,7 @@ wages_hgc_new <- wages_hs %>%
   mutate(hgc_regroup = factor(hgc_regroup, levels = c("ungraded", "8TH grade or less", "9TH to 11TH grade", "12TH grade")))
 
 # create the plot of wages vs year facet by education
-ggplot(wages_hgc_new, aes(x = year, y = log(mean_hourly_wage), color = hgc_regroup)) +
+ggplot(wages_hgc_new, aes(x = year, y = log(wage), color = hgc_regroup)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black", se = TRUE) +
   scale_colour_brewer("", palette="Dark2") +
@@ -134,6 +134,7 @@ ggplot(wages_hgc_new, aes(x = year, y = log(mean_hourly_wage), color = hgc_regro
   ggtitle("Wages based on education, overlaid by GAM smoother") +
   ylab("log of mean hourly wage")
 ```
+
 
 ##  Data cleaning and more examples of data exploration
 

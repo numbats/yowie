@@ -161,8 +161,10 @@ hours_wages <- left_join(rates_all,
                          hours_all,
                          by = c("id", "year", "job")) %>%
   # set the 0 value in rate_per_hour as NA
+  # set hours_work = 0 or > 84 to be NA
   mutate(rate_per_hour = ifelse(rate_per_hour == 0, NA,
-                                rate_per_hour))
+                                rate_per_hour),
+         hours_work = ifelse(hours_work == 0 | hours_work > 84, NA, hours_work))
 
 ## Calculate the mean hourly wage data
 
@@ -293,15 +295,18 @@ wages_hs2020 <- wages_demog_hs %>%
          year = as.integer(year),
          age_1979 = as.integer(age_1979),
          yr_hgc = as.integer(yr_hgc),
-         number_of_jobs = as.integer(number_of_jobs))
+         number_of_jobs = as.integer(number_of_jobs)) %>%
+  rename(wage = mean_hourly_wage,
+         njobs = number_of_jobs,
+         hours = total_hours)
 
-wages_hs <- as_tsibble(x = wages_hs2020,
+wages <- as_tsibble(x = wages_hs2020,
                        key = id,
                        index = year,
                        regular = FALSE)
 
 # save it to an rda object
-usethis::use_data(wages_hs, overwrite = TRUE)
+usethis::use_data(wages, overwrite = TRUE)
 
 
 # CREATE THE DATASET FOR THE DOMEGRAPHIC INFORMATION

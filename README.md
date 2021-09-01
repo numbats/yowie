@@ -18,7 +18,7 @@ follows the lives of a sample of American youth born between 1957-64.
 The cohort originally included 12,686 respondents ages 14-22 when first
 interviewed in 1979. There are three data sets provided in this package:
 
-  - `wages_hs`: The wages data from the cohort whose highest grade
+  - `wages`: The wages data from the cohort whose highest grade
     completed is up to 12th grade.
   - `wages_hs_do`: The wages data of the high school dropouts.
   - `demog_nlsy79`: The demographic data of the NLSY79 cohort.
@@ -45,10 +45,10 @@ library(ggplot2)
 
 set.seed(20210217)
 
-ggplot(wages_hs, 
+ggplot(yowie::wages, 
        aes(x = year,
-                y = mean_hourly_wage,
-                group = id)) +
+           y = wage,
+           group = id)) +
   geom_line(alpha = 0.7) +
   facet_sample() +
   ylab("mean hourly wage") +

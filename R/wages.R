@@ -13,7 +13,7 @@
 #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}
-#'   \item{mean_hourly_wage}{The mean of the hourly wages the individual gets at
+#'   \item{wage}{The mean of the hourly wages the individual gets at
 #'                           each of their different jobs. The value could be a
 #'                           weighted or an arithmetic mean. The weighted mean is used
 #'                           when the information of hours of work as the weight
@@ -26,8 +26,8 @@
 #'   \item{hgc}{Highest grade completed.}
 #'   \item{hgc_i}{Integer of highest grade completed.}
 #'   \item{yr_hgc}{The year when the highest grade completed.}
-#'   \item{number_of_jobs}{Number of jobs that an individual has.}
-#'   \item{total_hours}{The number of hours the individual usually works per week.}
+#'   \item{njobs}{Number of jobs that an individual has.}
+#'   \item{hours}{The total number of hours the individual usually works per week.}
 #'   \item{is_wm}{Whether the mean hourly wage is weighted mean, using the hour work
 #'                as the weight, or regular/arithmetic mean. TRUE = is weighted mean.
 #'                FALSE = is regular mean.}
@@ -36,19 +36,19 @@
 #'
 #' @examples
 #' # data summary
-#' wages_hs
+#' wages
 #'
 #' library(ggplot2)
 #' library(dplyr)
 #' library(tsibble)
-#' wages_hs_ids <- key_data(wages_hs) %>% select(id)
-#' wages_hs %>%
-#'   dplyr::filter(id %in% sample_n(wages_hs_ids, 10)$id) %>%
+#' wages_ids <- key_data(wages) %>% select(id)
+#' wages %>%
+#'   dplyr::filter(id %in% sample_n(wages_ids, 10)$id) %>%
 #'   ggplot() +
 #'     geom_line(aes(x = year,
-#'                   y = mean_hourly_wage,
+#'                   y = wage,
 #'                   group = id), alpha = 0.8)
 #' @docType data
-#' @name wages_hs
+#' @name wages
 #' @import tsibble
 NULL
