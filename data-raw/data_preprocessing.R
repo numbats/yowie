@@ -291,7 +291,8 @@ wages_demog_hs <- wages_demog_hs %>%
 # rename and select the wages in tidy
 wages_hs2020 <- wages_demog_hs %>%
   dplyr::select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc, number_of_jobs, total_hours, is_wm, is_pred) %>%
-  mutate(hgc = as.factor(hgc),
+  mutate(id = as.factor(id),
+         hgc = as.factor(hgc),
          year = as.integer(year),
          age_1979 = as.integer(age_1979),
          yr_hgc = as.integer(yr_hgc),
@@ -319,7 +320,8 @@ demog_nlsy79 <- full_demographics %>%
          hgc,
          hgc_i,
          yr_hgc) %>%
-  mutate(age_1979 = as.integer(age_1979),
+  mutate(id = as.factor(id),
+         age_1979 = as.integer(age_1979),
          hgc = as.factor(hgc),
          yr_hgc = as.integer(yr_hgc))
 
