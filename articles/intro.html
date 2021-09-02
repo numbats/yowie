@@ -248,6 +248,7 @@ Total
 <h2 class="hasAnchor">
 <a href="#minimal-examples-of-data-exploration" class="anchor"></a>Minimal examples of data exploration</h2>
 <p>This section shows the examples of <code>wages_hs</code> visualisation data based on gender, race, and education level using <code>ggplot2</code>.</p>
+<p><strong>Note: The data contains two demographics, gender and race, which needs special attention. Gender is as reported in the data and only has two categories, which is recognised today as inadequate. Gender is not binary. Race is as reported in the database, and when doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">wages</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span>, color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span>
@@ -299,7 +300,7 @@ Total
 <div id="data-cleaning-and-more-examples-of-data-exploration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-cleaning-and-more-examples-of-data-exploration" class="anchor"></a>Data cleaning and more examples of data exploration</h2>
-<p>More examples of data exploration and the data cleaning process from the NLSY79 database to this package could be found here.</p>
+<p>More examples of data exploration and the data cleaning process from the NLSY79 database to this package would be made available soon.</p>
 </div>
 <div id="reference" class="section level2">
 <h2 class="hasAnchor">
