@@ -80,7 +80,9 @@ wages_hs_df %>%
 
 ## Minimal examples of data exploration 
 
-This section shows the examples of `wages_hs` visualisation data based on gender, race, and education level using `ggplot2`.  
+This section shows the examples of `wages_hs` visualisation data based on gender, race, and education level using `ggplot2`. 
+
+**Note: The data contains two demographics, gender and race, which needs special attention. Gender is as reported in the data and only has two categories, which is recognised today as inadequate. Gender is not binary. Race is as reported in the database, and when doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.**
 
 ```{r, message=FALSE}
 ggplot(wages, aes(x = year, y = log(wage), color = gender)) +
@@ -138,7 +140,7 @@ ggplot(wages_hgc_new, aes(x = year, y = log(wage), color = hgc_regroup)) +
 
 ##  Data cleaning and more examples of data exploration
 
-More examples of data exploration and the data cleaning process from the NLSY79 database to this package could be found here. 
+More examples of data exploration and the data cleaning process from the NLSY79 database to this package would be made available soon. 
 
 ## Reference 
 
