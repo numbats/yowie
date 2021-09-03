@@ -145,8 +145,7 @@ More examples of data exploration and the data cleaning process from the NLSY79 
 ## Reference 
 
 
-Singer, Judith D, & Willett, John B. (2003). Applied longitudinal data analysis. Oxford Univ. Pr. https://doi.org/10.1093/acprof:oso/9780195152968.001.0001
-
+Singer, Judith D, & Willett, John B. (2003). Applied longitudinal data analysis. Oxford Univ. Pr. 
 
 The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 
