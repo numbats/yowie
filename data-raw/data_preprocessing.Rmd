@@ -1,6 +1,5 @@
 
-
-## ---- setup
+```{r setup}
 library(readr)
 library(tidyr)
 library(dplyr)
@@ -9,21 +8,23 @@ library(MASS)
 library(broom)
 library(purrr)
 library(tsibble)
+```
 
+The downloaded data (wages-high-school-demo.dat) from NLSY website
+is provided with an R file (wages-high-school-demo.R)
+to read the data into R and transform the variable name and
+coding the variables' value into something more sensible.
+It is also come along with the wages-high-school-demo.NLSY79
+Which is a tagset, that can be uploaded to the web site to recreate the data set.
 
-#' The downloaded data (wages-high-school-demo.dat) from NLSY website
-#' is provided with an R file (wages-high-school-demo.R)
-#' to read the data into R and transform the variable name and
-#' coding the variables' value into something more sensible.
-#' It is also come along with the wages-high-school-demo.NLSY79
-#' Which is a tagset, that can be uploaded to the web site to recreate the data set.
-## ---- raw-data
+```{r raw-data}
 source(here::here("data-raw/wages-high-school-demo.R"))
+```
 
-#' # Demographic data pre-processing
-#' ## Tidy the date of birth data
+# Demographic data pre-processing
+## Tidy the date of birth data
 
-## ---- dob-tidy
+```{r dob-tidy}
 dob_tidy <- new_data_qnames %>%
   dplyr::select(CASEID_1979,
          starts_with("Q1-3_A~")) %>%
@@ -52,18 +53,22 @@ dob_tidy <- dob_tidy %>%
          dob_month,
          dob_year,
          dob_conflict)
+```
 
-#' Tidy the sex and race data
-## ---- demog-tidy
+Tidy the sex and race data
+
+```{r demog-tidy}
 demog_tidy <- categories_qnames %>%
   dplyr::select(CASEID_1979,
          SAMPLE_RACE_78SCRN,
          SAMPLE_SEX_1979) %>%
   rename(gender = SAMPLE_SEX_1979,
          race = SAMPLE_RACE_78SCRN)
+```
 
-#' Tidy the grade completed in each year
-## ---- demog-ed
+Tidy the grade completed in each year
+
+```{r demog-ed}
 demog_education <- new_data_qnames %>%
   as_tibble() %>%
   rename(HGC_2018 = `Q3-4_2018`) %>%
@@ -329,7 +334,8 @@ demog_nlsy79 <- full_demographics %>%
          yr_hgc = as.integer(yr_hgc))
 
 
-#+ eval=FALSE
+```
+```{r eval=FALSE}
 # save it to an rda object
 usethis::use_data(demog_nlsy79, overwrite = TRUE)
 
@@ -352,11 +358,9 @@ wages_hs_do <- as_tsibble(x = wages_hs_dropout,
                           index = year,
                           regular = FALSE)
 
-#+ eval=FALSE
+```
+```{r eval=FALSE}
 # save it to an rda object
 usethis::use_data(wages_hs_do, overwrite = TRUE)
-
-
-
-
+```
 
