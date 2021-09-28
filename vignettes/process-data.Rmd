@@ -14,8 +14,8 @@ vignette: >
   padding: 10px;
 }
 
-.source > .sourceCode {
-  background-color: #ffe066
+.source .sourceCode {
+  background-color: #ffffe6
 }
 ```
 

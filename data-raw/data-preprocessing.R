@@ -5,7 +5,7 @@
 library(tidyverse)
 select <- dplyr::select
 
-#' # Reading the data
+#' # Reading the data {#read-data}
 #+ raw-data, eval=FALSE, include=FALSE
 source(here::here("data-raw/NLSY79/NLSY79.R"))
 
@@ -16,6 +16,7 @@ source(here::here("data-raw/NLSY79/NLSY79.R"))
 #+ raw-data-rmd, code=readLines(here::here("data-raw/NLSY79/NLSY79.R"))
 #' </details>
 
+#'
 #' The above source code creates a data set `new_data_qnames`.
 #' As shown below, the column names contain information on the job number
 #' (HRP1 = job 1, HRP2 = job 2, ..., HRP5 = job 5) and the year information.
@@ -30,81 +31,93 @@ new_data_qnames %>%
 
 #' # Demographic data pre-processing
 #' ## Tidy the date of birth data
+#' The month and year of birth is recorded in 1979 and 1981 for each individual.
+#' The records in 1981 are missing for some individuals so we take the month and year of
+#' birth from 1979 records.
+#'
+#' Where the record is present for both 1979 and 1981, we check that the
+#' record matches.
 #+ dob-tidy
 dob_tidy <- new_data_qnames %>%
-  select(CASEID_1979,
-                starts_with("Q1-3_A~")) %>%
+  select(id = CASEID_1979,
+         year_1979 = `Q1-3_A~Y_1979`,
+         year_1981 = `Q1-3_A~Y_1981`,
+         month_1979 = `Q1-3_A~M_1979`,
+         month_1981 = `Q1-3_A~M_1981`) %>%
   mutate(dob_year = case_when(
                       # if the years recorded in both sets match, take 79 data
-                      `Q1-3_A~Y_1979` == `Q1-3_A~Y_1981` ~ `Q1-3_A~Y_1979`,
+                      year_1979 == year_1981 ~ year_1979,
                       # if the year in the 81 set is missing, take the 79 data
-                      is.na(`Q1-3_A~Y_1981`) ~ `Q1-3_A~Y_1979`,
+                      is.na(year_1981) ~ year_1979,
                       # if the sets don't match for dob year, take the 79 data
-                      `Q1-3_A~Y_1979` != `Q1-3_A~Y_1981` ~ `Q1-3_A~Y_1979`),
+                      year_1979 != year_1981 ~ year_1979),
          dob_month = case_when(
                       # if months recorded in both sets match, take 79 data
-                      `Q1-3_A~M_1979` == `Q1-3_A~M_1981` ~ `Q1-3_A~M_1979`,
+                      month_1979 == month_1981 ~ month_1979,
                       # if month in 81 set is missing, take the 79 data
-                      is.na(`Q1-3_A~M_1981`) ~ `Q1-3_A~M_1979`,
+                      is.na(month_1981) ~ month_1979,
                       # if sets don't match for dob month, take the 79 data
-                      `Q1-3_A~M_1979` != `Q1-3_A~M_1981` ~ `Q1-3_A~M_1979`),
+                      month_1979 != month_1981 ~ month_1979),
          # flag if there is a conflict between dob recorded in 79 and 81
          dob_conflict = case_when(
-                      (`Q1-3_A~M_1979` != `Q1-3_A~M_1981`) & !is.na(`Q1-3_A~M_1981`)
-                      ~ TRUE,
-                      (`Q1-3_A~Y_1979` != `Q1-3_A~Y_1981`) & !is.na(`Q1-3_A~Y_1981`)
-                      ~ TRUE,
-                      (`Q1-3_A~Y_1979` == `Q1-3_A~Y_1981`) &
-                        (`Q1-3_A~M_1979` == `Q1-3_A~M_1981`) ~ FALSE,
-                      is.na(`Q1-3_A~M_1981`) | is.na(`Q1-3_A~Y_1981`) ~ FALSE)) %>%
-  select(CASEID_1979,
+                      !is.na(month_1981) && (month_1979 != month_1981) ~ TRUE,
+                      !is.na(year_1981) && (year_1979 != year_1981) ~ TRUE,
+                      (year_1979 == year_1981) & (month_1979 == month_1981) ~ FALSE,
+                      is.na(month_1981) | is.na(year_1981) ~ FALSE)) %>%
+  select(id,
          dob_month,
          dob_year,
          dob_conflict)
 
+has_dob_conflict <- any(dob_tidy$dob_conflict, na.rm = TRUE)
+#+ dob-conflict-no, echo=FALSE, eval=!has_dob_conflict
+cat("All birth month and year recorded in 1979 and 1981 match.")
+#+ dob-conflict-yes, echo=has_dob_conflict, eval=has_dob_conflict
+cat("The birth record does not match for the following individuals.")
+dob_tidy %>%
+  filter(dob_conflict)
+
+
 #' ## Tidy the sex and race data
 #+ demog-tidy
 demog_tidy <- categories_qnames %>%
-  select(CASEID_1979,
-         SAMPLE_RACE_78SCRN,
-         SAMPLE_SEX_1979) %>%
-  rename(gender = SAMPLE_SEX_1979,
-         race = SAMPLE_RACE_78SCRN)
+  select(id = CASEID_1979,
+         race = SAMPLE_RACE_78SCRN,
+         gender = SAMPLE_SEX_1979)
 
 #' ## Tidy the grade completed in each year
 #+ demog-ed
 demog_education <- new_data_qnames %>%
-  as_tibble() %>%
   # in 2018, the variable's name is Q3-4_2018, instead of HGC_2018
   rename(HGC_2018 = `Q3-4_2018`) %>%
-  select(CASEID_1979,
-                starts_with("HGCREV"),
-                "HGC_2012",
-                "HGC_2014",
-                "HGC_2016",
-                "HGC_2018") %>%
-  pivot_longer(!CASEID_1979,
+  select(id = CASEID_1979,
+         starts_with("HGCREV"),
+         "HGC_2012",
+         "HGC_2014",
+         "HGC_2016",
+         "HGC_2018") %>%
+  pivot_longer(!id,
                names_to = "var",
                values_to = "grade") %>%
-  separate("var", c("var", "year"), sep = -4) %>%
+  separate("var", c("var", "year"), sep = "_") %>%
   filter(!is.na(grade)) %>%
   select(-var)
 
 #' ### Get the highest year completed
 #+ tidy-hgc
 highest_year <- demog_education %>%
-  group_by(CASEID_1979) %>%
+  group_by(id) %>%
   mutate(hgc_i = max(grade)) %>%
   filter(hgc_i == grade) %>%
   filter(year == first(year)) %>%
   rename(yr_hgc = year) %>%
-  select(CASEID_1979, yr_hgc, hgc_i) %>%
+  select(id, yr_hgc, hgc_i) %>%
   ungroup() %>%
   mutate(hgc = case_when(hgc_i == 0 ~ "NONE",
                          hgc_i == 1 ~ "1ST GRADE",
                          hgc_i == 2 ~ "2ND GRADE",
                          hgc_i == 3 ~ "3RD GRADE",
-                         hgc_i >= 4 & hgc_i <= 12 ~ paste0(hgc_i,"TH GRADE"),
+                         hgc_i >= 4 & hgc_i <= 12 ~ paste0(hgc_i, "TH GRADE"),
                          hgc_i == 13 ~ "1ST YEAR COL",
                          hgc_i == 14 ~ "2ND YEAR COL",
                          hgc_i == 15 ~ "3RD YEAR COL",
@@ -112,9 +125,8 @@ highest_year <- demog_education %>%
                          TRUE ~ paste0((hgc_i - 12), "TH YEAR COL")))
 
 #+ full-demog
-full_demographics <- full_join(dob_tidy, demog_tidy, by = "CASEID_1979") %>%
-  full_join(highest_year, by = "CASEID_1979") %>%
-  rename("id" = "CASEID_1979") %>%
+full_demographics <- full_join(dob_tidy, demog_tidy, by = "id") %>%
+  full_join(highest_year, by = "id") %>%
   mutate(age_1979 = 1979 - (dob_year + 1900))
 
 #+ tidy-hours
@@ -125,13 +137,13 @@ get_hour <- function(year) {
   if(year %in% year_A){
     temp <- new_data_qnames %>%
       select(CASEID_1979,
-                    starts_with("QES-52A") &
-                      ends_with(as.character(year)))}
+             starts_with("QES-52A") &
+             ends_with(as.character(year)))}
   else{
     temp <- new_data_qnames %>%
       select(CASEID_1979,
-                    starts_with("QES-52D") &
-                      ends_with(as.character(year)))}
+             starts_with("QES-52D") &
+             ends_with(as.character(year)))}
   temp %>%
     pivot_longer(!CASEID_1979,
                  names_to = "job",
@@ -149,8 +161,8 @@ hours_all <- map_dfr(years, get_hour)
 get_rate <- function(year) {
   new_data_qnames %>%
     select(CASEID_1979,
-                  starts_with("HRP") &
-                    ends_with(as.character(year))) %>%
+           starts_with("HRP") &
+              ends_with(as.character(year))) %>%
     pivot_longer(!CASEID_1979, names_to = "job", values_to = "rate_per_hour") %>%
     separate("job", c("job", "year"), sep = -4) %>%
     mutate(job = paste0("job_0", substr(job, 4, 4))) %>%
