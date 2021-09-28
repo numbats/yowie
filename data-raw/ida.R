@@ -1,3 +1,10 @@
+## ---- load-pkgs2
+library(kableExtra)
+library(janitor)
+library(tsibble)
+library(brolgar)
+library(patchwork)
+
 ## ---- age-table
 age_table <- full_demographics %>%
   group_by(age_1979) %>%

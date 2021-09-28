@@ -106,16 +106,16 @@ The National Longitudinal Survey of Youth (NLSY79) is a prominent open data sour
 \hypertarget{intro}{%
 \section{Introduction}\label{intro}}
 
-``Open data'' is data that is freely accessible, modifiable, and shareable by anyone for any purpose (Open Knowledge Foundation 2021). This type of data can be useful as example data in statistical textbooks and for research purposes. However, open data is often referred to as what we might call ``wild data'' because it requires substantial cleaning and tidying to tame it into textbook shape. Huebner, Vach, and Cessie (2016) emphasize that making the data cleaning process accountable and transparent is imperative and essential for the integrity of downstream statistical analyses and model building (Huebner et al. 2020).
+``Open data'' is data that is freely accessible, modifiable, and shareable by anyone for any purpose (Open Knowledge Foundation 2021). This type of data can be useful as example data in statistical textbooks and for research purposes. However, open data is often referred to as what we might call ``wild data'' because it requires substantial cleaning and tidying to tame it into textbook shape. Huebner Marianne, Vach, and Cessie (2016) emphasize that making the data cleaning process accountable and transparent is imperative and essential for the integrity of downstream statistical analyses and model building (M. Huebner et al. 2020).
 Data cleaning can be considered to be a part of what is called ``initial data analysis'' (IDA) (Chatfield 1985). In IDA one would also explore the data, especially to check if the data is consistent with assumptions required for modeling. This is also related to exploratory data analysis (EDA), coined by Tukey (1977) with a focus on learning from data. EDA can be considered to encompass IDA. Dasu and Johnson (2003) say that data cleaning and exploration, without naming it as IDA, is a difficult task and consumes 80\% of the data mining task.
 
-Despite it's importance, this IDA stage is often undervalued and neglected (Chatfield 1985). There are few research papers that document the data cleaning (Wickham 2014). Furthermore, the decisions made in this stage often go unreported in the sense that IDA is often performed in an unplanned and unstructured way and is only shared among restricted parties (Huebner et al. 2020).
+Despite it's importance, this IDA stage is often undervalued and neglected (Chatfield 1985). There are few research papers that document the data cleaning (Wickham 2014). Furthermore, the decisions made in this stage often go unreported in the sense that IDA is often performed in an unplanned and unstructured way and is only shared among restricted parties (M. Huebner et al. 2020).
 
 This paper demonstrates the steps of IDA, and documents the process, for a prominent open data source, National Longitudinal Survey of Youth 1979, henceforth referred to NLSY79. This data has been playing an important role in research in various disciplines, including but are not limited to economics, sociology, education, public policy, and public health for more than a quarter of the century (Pergamit et al. 2001). In addition, this is considered a carefully designed longitudinal survey with high retention rates, making it suitable for life course research (Pergamit et al. 2001; Cooksey 2017). According to Cooksey (2017), thousands of articles, and hundreds of book chapters and monographs have utilized this data. Moreover, the NLSY79 is considered the most widely used and most important cohort in the survey data (Pergamit et al. 2001).
 
 Singer and Willett (2003) used the wages and other variables of high school dropouts from the NLSY79 data as an example data set to illustrate longitudinal data modeling of wages on workforce experience, with covariates education and race. Our aim is to refresh this textbook data with data from 1994 through to the latest data reported in 2018. Here, we investigate the process of getting from the raw NLSY79 data to a textbook data set as similar as possible to that provided by Singer and Willett (2003). We should also note that race is a variable in the original data set, and for compatibility it is also provided with the refreshed data, for the purposes of studying racism, not race (Fullilove 1998),
 
-Our process of cleaning builds heavily on the tidyverse approach (H. Wickham, Averick, et al. 2019). The data is first organised into ``tidy data'' (Wickham 2014) and then further wrangled using the data pipeline and split-apply-combine approach (Wickham 2011). The resulting data is provided in a new R package called \texttt{yowie} which includes the code so that the process is reproducible, and could be used to further refresh the data as new records are made available in the NLSY79 database.
+Our process of cleaning builds heavily on the tidyverse approach (Wickham et al. 2019). The data is first organised into ``tidy data'' (Wickham 2014) and then further wrangled using the data pipeline and split-apply-combine approach (Wickham 2011). The resulting data is provided in a new R package called \texttt{yowie} which includes the code so that the process is reproducible, and could be used to further refresh the data as new records are made available in the NLSY79 database.
 
 This paper is structured in the following way. Section \ref{database} describes the NLSY79 data source. Section \ref{cleaning} presents the steps of cleaning the data, including getting and tidying the data from the NLSY79 and IDA to find and repair anomalies. Our final subset is compared the old textbook subset in Section \ref{compare}. Finally, Section \ref{summary} summarizes the contribution and makes recommendations for the NLSY79 data curators.
 
@@ -226,7 +226,7 @@ The raw data, \texttt{new\_data\_qnames}, is organised such that each row corres
 #>   [list output truncated]
 \end{verbatim}
 
-According to Wickham (2014), tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the \texttt{tidyverse} suite of packages (H. Wickham, Averick, et al. 2019), \texttt{tidyr} (H. Wickham 2020b) to pivot the data into long form, \texttt{dplyr} (H. Wickham, François, et al. 2020), and \texttt{stringr} (H. Wickham 2019) for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data.
+According to Wickham (2014), tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the \texttt{tidyverse} suite of packages (Wickham et al. 2019), \texttt{tidyr} (Wickham 2020b) to pivot the data into long form, \texttt{dplyr} (Wickham et al. 2020), and \texttt{stringr} (Wickham 2019) for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data.
 
 \hypertarget{tidydemog}{%
 \subsubsection{Tidying demographic variables}\label{tidydemog}}
@@ -277,7 +277,7 @@ The employment and demographic variables are then joined. We also filtered the d
 \hypertarget{ida}{%
 \subsection{Initial data analysis}\label{ida}}
 
-According to Huebner, Vach, and Cessie (2016), initial data analysis (IDA) is the step of inspecting and screening the data after being collected to ensure that the data is clean, valid, and ready to be deployed in the later formal statistical analysis. Moreover, Chatfield (1985) argues that the two main objectives of IDA are data description, which is to assess the structure and the quality of the data, and model formulation without any formal statistical inference.
+According to Huebner Marianne, Vach, and Cessie (2016), initial data analysis (IDA) is the step of inspecting and screening the data after being collected to ensure that the data is clean, valid, and ready to be deployed in the later formal statistical analysis. Moreover, Chatfield (1985) argues that the two main objectives of IDA are data description, which is to assess the structure and the quality of the data, and model formulation without any formal statistical inference.
 
 In this paper, we conduct an IDA or a preliminary data analysis to assess the consistency of the data with the cohort information that the NLSY provides. In addition, we also aim to find the anomaly in the wages values using this approach. We mainly use graphical summaries to do the IDA using \texttt{ggplot2} (Wickham 2016) and \texttt{brolgar} (Tierney, Cook, and Prvan 2020).
 
@@ -350,13 +350,13 @@ The anomalies are also found in the total hours of work, where some observations
 
 As part of the IDA, which is the model formulation, we build a robust linear regression model to treat the extreme values in the data. Robust linear regression yields an estimation robust to the influence of noise or contamination (Koller 2016). It also aims to detect the contamination by weighting each observation based on how ``well-behaved'' they are, known as robustness weight. Observations with lower robustness weight are suggested as an outlier by this method (Koller 2016).
 
-Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (H. Wickham 2020b) and \texttt{purrr} (Henry and Wickham 2020), respectively.
+Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (Wickham 2020b) and \texttt{purrr} (Henry and Wickham 2020), respectively.
 
 We build the model using the \texttt{rlm} function from \texttt{MASS} package (Venables and Ripley 2002). We set the \texttt{mean\_hourly\_wage} and \texttt{year} as the dependent and predictor, respectively. Furthermore, we use M-Estimation with Huber weighting, where the observation with a slight residual gets a weight of 1, while the larger the residual, the smaller the weight (less than 1) (UCLA: Statistical Consulting Group 2021). However, the challenging part of detecting the anomaly using the robustness weight is determining the weight threshold in which the observations are considered outliers. Moreover, it should be noted that not all the outliers are due to an error. Instead, it might be that one had reasonably increasing or decreasing wages in a particular period.
 
-To minimize the risk of mistakenly identifying an outlier as an ``erroneous outlier'', we simulate some thresholds and study how they affect the data. We find that 0.12 is the most reasonable value to be the threshold to minimize that drawback's risk because it still captures the sensible spikes in the data. In other words, we keep maintaining the natural variability of the wages while minimizing anomalies because of the error in the data recording. After deciding the threshold, we impute the observations whose weights are less than 0.12 with the models' predicted value. We then flag those observations in a new variable called \texttt{is\_pred}.
+To minimize the risk of mistakenly identifying an outlier as an ``erroneous outlier,'' we simulate some thresholds and study how they affect the data. We find that 0.12 is the most reasonable value to be the threshold to minimize that drawback's risk because it still captures the sensible spikes in the data. In other words, we keep maintaining the natural variability of the wages while minimizing anomalies because of the error in the data recording. After deciding the threshold, we impute the observations whose weights are less than 0.12 with the models' predicted value. We then flag those observations in a new variable called \texttt{is\_pred}.
 
-Figure \ref{fig:compare-plot} shows the mean hourly wage before and after the extreme values are replaced. It implies that the fluctuation can still be observed in the data after the treatment. However, the large spikes, which are considered ``erroneous outliers'', are already eliminated from the data. Hence, the model produces a data set with a more reasonable degree of fluctuation.
+Figure \ref{fig:compare-plot} shows the mean hourly wage before and after the extreme values are replaced. It implies that the fluctuation can still be observed in the data after the treatment. However, the large spikes, which are considered ``erroneous outliers,'' are already eliminated from the data. Hence, the model produces a data set with a more reasonable degree of fluctuation.
 
 \begin{figure}
 
@@ -387,11 +387,11 @@ Figure \ref{fig:flow-chart} summarizes the steps taken to go from raw to input t
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.85\linewidth]{/Users/deeamaliah/Documents/summer_project/summer-wages-refresh/paper/figures/flowchart} 
+{\centering \includegraphics[width=0.85\linewidth]{/Users/etan0038/yowie/paper/figures/flowchart} 
 
 }
 
-\caption{The stages of data cleaning from the raw data to get three datasets contained yowie. \# of individuals means the number of respondents included in each stage, while \# of observations means the number of rows in the data. The color represented the stage of data cleaning in statistical value chain (van der Loo \& de Jonge, 2018). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
+\caption{The stages of data cleaning from the raw data to get three datasets contained yowie. \# of individuals means the number of respondents included in each stage, while \# of observations means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (van der Loo \& de Jonge, 2018). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
 \end{figure}
 
 \hypertarget{compare}{%
@@ -408,7 +408,7 @@ Now is the time to see how close we have come to the original textbook data. The
 \caption{Comparison of original textbook example (A) with refreshed data (B). The original data was inflation-adjusted to 1990 prices and the individual's time of collection was converted to a length of experience in the workforce, which make it difficult to precisely compare the two sets.}\label{fig:plotting-sw-do}
 \end{figure}
 
-There are two aspects of the original data that make a direct comparison difficult. The time variable provided is ``experience in the workforce''. It is not clear how this is calculated. One would expect that there is a record of the day the individual first started a job, and this is used to adjust the year of collection. We have not been able to find this information in the database. Secondly, wages were inflation-adjusted to 1990 prices, which is not done for the refreshed data.
+There are two aspects of the original data that make a direct comparison difficult. The time variable provided is ``experience in the workforce.'' It is not clear how this is calculated. One would expect that there is a record of the day the individual first started a job, and this is used to adjust the year of collection. We have not been able to find this information in the database. Secondly, wages were inflation-adjusted to 1990 prices, which is not done for the refreshed data.
 
 Figure \ref{fig:plotting-sw-do} shows a comparison of the two sets. (A direct ID matching is not possible.) There are 888 individuals in the original and 1,188 individuals in the refreshed data. This suggests some individuals were removed in the original data.
 In addition, in the original set the racial break down was 246 black, 204 hispanic and 438 white, while in the refreshed data there are 346 black, 219 hispanic and 623 white, so the proportions have not been exactly reproduced. On education, in the refreshed data there are very few individuals with less than a 12th grade education, which varies from the original. In the original data there were 366 individuals with up to 8th grade and 522 9th-12th grade, as compared to 967 with 12th grade in the refreshed data.
@@ -429,7 +429,7 @@ Various difficulties were encountered in trying to refresh the data, which inclu
 \item
   determining which records should be downloaded from the database.
 \item
-  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour, and there was no information on how these were handled in the original data.
+  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour. Further for original data, wages greater than 75 dollars were set to be missing. However, in recent context, this value might be too low to be set as the maximum threshold.
 \item
   there is no explicit variable in the database recording high school dropout, which means we needed to compare date of 12th grade with the individual's age.
 \item
@@ -445,18 +445,18 @@ Finally, for the data providers we recommend that a validation system with clear
 
 We would like to thank Aarathy Babu for the insight and discussion during the writing of this paper.
 
-The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{rstudio} using these packages: \texttt{tidyverse} (H. Wickham, Averick, et al. 2019), \texttt{ggplot2} (Wickham 2016), \texttt{dplyr} (H. Wickham, François, et al. 2020), \texttt{readr} (H. Wickham and Hester 2020), \texttt{tidyr} (H. Wickham 2020b), \texttt{stringr} (H. Wickham 2019), \texttt{purrr} (Henry and Wickham 2020), \texttt{broom} (Robinson, Hayes, and Couch 2021), \texttt{brolgar} (Tierney, Cook, and Prvan 2020), \texttt{patchwork} (Pedersen 2020), \texttt{kableExtra} (Zhu 2019), \texttt{MASS} (Venables and Ripley 2002), \texttt{janitor} (Firke 2020), \texttt{DiagrammeR} (Iannone 2020), \texttt{rsvg} (Ooms 2020), \texttt{webshot} (Chang 2019), \texttt{mgcv} (Wood 2003), \texttt{tsibble} (Wang, Cook, and Hyndman 2020), and \texttt{modelr} (H. Wickham 2020a). The paper are generated using \texttt{knitr} (Xie 2014), \texttt{rmarkdown} (Xie, Dervieux, and Riederer 2020), and \texttt{rticles} (Allaire et al. 2021).
+The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{rstudio} using these packages: \texttt{tidyverse} (Wickham et al. 2019), \texttt{ggplot2} (Wickham 2016), \texttt{dplyr} (Wickham et al. 2020), \texttt{readr} (Wickham and Hester 2020), \texttt{tidyr} (Wickham 2020b), \texttt{stringr} (Wickham 2019), \texttt{purrr} (Henry and Wickham 2020), \texttt{broom} (Robinson, Hayes, and Couch 2021), \texttt{brolgar} (Tierney, Cook, and Prvan 2020), \texttt{patchwork} (Pedersen 2020), \texttt{kableExtra} (Zhu 2019), \texttt{MASS} (Venables and Ripley 2002), \texttt{janitor} (Firke 2020), \texttt{DiagrammeR} (Iannone 2020), \texttt{rsvg} (Ooms 2020), \texttt{webshot} (Chang 2019), \texttt{mgcv} (Wood 2003), \texttt{tsibble} (Wang, Cook, and Hyndman 2020), and \texttt{modelr} (Wickham 2020a). The paper are generated using \texttt{knitr} (Xie 2014), \texttt{rmarkdown} (Xie, Dervieux, and Riederer 2020), and \texttt{rticles} (Allaire et al. 2021).
 
 \hypertarget{supplementary-materials}{%
 \section{Supplementary Materials}\label{supplementary-materials}}
 
 \begin{itemize}
 \item
-  \textbf{Codes} : R script to reproduce data tidying and cleaning are available in this \href{https://github.com/numbats/yowie/blob/master/data-raw/data_preprocessing.R}{Github Repository}.
+  \textbf{Codes} : R script to reproduce data tidying and cleaning are available in this \href{https://numbats.github.io/yowie/articles/process-data.html}{page}.
 \item
   \textbf{R Package \texttt{yowie}}:\texttt{yowie} is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed \href{https://github.com/numbats/yowie}{here}.
 \item
-  \textbf{shiny app}: An web interactive \texttt{shiny} app to run a simulation to customize the weight threshold. This app could be accessed \href{https://github.com/numbats/wages-refresh/tree/main/app}{here}.
+  \textbf{shiny app}: An web interactive \texttt{shiny} app to customize the weight threshold. This app could be accessed \href{https://github.com/numbats/wages-refresh/tree/main/app}{here}.
 \end{itemize}
 
 \hypertarget{references}{%
@@ -464,20 +464,21 @@ The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{
 \addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
 \leavevmode\hypertarget{ref-rticles}{}%
-Allaire, JJ, Yihui Xie, R Foundation, Hadley Wickham, Journal of Statistical Software, Ramnath Vaidyanathan, Association for Computing Machinery, et al. 2021. \emph{Rticles: Article Formats for R Markdown}. \url{https://CRAN.R-project.org/package=rticles}.
+Allaire, JJ, Yihui Xie, R Foundation, Hadley Wickham, Journal of Statistical Software, Ramnath Vaidyanathan, Association for Computing Machinery, et al. 2021. \emph{Rticles: Article Formats for r Markdown}. \url{https://CRAN.R-project.org/package=rticles}.
 
 \leavevmode\hypertarget{ref-webshot}{}%
 Chang, Winston. 2019. \emph{Webshot: Take Screenshots of Web Pages}. \url{https://CRAN.R-project.org/package=webshot}.
 
 \leavevmode\hypertarget{ref-shiny}{}%
-Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2020. \emph{Shiny: Web Application Framework for R}. \url{https://CRAN.R-project.org/package=shiny}.
+Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2020. \emph{Shiny: Web Application Framework for r}. \url{https://CRAN.R-project.org/package=shiny}.
 
 \leavevmode\hypertarget{ref-Chatfield1985TIEo}{}%
-Chatfield, C. 1985. ``The Initial Examination of Data.'' \emph{Journal of the Royal Statistical Society. Series A. General} 148 (3): 214--53.
+Chatfield, C. 1985. {``The Initial Examination of Data.''} \emph{Journal of the Royal Statistical Society. Series A. General} 148 (3): 214--53.
 
 \leavevmode\hypertarget{ref-eliznlsy}{}%
-Cooksey, Elizabeth C. 2017. ``Using the National Longitudinal Surveys of Youth (Nlsy) to Conduct Life Course Analyses.'' In \emph{Handbook of Life Course Health Development}, edited by Richard M. Lerner Neal Halfon Christoper B. Forrest, 561--77. Cham: Springer. \url{https://doi.org/https://doi.org/10.1007/978-3-319-47143-3_23}.
+Cooksey, Elizabeth C. 2017. {``Using the National Longitudinal Surveys of Youth (NLSY) to Conduct Life Course Analyses.''} In \emph{Handbook of Life Course Health Development}, edited by Richard M. Lerner Neal Halfon Christoper B. Forrest, 561--77. Cham: Springer. https://doi.org/\url{https://doi.org/10.1007/978-3-319-47143-3_23}.
 
 \leavevmode\hypertarget{ref-DasuTamraparni2003Edma}{}%
 Dasu, Tamraparni, and Theodore Johnson. 2003. \emph{Exploratory Data Mining and Data Cleaning}. Wiley Series in Probability and Statistics. Hoboken: WILEY.
@@ -486,34 +487,34 @@ Dasu, Tamraparni, and Theodore Johnson. 2003. \emph{Exploratory Data Mining and 
 Firke, Sam. 2020. \emph{Janitor: Simple Tools for Examining and Cleaning Dirty Data}. \url{https://CRAN.R-project.org/package=janitor}.
 
 \leavevmode\hypertarget{ref-racismnotrace}{}%
-Fullilove, M. T. 1998. ``Comment: Abandoning "Race" as a Variable in Public Health Research--an Idea Whose Time Has Come.'' \emph{American Journal of Public Health} 88 (9): 1297--8.
+Fullilove, M. T. 1998. {``Comment: Abandoning "Race" as a Variable in Public Health Research--an Idea Whose Time Has Come.''} \emph{American Journal of Public Health} 88 (9): 1297--98.
 
 \leavevmode\hypertarget{ref-purrr}{}%
 Henry, Lionel, and Hadley Wickham. 2020. \emph{Purrr: Functional Programming Tools}. \url{https://CRAN.R-project.org/package=purrr}.
 
 \leavevmode\hypertarget{ref-HuebnerMariannePhD2016Asat}{}%
-Huebner, Marianne, Werner Vach, and Saskia le Cessie. 2016. ``A Systematic Approach to Initial Data Analysis Is Good Research Practice.'' \emph{The Journal of Thoracic and Cardiovascular Surgery} 151 (1): 25--27.
+Huebner, Marianne, Werner Vach, and Saskia le Cessie. 2016. {``A Systematic Approach to Initial Data Analysis Is Good Research Practice.''} \emph{The Journal of Thoracic and Cardiovascular Surgery} 151 (1): 25--27.
 
 \leavevmode\hypertarget{ref-HuebnerMarianne2020Haar}{}%
-Huebner, Marianne, Werner Vach, Saskia le Cessie, Carsten Oliver Schmidt, and Lara Lusa. 2020. ``Hidden Analyses: A Review of Reporting Practice and Recommendations for More Transparent Reporting of Initial Data Analyses.'' \emph{BMC Medical Research Methodology} 20 (1): 61--61.
+Huebner, Marianne, Werner Vach, Saskia le Cessie, Carsten Oliver Schmidt, and Lara Lusa. 2020. {``Hidden Analyses: A Review of Reporting Practice and Recommendations for More Transparent Reporting of Initial Data Analyses.''} \emph{BMC Medical Research Methodology} 20 (1): 61--61.
 
 \leavevmode\hypertarget{ref-DiagrammeR}{}%
 Iannone, Richard. 2020. \emph{DiagrammeR: Graph/Network Visualization}. \url{https://CRAN.R-project.org/package=DiagrammeR}.
 
 \leavevmode\hypertarget{ref-KollerManuel2016rARP}{}%
-Koller, Manuel. 2016. ``Robustlmm: An R Package for Robust Estimation of Linear Mixed-Effects Models.'' \emph{Journal of Statistical Software} 75 (6): 1--24.
+Koller, Manuel. 2016. {``Robustlmm: An r Package for Robust Estimation of Linear Mixed-Effects Models.''} \emph{Journal of Statistical Software} 75 (6): 1--24.
 
 \leavevmode\hypertarget{ref-rsvg}{}%
-Ooms, Jeroen. 2020. \emph{Rsvg: Render Svg Images into Pdf, Png, Postscript, or Bitmap Arrays}. \url{https://CRAN.R-project.org/package=rsvg}.
+Ooms, Jeroen. 2020. \emph{Rsvg: Render SVG Images into PDF, PNG, PostScript, or Bitmap Arrays}. \url{https://CRAN.R-project.org/package=rsvg}.
 
 \leavevmode\hypertarget{ref-opendata}{}%
-Open Knowledge Foundation. 2021. ``Open Definition. Defining Open in Open Data, Open Content, and Open Knowledge.'' 2021. \url{http://opendefinition.org/od/2.1/en/}.
+Open Knowledge Foundation. 2021. {``Open Definition. Defining Open in Open Data, Open Content, and Open Knowledge.''} 2021. \url{http://opendefinition.org/od/2.1/en/}.
 
 \leavevmode\hypertarget{ref-patchwork}{}%
 Pedersen, Thomas Lin. 2020. \emph{Patchwork: The Composer of Plots}. \url{https://CRAN.R-project.org/package=patchwork}.
 
 \leavevmode\hypertarget{ref-MichaelRPergamit2001DWTN}{}%
-Pergamit, Michael R., Charles R. Pierret, Donna S. Rothstein, and Jonathan R. Veum. 2001. ``Data Watch: The National Longitudinal Surveys.'' \emph{The Journal of Economic Perspectives} 15 (2): 239--53.
+Pergamit, Michael R., Charles R. Pierret, Donna S. Rothstein, and Jonathan R. Veum. 2001. {``Data Watch: The National Longitudinal Surveys.''} \emph{The Journal of Economic Perspectives} 15 (2): 239--53.
 
 \leavevmode\hypertarget{ref-R}{}%
 R Core Team. 2020. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
@@ -525,31 +526,31 @@ Robinson, David, Alex Hayes, and Simon Couch. 2021. \emph{Broom: Convert Statist
 Singer, Judith D, and John B Willett. 2003. \emph{Applied Longitudinal Data Analysis: Modeling Change and Event Occurrence}. Oxford u.a: Oxford Univ. Pr.
 
 \leavevmode\hypertarget{ref-nlsy79}{}%
-The U.S. Bureau of Labor Statistics. n.d. ``National Longitudinal Survey of Youth 1979.'' Available at \url{https://www.nlsinfo.org/content/cohorts/nlsy79} (2021/25/02).
+The U.S. Bureau of Labor Statistics. n.d. {``National Longitudinal Survey of Youth 1979.''} Available at \url{https://www.nlsinfo.org/content/cohorts/nlsy79} (2021/25/02).
 
 \leavevmode\hypertarget{ref-brolgar}{}%
-Tierney, Nicholas, Di Cook, and Tania Prvan. 2020. \emph{Brolgar: BRowse over Longitudinal Data Graphically and Analytically in R}. \url{https://github.com/njtierney/brolgar}.
+Tierney, Nicholas, Di Cook, and Tania Prvan. 2020. \emph{Brolgar: BRowse over Longitudinal Data Graphically and Analytically in r}. \url{https://github.com/njtierney/brolgar}.
 
 \leavevmode\hypertarget{ref-tukey}{}%
 Tukey, John W. (John Wilder). 1977. \emph{Exploratory Data Analysis}. Addison-Wesley Series in Behavioral Science. Reading, Mass.: Addison-Wesley Pub. Co.
 
 \leavevmode\hypertarget{ref-rlm}{}%
-UCLA: Statistical Consulting Group. 2021. ``Robust Regression \textbar{} R Data Analysis Examples.'' February 2021. \url{https://stats.idre.ucla.edu/r/dae/robust-regression/}.
+UCLA: Statistical Consulting Group. 2021. {``Robust Regression \textbar{} r Data Analysis Examples.''} February 2021. \url{https://stats.idre.ucla.edu/r/dae/robust-regression/}.
 
 \leavevmode\hypertarget{ref-LooMarkvander2018Sdcw}{}%
-van der Loo, Mark, and Edwin de Jonge. 2018. \emph{Statistical Data Cleaning with Applications in R}.
+van der Loo, Mark, and Edwin de Jonge. 2018. \emph{Statistical Data Cleaning with Applications in r}.
 
 \leavevmode\hypertarget{ref-mass}{}%
-Venables, W. N., and B. D. Ripley. 2002. \emph{Modern Applied Statistics with S}. Fourth. New York: Springer. \url{http://www.stats.ox.ac.uk/pub/MASS4}.
+Venables, W. N., and B. D. Ripley. 2002. \emph{Modern Applied Statistics with s}. Fourth. New York: Springer. \url{http://www.stats.ox.ac.uk/pub/MASS4}.
 
 \leavevmode\hypertarget{ref-tsibble}{}%
-Wang, Earo, Dianne Cook, and Rob J Hyndman. 2020. ``A New Tidy Data Structure to Support Exploration and Modeling of Temporal Data.'' \emph{Journal of Computational and Graphical Statistics} 29 (3): 466--78. \url{https://doi.org/10.1080/10618600.2019.1695624}.
+Wang, Earo, Dianne Cook, and Rob J Hyndman. 2020. {``A New Tidy Data Structure to Support Exploration and Modeling of Temporal Data.''} \emph{Journal of Computational and Graphical Statistics} 29 (3): 466--78. \url{https://doi.org/10.1080/10618600.2019.1695624}.
 
 \leavevmode\hypertarget{ref-plyr}{}%
-Wickham, Hadley. 2011. ``The Split-Apply-Combine Strategy for Data Analysis.'' \emph{Journal of Statistical Software, Articles} 40 (1): 1--29. \url{https://doi.org/10.18637/jss.v040.i01}.
+Wickham, Hadley. 2011. {``The Split-Apply-Combine Strategy for Data Analysis.''} \emph{Journal of Statistical Software, Articles} 40 (1): 1--29. \url{https://doi.org/10.18637/jss.v040.i01}.
 
 \leavevmode\hypertarget{ref-WickhamHadley2014TD}{}%
----------. 2014. ``Tidy Data.'' \emph{Journal of Statistical Software} 59 (10): 1--23.
+---------. 2014. {``Tidy Data.''} \emph{Journal of Statistical Software} 59 (10): 1--23.
 
 \leavevmode\hypertarget{ref-ggplot2}{}%
 ---------. 2016. \emph{Ggplot2: Elegant Graphics for Data Analysis}. Springer-Verlag New York. \url{https://ggplot2.tidyverse.org}.
@@ -564,7 +565,7 @@ Wickham, Hadley. 2011. ``The Split-Apply-Combine Strategy for Data Analysis.'' \
 ---------. 2020b. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
 
 \leavevmode\hypertarget{ref-tidyverse}{}%
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. ``Welcome to the tidyverse.'' \emph{Journal of Open Source Software} 4 (43): 1686. \url{https://doi.org/10.21105/joss.01686}.
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. {``Welcome to the {tidyverse}.''} \emph{Journal of Open Source Software} 4 (43): 1686. \url{https://doi.org/10.21105/joss.01686}.
 
 \leavevmode\hypertarget{ref-dplyr}{}%
 Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. \emph{Dplyr: A Grammar of Data Manipulation}. \url{https://CRAN.R-project.org/package=dplyr}.
@@ -573,16 +574,18 @@ Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. \emph
 Wickham, Hadley, and Jim Hester. 2020. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
 
 \leavevmode\hypertarget{ref-mgcv}{}%
-Wood, S. N. 2003. ``Thin-Plate Regression Splines.'' \emph{Journal of the Royal Statistical Society (B)} 65 (1): 95--114.
+Wood, S. N. 2003. {``Thin-Plate Regression Splines.''} \emph{Journal of the Royal Statistical Society (B)} 65 (1): 95--114.
 
 \leavevmode\hypertarget{ref-knitr}{}%
-Xie, Yihui. 2014. ``Knitr: A Comprehensive Tool for Reproducible Research in R.'' In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.
+Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R}.''} In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.
 
 \leavevmode\hypertarget{ref-rmarkdown}{}%
 Xie, Yihui, Christophe Dervieux, and Emily Riederer. 2020. \emph{R Markdown Cookbook}. Boca Raton, Florida: Chapman; Hall/CRC. \url{https://bookdown.org/yihui/rmarkdown-cookbook}.
 
 \leavevmode\hypertarget{ref-kableExtra}{}%
-Zhu, Hao. 2019. \emph{KableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}. \url{https://CRAN.R-project.org/package=kableExtra}.
+Zhu, Hao. 2019. \emph{kableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}. \url{https://CRAN.R-project.org/package=kableExtra}.
+
+\end{CSLReferences}
 
 
 \bibliographystyle{Chicago}

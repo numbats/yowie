@@ -4,10 +4,8 @@
 library(tidyverse)
 select <- dplyr::select
 
-## ---- read-data
+## ---- raw-data
 source(here::here("data-raw/NLSY79/NLSY79.R"))
-
-
 
 ## ---- untidy-data
 options(width=70)

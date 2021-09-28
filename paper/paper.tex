@@ -397,11 +397,11 @@ Figure \ref{fig:flow-chart} summarizes the steps taken to go from raw to input t
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.85\linewidth]{/Users/etan0038/Dropbox/repo/summer-wages-refresh/paper/figures/flowchart} 
+{\centering \includegraphics[width=0.85\linewidth]{/Users/etan0038/yowie/paper/figures/flowchart} 
 
 }
 
-\caption{The stages of data cleaning from the raw data to get three datasets contained yowie. \# of individuals means the number of respondents included in each stage, while \# of observations means the number of rows in the data. The color represented the stage of data cleaning in statistical value chain (van der Loo \& de Jonge, 2018). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
+\caption{The stages of data cleaning from the raw data to get three datasets contained yowie. \# of individuals means the number of respondents included in each stage, while \# of observations means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (van der Loo \& de Jonge, 2018). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
 \end{figure}
 
 \hypertarget{compare}{%
@@ -439,7 +439,7 @@ Various difficulties were encountered in trying to refresh the data, which inclu
 \item
   determining which records should be downloaded from the database.
 \item
-  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour, and there was no information on how these were handled in the original data.
+  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour. Further for original data, wages greater than 75 dollars were set to be missing. However, in recent context, this value might be too low to be set as the maximum threshold.
 \item
   there is no explicit variable in the database recording high school dropout, which means we needed to compare date of 12th grade with the individual's age.
 \item
@@ -462,11 +462,11 @@ The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{
 
 \begin{itemize}
 \item
-  \textbf{Codes} : R script to reproduce data tidying and cleaning are available in this \href{https://github.com/numbats/yowie/blob/master/data-raw/data_preprocessing.R}{Github Repository}.
+  \textbf{Codes} : R script to reproduce data tidying and cleaning are available in this \href{https://numbats.github.io/yowie/articles/process-data.html}{page}.
 \item
   \textbf{R Package \texttt{yowie}}:\texttt{yowie} is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed \href{https://github.com/numbats/yowie}{here}.
 \item
-  \textbf{shiny app}: An web interactive \texttt{shiny} app to run a simulation to customize the weight threshold. This app could be accessed \href{https://github.com/numbats/wages-refresh/tree/main/app}{here}.
+  \textbf{shiny app}: An web interactive \texttt{shiny} app to customize the weight threshold. This app could be accessed \href{https://github.com/numbats/wages-refresh/tree/main/app}{here}.
 \end{itemize}
 
 \hypertarget{references}{%

@@ -64,7 +64,7 @@ read_chunk(here::here("data-raw/ida.R"))
 read_chunk(here::here("data-raw/eda.R"))
 ```
 
-```{r load-pkgs}
+```{r ref.label=c("load-pkgs", "load-pkgs2"), cache = FALSE}
 ```
 
 ```{r theme, eval = FALSE}
@@ -179,7 +179,7 @@ The downloaded data set comes as a zip file, containing the following set of fil
 
 The raw data, `new_data_qnames`, is organised such that each row corresponds to an individual. As respondents can have multiple jobs at specific years, the column names, such as `HRP1_1979`, `HRP2_1979`, `HRP1_1980` and `HRP2_1980`, contain the information about the job number up to 5 (`HRP1` = job 1, `HRP2` = job 2) and the year. The raw data consequently has a large number of columns (686 to be specific). The values in the cell under the variables that begin with `HRP` correspond to the hourly wage in dollars. A glimpse of this data output is shown below.
 
-```{r untidy-data, fig.cap="The structure of the NLSY79 raw data on wages for up to five jobs in any year."}
+```{r untidy-data}
 ```
 
 According to @WickhamHadley2014TD, tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the `tidyverse` suite of packages [@tidyverse], `tidyr` [@tidyr] to pivot the data into long form, `dplyr` [@dplyr], and `stringr` [@stringr] for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data. 
@@ -201,6 +201,8 @@ Age in 1979 are derived from year and month of birth variables in the raw data. 
 For `gender` and `race`, we only rename the column names. It is worth noting that using these two variable needs special attention. Gender, as reported in the data, only has two categories, which is recognised today as inadequate. Gender is not binary. Further, race is as reported in the database. When doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.
 
 ```{r demog-tidy}
+```
+```{r demog-ed}
 ```
 
 The next step is tidying the `highest grade completed` variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018. Thus, we just use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.  

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   comment = "#>"
 )
-fn <- here::here("data-raw/data-valid.R")
-knitr::read_chunk(fn)
+rc <- knitr::read_chunk
+rc(here::here("data-raw/data-valid.R"))
 ```
 
