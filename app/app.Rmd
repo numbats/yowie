@@ -1,0 +1,190 @@
+---
+title: "Customize Your Threshold"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(shiny)
+library(shinyWidgets)
+```
+
+```{r data}
+wages_hs <- readRDS(here::here("app/wages_hs.rds")) %>%
+    dplyr::select(-`X1.x`, -`X1.y`)
+```
+
+
+Inputs {.sidebar}
+-----------------------------------------------------------------------
+<br/>
+
+<style>
+div.blue { background-color:#FADBD8; border-radius: 10px; padding: 10px;}
+</style>
+<div class = "blue">
+
+```{r}
+p(icon("info-circle", lib = "font-awesome"), strong("About"))
+```
+
+The wages data in `yowie` package uses the weight of robust linear model to detect anomalies and imputes those anomalies with its fitted values. The threshold of weight used is 0.12 to maintain the natural variability of the data. Here, you can customize your own threshold.
+
+</div>
+
+
+<br/>
+
+```{r}
+sliderInput("th", "Threshold:",
+            min = 0.01,
+            max = 1,
+            value = 5)
+```
+
+
+<br/>
+
+
+Row {data-height=400}
+-------------------------------------
+   
+### Spaghetti plots
+
+```{r}
+
+thres_data_all <- reactive({
+  temp_data <- wages_hs %>%
+    mutate(wages_rlm = ifelse(w < input$th  & .fitted >= 0, .fitted,
+                                      mean_hourly_wage)) %>%
+    mutate(is_pred = ifelse(w < input$th & .fitted >= 0, TRUE, FALSE))
+
+  wages_compare <- temp_data %>%
+    select(id, year, mean_hourly_wage, wages_rlm) %>%
+    rename(original = mean_hourly_wage,
+           imputed = wages_rlm) %>%
+    pivot_longer(c(-id, -year), names_to = "type", values_to = "wages") %>%
+    mutate(type = factor(type, levels = c("original", "imputed")))
+  })
+
+renderPlot({
+  ggplot(thres_data_all()) +
+    geom_line(aes(x = year,
+                  y = wages,
+                  group = id),
+              alpha = 0.1) +
+    theme_bw() +
+    facet_wrap(~type, scales = "free_y") +
+    theme(strip.text = element_text(size = 12))
+  })
+```   
+    
+### Summary Statistics
+
+```{r}
+max_ori <- max(wages_hs$mean_hourly_wage)
+min_ori <- round(min(wages_hs$mean_hourly_wage), 2)
+med_ori <- round(median(wages_hs$mean_hourly_wage), 2)
+mean_ori <- round(mean(wages_hs$mean_hourly_wage), 2)
+```
+
+
+```{r}
+pred <- reactive({
+  temp_data <- wages_hs %>%
+    mutate(wages_rlm = ifelse(w < input$th  & .fitted >= 0, .fitted,
+                                      mean_hourly_wage)) %>%
+    mutate(is_pred = ifelse(w < input$th & .fitted >= 0, TRUE, FALSE))
+  })
+```
+
+<style>
+div.blue { background-color:#FADBD8; border-radius: 10px; padding: 10px;}
+</style>
+<div class = "blue">
+
+```{r}
+p(icon("info-circle", lib = "font-awesome"), "Summary statistics of wages in imputed data")
+renderText({paste0("Minimum = ", round(min(pred()$wages_rlm), 2), " (Original = 0.01)")})
+renderText({paste0("Median = ", round(median(pred()$wages_rlm), 2), " (Original = 7.2)")})
+renderText({paste0("Mean = ", round(mean(pred()$wages_rlm), 2), " (Original = 11.87)")})
+renderText({paste0("Maximum = ", round(max(pred()$wages_rlm), 2), " (Original = 33400)")})
+```
+
+</div>
+
+
+### Box
+
+```{r}
+renderValueBox({
+  n_pred <- round(nrow(filter(pred(), is_pred == TRUE))/nrow(pred())*100,2)
+  valueBox(
+    value = n_pred,
+    caption = "percentage of imputed observations",
+    icon = "fa-area-chart"
+  )
+})
+
+```
+
+Row {data-height=650}
+-------------------------------------
+
+### Individual plots
+
+```{r}
+actionButton("resample", "Click here to sample individuals to display")
+```
+
+
+```{r}
+
+compare_data <- eventReactive(input$resample, {
+  sample_id <- sample(unique(wages_hs$id), 16)
+  sample <- subset(wages_hs, id %in% sample_id)
+})
+
+thres_data <- reactive({
+  temp_data <- compare_data() %>%
+    mutate(wages_rlm = ifelse(w < input$th  & .fitted >= 0, .fitted,
+                                      mean_hourly_wage)) %>%
+    mutate(is_pred = ifelse(w < input$th & .fitted >= 0, TRUE, FALSE))
+
+  wages_compare <- temp_data %>%
+    select(id, year, mean_hourly_wage, wages_rlm) %>%
+    rename(original = mean_hourly_wage,
+           imputed = wages_rlm) %>%
+    pivot_longer(c(-id, -year), names_to = "type", values_to = "wages") %>%
+    mutate(type = factor(type, levels = c("original", "imputed")))
+  })
+
+renderPlot({
+  ggplot(thres_data()) +
+    geom_line(aes(x = year,
+                  y = wages,
+                  colour = type,
+                  linetype = type),
+              alpha = 1,
+              size = 1) +
+    geom_point(aes(x = year,
+                   y = wages,
+                   colour = type),
+               alpha = 0.5,
+               size = 1) +
+    scale_color_manual(values = c("#229954", "#DC7633")) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 10, size = 5),
+          legend.position = "bottom",
+          legend.text = element_text(size = 12),
+          legend.key.size = unit(6,"line")) +
+    facet_wrap(~id, scales = "free_y")
+  })
+
+```

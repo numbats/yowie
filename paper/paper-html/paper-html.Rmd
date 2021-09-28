@@ -1,0 +1,50 @@
+---
+title: "The Journey from Wild to Textbook Data: A Case Study from the National Longitudinal Survey of Youth"
+author:
+  - name: Dewi Amaliah
+    thanks: ""
+    department: Department of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: dama0007@student.monash.edu
+  - name: Dianne Cook
+    department: Department of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: dicook@monash.edu
+  - name: Emi Tanaka
+    department: Department of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: emi.tanaka@monash.edu
+  - name: Kate Hyde
+    thanks: ""
+    department: Department of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: ""
+  - name: Nicholas Tierney
+    thanks: ""
+    department: ""
+    affiliation: ""
+    location: ""
+    email: ""
+bibliography: ../references.bib
+biblio-style: unsrt
+keyword: Data cleaning; Data tidying; Longitudinal data; NLSY79; Open data; Initial data analysis; Outlier detection; Robust linear regression
+abstract: >
+  NSLY79 is a prominent open data source that has been an important support for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the original data to these subsets is never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database. Ultimately, the goal is to provide the resources so that refreshing data subsets can be done on a regular basis, especially when updates are made to the database. Thus, this paper demonstrates the process of initial data analysis (IDA) -- tidying, cleaning, and documenting the process -- to make data available for text book examples or research. A brief exploratory analysis of the resulting data is also conducted. Three new data sets, and the code to produce them are provided in an accompanying open source R package, called `yowie`. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks, and providing more convenient samples of the data to potential users. 
+output: 
+  bookdown::html_document2:
+    theme: paper
+---
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(dev = "png", fig.ext = "png")
+```
+
+
+```{r, child = "../paper.Rmd"}
+```

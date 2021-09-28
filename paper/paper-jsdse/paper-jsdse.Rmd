@@ -1,0 +1,59 @@
+---
+authors:
+  - name: Dewi Amaliah
+    thanks: "Corresponding author, dlamaleeah@gmail.com"
+    department: Dept of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: dlamaleeah@gmail.com
+  - name: Dianne Cook
+    department: Dept of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: dicook@monash.edu
+  - name: Emi Tanaka
+    department: Dept of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: emi.tanaka@monash.edu
+  - name: Kate Hyde
+    thanks: ""
+    department: Dept of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: ""
+  - name: Nicholas Tierney
+    thanks: ""
+    department: Telethon Kids Institute
+    affiliation: Perth, WA
+    location: "Perth, WA"
+    email: ""
+bibliography: ../references.bib
+biblio-style: unsrt
+#preamble: >
+output: 
+  bookdown::pdf_document2:
+    template: TAS-template-for-rmd.tex
+    keep_tex: true
+date: "`r Sys.Date()`"
+always_allow_html: true
+---
+
+
+```{r, include = FALSE}
+paper <- here::here("paper/paper.Rmd")
+meta <- rmarkdown::yaml_front_matter(paper)
+```
+
+---
+title: "`r meta$title`"
+abstract: >
+  `r meta$abstract`
+keywords: `r meta$keywords`
+---
+
+
+
+```{r, child = "../paper.Rmd"}
+```
+

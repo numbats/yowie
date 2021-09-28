@@ -7,17 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, include = FALSE, eval = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
   comment = "#>"
 )
-rmd_file <- knitr::spin(here::here("data-raw/data-valid.R"),
-                        knit = FALSE)
-```
-
-```{r child=rmd_file}
+fn <- here::here("data-raw/data-valid.R")
+knitr::read_chunk(fn)
 ```
 

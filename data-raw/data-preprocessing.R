@@ -1,26 +1,15 @@
 
 
-#' The data cleaning step is conducted using the suite of packages in `tidyverse`.
-#+ load-pkgs
+## ---- load-pkgs
 library(tidyverse)
 select <- dplyr::select
 
-#' # Reading the data {#read-data}
-#+ raw-data, eval=FALSE, include=FALSE
+## ---- read-data
 source(here::here("data-raw/NLSY79/NLSY79.R"))
 
-#' <details class="source">
-#' <summary>Click here for the **source file to read data** (note this is quite long)</summary>
-#' The code below is provided by the NLSY79 database to do the
-#' reading and initial cleaning of data.
-#+ raw-data-rmd, code=readLines(here::here("data-raw/NLSY79/NLSY79.R"))
-#' </details>
 
-#'
-#' The above source code creates a data set `new_data_qnames`.
-#' As shown below, the column names contain information on the job number
-#' (HRP1 = job 1, HRP2 = job 2, ..., HRP5 = job 5) and the year information.
-#+ untidy-data, echo=-1
+
+## ---- untidy-data
 options(width=70)
 new_data_qnames %>%
   select(CASEID_1979,
@@ -29,15 +18,8 @@ new_data_qnames %>%
          everything()) %>%
   str(list.len = 10)
 
-#' # Demographic data pre-processing
-#' ## Tidy the date of birth data
-#' The month and year of birth is recorded in 1979 and 1981 for each individual.
-#' The records in 1981 are missing for some individuals so we take the month and year of
-#' birth from 1979 records.
-#'
-#' Where the record is present for both 1979 and 1981, we check that the
-#' record matches.
-#+ dob-tidy
+
+## ---- dob-tidy
 dob_tidy <- new_data_qnames %>%
   select(id = CASEID_1979,
          year_1979 = `Q1-3_A~Y_1979`,
@@ -70,23 +52,16 @@ dob_tidy <- new_data_qnames %>%
          dob_conflict)
 
 has_dob_conflict <- any(dob_tidy$dob_conflict, na.rm = TRUE)
-#+ dob-conflict-no, echo=FALSE, eval=!has_dob_conflict
-cat("All birth month and year recorded in 1979 and 1981 match.")
-#+ dob-conflict-yes, echo=has_dob_conflict, eval=has_dob_conflict
-cat("The birth record does not match for the following individuals.")
-dob_tidy %>%
-  filter(dob_conflict)
 
 
-#' ## Tidy the sex and race data
-#+ demog-tidy
+
+## ---- demog-tidy
 demog_tidy <- categories_qnames %>%
   select(id = CASEID_1979,
          race = SAMPLE_RACE_78SCRN,
          gender = SAMPLE_SEX_1979)
 
-#' ## Tidy the grade completed in each year
-#+ demog-ed
+## ---- demog-ed
 demog_education <- new_data_qnames %>%
   # in 2018, the variable's name is Q3-4_2018, instead of HGC_2018
   rename(HGC_2018 = `Q3-4_2018`) %>%
@@ -103,8 +78,8 @@ demog_education <- new_data_qnames %>%
   filter(!is.na(grade)) %>%
   select(-var)
 
-#' ### Get the highest year completed
-#+ tidy-hgc
+## ---- tidy-hgc
+# Get the highest year completed
 highest_year <- demog_education %>%
   group_by(id) %>%
   mutate(hgc_i = max(grade)) %>%
@@ -124,12 +99,12 @@ highest_year <- demog_education %>%
                          hgc_i == 95 ~ "UNGRADED",
                          TRUE ~ paste0((hgc_i - 12), "TH YEAR COL")))
 
-#+ full-demog
+## ---- full-demog
 full_demographics <- full_join(dob_tidy, demog_tidy, by = "id") %>%
   full_join(highest_year, by = "id") %>%
   mutate(age_1979 = 1979 - (dob_year + 1900))
 
-#+ tidy-hours
+## ---- tidy-hours
 # make a list for years where we used the "QES-52A"
 year_A <- c(1979:1987, 1993)
 # function to get the hour of work
@@ -153,11 +128,13 @@ get_hour <- function(year) {
     rename(id = CASEID_1979)
 }
 
+
+
+## ---- tidy-rate
 # getting the hours of work of all observations
 years <- c(1979:1994, seq(1996, 2018, by = 2))
 hours_all <- map_dfr(years, get_hour)
 
-#+ tidy-rate
 get_rate <- function(year) {
   new_data_qnames %>%
     select(CASEID_1979,
@@ -180,7 +157,7 @@ hours_wages <- left_join(rates_all,
          hours_work = ifelse(hours_work == 0 | hours_work > 84, NA, hours_work))
 
 
-#+ tidy-nojob
+## ---- tidy-nojob
 # calculate number of jobs that a person has in one year
 no_job <- hours_wages %>%
   filter(!is.na(rate_per_hour)) %>%
@@ -219,7 +196,7 @@ mean_hourly_wage <- eligible_wages %>%
   select(-flag1)
 head(mean_hourly_wage, n = 10)
 
-#+ wages-demog-hs
+## ---- wages-demog-hs
 # join the wages information and the demographic information by case id.
 wages_demog <- left_join(mean_hourly_wage, full_demographics, by="id")
 # calculate the years in work force and the age of the subjects in 1979
@@ -236,5 +213,5 @@ keep_me <- wages_before %>%
 wages_before <- wages_before %>%
   filter(id %in% keep_me$id)
 
-#+ save-data, echo = FALSE, eval = FALSE
+## ---- save-data
 saveRDS(wages_before, here::here("paper/results/wages_before.rds"))

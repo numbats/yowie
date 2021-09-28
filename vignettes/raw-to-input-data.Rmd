@@ -21,7 +21,8 @@ vignette: >
 
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
+library(knitr)
+opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   cache = TRUE,
@@ -29,10 +30,90 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
-rmd_file <- knitr::spin(here::here("data-raw/data-preprocessing.R"),
-                        knit = FALSE)
+# work around as per https://github.com/yihui/knitr/issues/1647
+rc <- read_chunk
+rc(here::here("data-raw/data-preprocessing.R"))
+```
+
+The data cleaning step is conducted using the suite of packages in `tidyverse`.
+
+```{r load-pkgs}
+```
+
+# Reading the data {#read-data}
+
+<details class="source">
+<summary>Click here for the **source file to read data** (note this is quite long)</summary>
+The code below is provided by the NLSY79 database to do the
+reading and initial processing of the data. Note that we did not modify this script except for
+the location of the file. 
+```{r raw-data-rmd, code=readLines(here::here("data-raw/NLSY79/NLSY79.R")), cache = TRUE}
+```
+</details>
+
+The above source code creates a data set `new_data_qnames`.
+As shown below, the column names contain information on the job number
+(HRP1 = job 1, HRP2 = job 2, ..., HRP5 = job 5) and the year information.
+
+```{r untidy-data, echo = -1}
+```
+
+# Tidy the date of birth data
+
+The month and year of birth is recorded in 1979 and 1981 for each individual.
+The records in 1981 are missing for some individuals so we take the month and year of
+birth from 1979 records.
+
+Where the record is present for both 1979 and 1981, we check that the record matches.
+
+```{r dob-tidy}
+```
+
+```{r, echo = FALSE, eval = !has_dob_conflict, results = "asis"}
+"All birth month and year recorded in 1979 and 1981 match."
+```
+```{r, echo = has_dob_conflict, eval = has_dob_conflict}
+cat("The birth record does not match for the following individuals.
+")
+dob_tidy %>%
+  filter(dob_conflict)
+```
+
+# Getting the race and sex data
+
+```{r demog-tidy}
+```
+
+# Tidying the education data
+
+```{r demog-ed}
+```
+
+## Getting the highest year completed
+
+```{r tidy-hgc}
+```
+
+# Combinining hte data 
+
+```{r full-demog}
+```
+
+# Tidying the employment information
+
+```{r tidy-hours}
+```
+
+```{r tidy-rate}
+```
+
+```{r tidy-nojob}
+```
+
+## Subsetting to the high school population
+
+```{r wages-demog-hs}
 ```
 
 
-```{r data-processing, child = rmd_file}
-```
+
