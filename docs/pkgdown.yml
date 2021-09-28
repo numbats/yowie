@@ -2,9 +2,10 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  input-to-valid-data: input-to-valid-data.html
   intro: intro.html
-  process-data: process-data.html
-last_built: 2021-09-28T03:27Z
+  raw-to-input-data: raw-to-input-data.html
+last_built: 2021-09-28T04:43Z
 urls:
   reference: https://numbats.github.io/yowie//reference
   article: https://numbats.github.io/yowie//articles

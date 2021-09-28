@@ -1,0 +1,21 @@
+---
+title: "Steps to process input to valid data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Steps to process input to valid data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+rmd_file <- knitr::spin(here::here("data-raw/data-valid.R"),
+                        knit = FALSE)
+```
+
+```{r child=rmd_file}
+```
+

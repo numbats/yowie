@@ -235,3 +235,6 @@ keep_me <- wages_before %>%
   filter(n > 4)
 wages_before <- wages_before %>%
   filter(id %in% keep_me$id)
+
+#+ save-data, echo = FALSE, eval = FALSE
+saveRDS(wages_before, here::here("paper/results/wages_before.rds"))
