@@ -106,7 +106,7 @@ There are two ways to conduct the interview of the NLSY79, which are face-to-fac
 
 ## Target data {#target}
 
-The NLSY79 data used in @SingerJudithD2003Alda. contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported. . 
+The NLSY79 data used in @SingerJudithD2003Alda. contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported.
 
 <!-- Since no specific criteria on high school dropouts was defined
 in @SingerJudithD2003Alda, we define high school dropouts as respondents who only completed either 9th to 11th grade, or who completed 12th when their age is at least 19 years old (meaning that the individual may have dropped out of high school but returned at a later time to complete high school education). XXX This should probably go further down in the flow. -->
@@ -160,29 +160,29 @@ For the remaining variables, we went to the "Variable Search" tab and select var
 \end{itemize}
 \end{itemize}
 \begin{itemize}
-\item[\faCloudDownload] To download all 686 variables selected, we then navigate to the tab "Save / Download" then select the tab "Advanced Download". We select the R Source code, Codebook of selected variables, Short Description File and Comma-delimited datafile of selected variables with Reference Number as column headers. We name the filename "NLSY79" and press the download button.
+\item[\faCloudDownload] To download all 686 variables selected, we then navigate to the tab "Save / Download" then select the tab "Advanced Download". We select the R Source code and Comma-delimited datafile of selected variables with Reference Number as column headers. We name the filename "NLSY79" and press the download button. There are also options to get control or dictionary files for SAS, SPSS and STATA. 
 \end{itemize}
 :::
 
       
 The downloaded data set comes as a zip file, containing the following set of files:
 
-- `NLSY79.csv`: csv format of the response data.
-- `NLSY79.dat`: dat format of the response data.
-- `NLSY79.NLSY79`: Tagset of variables that can be uploaded to the website to recreate the data set.
-- `NLSY79.R`: R script for reading the data into R and converting the variables' names and label into something more sensible. We utilize this code to do an initial data tidying which produces two data set,  `categories_qnames` (where the observations are stored in categorical/interval values) and `new_data_qnames` (the observations are stored in integer form).
+- `NLSY79.csv`: csv format of the response data,
+- `NLSY79.dat`: dat format of the response data,
+- `NLSY79.NLSY79`: Tagset of variables that can be uploaded to the website to recreate the data set, and
+- `NLSY79.R`: R script for reading the data into R and converting the variables' names and label into something more sensible. 
+
+We only alter the file path in `NLSY79.R` and run the script without any other alteration. This results in an initial processing of the raw data into two data set,  `categories_qnames` (where the observations are stored in categorical/interval values) and `new_data_qnames` (the observations are stored in integer form). 
 
 ```{r raw-data}
 ```
-
-### Tidying the wages data {#tidywages}
 
 The raw data, `new_data_qnames`, is organised such that each row corresponds to an individual. As respondents can have multiple jobs at specific years, the column names, such as `HRP1_1979`, `HRP2_1979`, `HRP1_1980` and `HRP2_1980`, contain the information about the job number up to 5 (`HRP1` = job 1, `HRP2` = job 2) and the year. The raw data consequently has a large number of columns (686 to be specific). The values in the cell under the variables that begin with `HRP` correspond to the hourly wage in dollars. A glimpse of this data output is shown below.
 
 ```{r untidy-data}
 ```
 
-According to @WickhamHadley2014TD, tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the `tidyverse` suite of packages [@tidyverse], `tidyr` [@tidyr] to pivot the data into long form, `dplyr` [@dplyr], and `stringr` [@stringr] for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data. 
+According to @WickhamHadley2014TD, tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the `tidyverse` suite of packages [@tidyverse], `tidyr` [@tidyr] to pivot the data into long form, `dplyr` [@dplyr], and `stringr` [@stringr] for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data. The code for tidying the data are demonstrated at \url{https://numbats.github.io/yowie/articles/raw-to-input-data.html} but also described in the subsequent subsections.
 
 <!-- required by making use of the `tidyverse` suite of packages [@tidyverse], which include the main set of packages needed, namely `tidyr` [@tidyr], `dplyr` [@dplyr], and `stringr` [@stringr]. The tidy data form, where we have a variable that indicates the individual ID, year, job number, wage in dollars and demographic variables, is important for downstream analysis, such as visualisation and modelling that will be performed later. 
 
@@ -191,26 +191,26 @@ According to @WickhamHadley2014TD, tidy data sets comply with three rules: (i) e
 
 ### Tidying demographic variables {#tidydemog}
 
-`Age in 1979`, `gender`, `race`, `highest grade completed`, and the `year when the highest grade completed` are the variables that we want to use in the cleaned data set. 
+In our final target data, we wish to include the demographic variables with variable names specified in brackets: gender (`gender`), race (`race`), age (`age`), highest grade completed (`hgc`) and the corresponding year this grade was completed (`yr_hgc`).
 
-Age in 1979 are derived from year and month of birth variables in the raw data. The variables have two versions, which are the 1979 version and the 1981 version. We only used the 1979 data and did a consistency check of those years and flag the inconsistent observations. 
+For gender and race, we only rename the column names. It is worth noting that using these two variable needs special attention. Gender, as reported in the data, only has two categories, which is recognised today as inadequate. Gender is not binary. Further, race is as reported in the database. When doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.
+
+The `new_data_qnames` contains the variables `Q1-3_A~Y_1979` and `Q1-3_A~Y_1981` which records two versions of the birth year of the respondent; this is also the case for the record of birth month (`Q1-3_A~M_1979` and `Q1-3_A~M_1981`). The record contains two versions of birth year and birth month as the survey recorded this in 1979 and 1981. We checked for consistency for the two versions and found no discrepancy where the responses were recorded in both 1979 and 1981. The age was then calculated using the birth year. 
+
 
 ```{r dob-tidy}
 ```
-
-For `gender` and `race`, we only rename the column names. It is worth noting that using these two variable needs special attention. Gender, as reported in the data, only has two categories, which is recognised today as inadequate. Gender is not binary. Further, race is as reported in the database. When doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.
-
 ```{r demog-tidy}
 ```
 ```{r demog-ed}
 ```
 
-The next step is tidying the `highest grade completed` variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018. Thus, we just use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.  
+The next step is tidying the highest grade completed (`hgc`) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018. Thus, we just use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.  
 
 ```{r tidy-grade}
 ```
 
-Further, `highest grade completed` is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for tidying this variable is also available in the supplementary materials.  
+Furthermore, `hgc` is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for deriving this variable is also available at \url{https://numbats.github.io/yowie/articles/raw-to-input-data.html}.
 
 ```{r tidy-hgc}
 ```

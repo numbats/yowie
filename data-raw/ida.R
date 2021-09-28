@@ -91,7 +91,7 @@ spag <- wages_before %>%
   geom_line(alpha = 0.5) +
   scale_x_continuous("Year",
                      breaks = seq(1980, 2020, 10),
-                     labels = c("80", "90", "00", "10", "20"),
+                     #labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
   ggtitle("A") +
   theme_bw() +
@@ -137,7 +137,7 @@ plot_high <- ggplot(filter(wages_high2, id == 39)) +
   annotate("text", x = 2010, y = 1000, label = "id: 39") +
   scale_x_continuous("Year",
                      breaks = seq(1980, 2020, 10),
-                     labels = c("80", "90", "00", "10", "20"),
+                     #labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
   ylab("Hourly wage ($)") +
   theme_bw() +

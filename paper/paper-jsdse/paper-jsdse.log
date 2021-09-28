@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  28 SEP 2021 18:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  29 SEP 2021 08:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -601,6 +601,9 @@ Non-PDF special ignored!
 <special> header=psfrag.pro
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+
+LaTeX Warning: Reference `tidywages' on page 4 undefined on input line 142.
+
 [4]
 LaTeX Font Info:    Trying to load font information for U+fontawesomethree on i
 nput line 151.
@@ -611,150 +614,148 @@ LaTeX Font Info:    Trying to load font information for U+fontawesometwo on inp
 ut line 153.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/fontawesome/ufontawesometwo.fd
 File: ufontawesometwo.fd 2016/05/22 Font definitions for U/fontawesometwo.
-) [5] [6]
-Overfull \hbox (31.73026pt too wide) in paragraph at lines 217--217
+) [5]
+Overfull \vbox (19.50323pt too high) has occurred while \output is active []
+
+[6]
+Overfull \hbox (31.73026pt too wide) in paragraph at lines 216--216
 []\OT1/cmtt/m/n/12 #>  $ HRP1_1979                    : int  328 385 365 NA 310
  NA NA NA 214 NA ...[] 
  []
 
 
-Overfull \hbox (7.03024pt too wide) in paragraph at lines 218--218
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 217--217
 []\OT1/cmtt/m/n/12 #>  $ HRP2_1979                    : int  NA NA NA NA 375 NA
  NA NA NA NA ...[] 
  []
 
 
-Overfull \hbox (7.03024pt too wide) in paragraph at lines 219--219
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 218--218
 []\OT1/cmtt/m/n/12 #>  $ HRP3_1979                    : int  NA NA 275 NA NA NA
  NA NA NA NA ...[] 
  []
 
 
-Overfull \hbox (7.03024pt too wide) in paragraph at lines 220--220
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 219--219
 []\OT1/cmtt/m/n/12 #>  $ HRP4_1979                    : int  NA NA NA NA NA 250
  NA NA NA NA ...[] 
  []
 
 
-Overfull \hbox (0.85524pt too wide) in paragraph at lines 221--221
+Overfull \hbox (0.85524pt too wide) in paragraph at lines 220--220
 []\OT1/cmtt/m/n/12 #>  $ HRP5_1979                    : int  NA NA NA NA NA NA 
 NA NA NA NA ...[] 
  []
 
 
-Overfull \hbox (50.25526pt too wide) in paragraph at lines 222--222
+Overfull \hbox (50.25526pt too wide) in paragraph at lines 221--221
 []\OT1/cmtt/m/n/12 #>  $ HRP1_1980                    : int  NA 457 397 NA 333 
 275 300 394 200 318 ...[] 
  []
 
 
-Overfull \hbox (7.03024pt too wide) in paragraph at lines 223--223
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 222--222
 []\OT1/cmtt/m/n/12 #>  $ HRP2_1980                    : int  NA NA 367 NA NA NA
  NA NA NA NA ...[] 
  []
 
 
-Overfull \hbox (13.20525pt too wide) in paragraph at lines 224--224
+Overfull \hbox (13.20525pt too wide) in paragraph at lines 223--223
 []\OT1/cmtt/m/n/12 #>  $ HRP3_1980                    : int  NA NA 380 NA NA NA
  290 NA NA NA ...[] 
  []
 
 
-Overfull \hbox (0.85524pt too wide) in paragraph at lines 225--225
+Overfull \hbox (0.85524pt too wide) in paragraph at lines 224--224
 []\OT1/cmtt/m/n/12 #>  $ HRP4_1980                    : int  NA NA NA NA NA NA 
 NA NA NA NA ...[] 
  []
 
-[7]
-Overfull \hbox (4.1212pt too wide) in paragraph at lines 234--235
-\OT1/cmtt/m/n/12 Age in 1979\OT1/cmr/m/n/12 , \OT1/cmtt/m/n/12 gender\OT1/cmr/m
-/n/12 , \OT1/cmtt/m/n/12 race\OT1/cmr/m/n/12 , \OT1/cmtt/m/n/12 highest grade c
-ompleted\OT1/cmr/m/n/12 , and the \OT1/cmtt/m/n/12 year when the highest
- []
-
-[8]
+[7] [8]
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 2
-53.
+52.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 253.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 252.
 [9] [10]
-Overfull \hbox (6.00642pt too wide) in paragraph at lines 310--322
+Overfull \hbox (6.00642pt too wide) in paragraph at lines 309--321
  [][] 
  []
 
-<figures/sample-plot-1.pdf, id=100, 716.6775pt x 566.115pt>
+<figures/sample-plot-1.pdf, id=101, 716.6775pt x 566.115pt>
 File: figures/sample-plot-1.pdf Graphic file (type pdf)
 <use figures/sample-plot-1.pdf>
-Package pdftex.def Info: figures/sample-plot-1.pdf  used on input line 328.
+Package pdftex.def Info: figures/sample-plot-1.pdf  used on input line 327.
 (pdftex.def)             Requested size: 462.26999pt x 365.16296pt.
 [11] [12 <./figures/sample-plot-1.pdf>]
-<figures/feature-plot-1.pdf, id=126, 705.63625pt x 265.99374pt>
+<figures/feature-plot-1.pdf, id=127, 705.63625pt x 265.99374pt>
 File: figures/feature-plot-1.pdf Graphic file (type pdf)
 <use figures/feature-plot-1.pdf>
-Package pdftex.def Info: figures/feature-plot-1.pdf  used on input line 339.
+Package pdftex.def Info: figures/feature-plot-1.pdf  used on input line 338.
 (pdftex.def)             Requested size: 462.26999pt x 174.25761pt.
-[13 <./figures/feature-plot-1.pdf>]
-<figures/compare-plot-1.pdf, id=148, 716.6775pt x 557.08125pt>
+[13 <./figures/feature-plot-1.pdf>] [14]
+<figures/compare-plot-1.pdf, id=153, 716.6775pt x 557.08125pt>
 File: figures/compare-plot-1.pdf Graphic file (type pdf)
 <use figures/compare-plot-1.pdf>
-Package pdftex.def Info: figures/compare-plot-1.pdf  used on input line 363.
+Package pdftex.def Info: figures/compare-plot-1.pdf  used on input line 362.
 (pdftex.def)             Requested size: 416.04016pt x 323.39636pt.
-[14] [15 <./figures/compare-plot-1.pdf>]
-<figures/fixed-feature-plot-1.pdf, id=169, 705.63625pt x 265.99374pt>
+<figures/fixed-feature-plot-1.pdf, id=157, 705.63625pt x 265.99374pt>
 File: figures/fixed-feature-plot-1.pdf Graphic file (type pdf)
 <use figures/fixed-feature-plot-1.pdf>
 Package pdftex.def Info: figures/fixed-feature-plot-1.pdf  used on input line 3
-74.
+73.
 (pdftex.def)             Requested size: 462.26999pt x 174.25761pt.
-</Users/etan0038/yowie/paper/figures/flowchart.png, id=171, 1606.0pt x 2176.13p
+</Users/etan0038/yowie/paper/figures/flowchart.png, id=159, 1606.0pt x 2176.13p
 t>
 File: /Users/etan0038/yowie/paper/figures/flowchart.png Graphic file (type png)
 
 <use /Users/etan0038/yowie/paper/figures/flowchart.png>
 Package pdftex.def Info: /Users/etan0038/yowie/paper/figures/flowchart.png  use
-d on input line 390.
+d on input line 389.
 (pdftex.def)             Requested size: 392.93231pt x 532.40941pt.
 
-LaTeX Warning: Float too large for page by 7.41624pt on input line 395.
+LaTeX Warning: Float too large for page by 7.41624pt on input line 394.
 
-[16 <./figures/fixed-feature-plot-1.pdf>] [17 </Users/etan0038/yowie/paper/figu
-res/flowchart.png>]
-<figures/plotting-sw-do-1.pdf, id=198, 633.36626pt x 332.24126pt>
+<figures/plotting-sw-do-1.pdf, id=161, 633.36626pt x 332.24126pt>
 File: figures/plotting-sw-do-1.pdf Graphic file (type pdf)
 <use figures/plotting-sw-do-1.pdf>
-Package pdftex.def Info: figures/plotting-sw-do-1.pdf  used on input line 404.
+Package pdftex.def Info: figures/plotting-sw-do-1.pdf  used on input line 403.
 (pdftex.def)             Requested size: 462.26999pt x 242.49353pt.
-[18 <./figures/plotting-sw-do-1.pdf>] [19]
+[15] [16 <./figures/compare-plot-1.pdf>] [17 <./figures/fixed-feature-plot-1.pd
+f>] [18 </Users/etan0038/yowie/paper/figures/flowchart.png>] [19 <./figures/plo
+tting-sw-do-1.pdf>] [20]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 457.
-[20] [21] [22]
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 456.
+[21] [22]
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 5
-38.
+37.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 538.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 537.
 [23]
-Overfull \hbox (33.67421pt too wide) in paragraph at lines 582--584
+Overfull \hbox (33.67421pt too wide) in paragraph at lines 581--583
 \OT1/cmr/m/n/12 Ra-ton, Florida: Chap-man; Hall/CRC. []$\OT1/cmtt/m/n/12 https 
 : / / bookdown . org / yihui / rmarkdown-[]cookbook$[]\OT1/cmr/m/n/12 . 
  []
 
-[24]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 593.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 593.
+[24] [25]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 592.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 592.
 (./paper-jsdse.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 593.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 593.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 592.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 592.
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 18227 strings out of 480488
- 334106 string characters out of 5899970
- 584461 words of memory out of 5000000
+ 18226 strings out of 480488
+ 334097 string characters out of 5899970
+ 584402 words of memory out of 5000000
  33783 multiletter control sequences out of 15000+600000
  542130 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -776,10 +777,10 @@ fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pf
 b></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb>
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></
 usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on paper-jsdse.pdf (24 pages, 971645 bytes).
+Output written on paper-jsdse.pdf (25 pages, 973321 bytes).
 PDF statistics:
- 455 PDF objects out of 1000 (max. 8388607)
- 394 compressed objects within 4 object streams
- 108 named destinations out of 1000 (max. 500000)
- 179 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 460 PDF objects out of 1000 (max. 8388607)
+ 398 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 171 words of extra memory for PDF output out of 10000 (max. 10000000)
 
