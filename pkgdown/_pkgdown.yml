@@ -21,3 +21,14 @@ reference:
   - wages
   - wages_hs_do
 
+articles:
+- title: "Getting started"
+  navbar: ~
+  contents:
+  - intro
+- title: "Data cleaning process"
+  navbar: ~
+  contents:
+  - raw-to-input-data
+  - input-to-valid-data
+

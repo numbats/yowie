@@ -10,6 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
   comment = "#>"
 )
 rmd_file <- knitr::spin(here::here("data-raw/data-valid.R"),

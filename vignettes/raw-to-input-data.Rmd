@@ -1,8 +1,8 @@
 ---
-title: "Processing raw data to input data"
+title: "Steps to process raw data to input data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Processing raw data to input data}
+  %\VignetteIndexEntry{Steps to process raw data to input data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
