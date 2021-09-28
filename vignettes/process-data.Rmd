@@ -1,11 +1,24 @@
 ---
-title: "Steps to process raw data to input data"
+title: "Processing raw data to input data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{process-data}
+  %\VignetteIndexEntry{Processing raw data to input data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{css, echo = FALSE}
+.source {
+  font-size: 0.7em;
+  background-color: #ffcc66;
+  padding: 10px;
+}
+
+.source > .sourceCode {
+  background-color: #ffe066
+}
+```
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -16,9 +29,10 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
-rmd_file <- knitr::spin(here::here("data-raw/data_preprocessing.R"),
+rmd_file <- knitr::spin(here::here("data-raw/data-preprocessing.R"),
                         knit = FALSE)
 ```
+
 
 ```{r data-processing, child = rmd_file}
 ```
