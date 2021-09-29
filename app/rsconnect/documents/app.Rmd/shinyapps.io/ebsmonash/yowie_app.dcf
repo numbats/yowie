@@ -1,0 +1,13 @@
+name: yowie_app
+title: yowie_app
+username:
+account: ebsmonash
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4755961
+bundleId: 5083359
+url: https://ebsmonash.shinyapps.io/yowie_app/
+when: 1632884561.64266
+lastSyncTime: 1632884561.64267
+asMultiple: FALSE
+asStatic: FALSE
