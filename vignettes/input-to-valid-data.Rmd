@@ -18,6 +18,19 @@ rc <- knitr::read_chunk
 rc(here::here("data-raw/data-valid.R"))
 ```
 
+The wages contain some values that are unlikely to be true. To detect these unlikely values, we fitted a robust linear regression to each individual. More specifically, for each individual we fitted the model
+
+$$y_i = \beta_0 + \beta_1 x_i + e_i$$
+where 
+
+* $y_i$ is the mean hourly wage in the $i$-th year, 
+* $x_i$ is the year and 
+* $e_i$ is the $i$-th error term,
+
+using the iterated re-weighted least squares (IWLS) process. 
+
+Observations with weights (used in the IWLS process) less than 0.12 are modified as missing values. An alternative wage is predicted from the fitted robust linear regression model for these censored values and stored in another variable. The threshold of the weights was determined by visualising the effect of different thresholds using the shiny app found [here](https://ebsmonash.shinyapps.io/yowie_app/). 
+
 ```{r load-pkgs-valid}
 ```
 
@@ -25,5 +38,8 @@ rc(here::here("data-raw/data-valid.R"))
 ```
 
 
+```{r}
+wages_after
+```
 
 

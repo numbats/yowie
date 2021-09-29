@@ -105,6 +105,18 @@
 
     
     
+<p>The wages contain some values that are unlikely to be true. To detect these unlikely values, we fitted a robust linear regression to each individual. More specifically, for each individual we fitted the model</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_i + e_i\]</span> where</p>
+<ul>
+<li>
+<span class="math inline">\(y_i\)</span> is the mean hourly wage in the <span class="math inline">\(i\)</span>-th year,</li>
+<li>
+<span class="math inline">\(x_i\)</span> is the year and</li>
+<li>
+<span class="math inline">\(e_i\)</span> is the <span class="math inline">\(i\)</span>-th error term,</li>
+</ul>
+<p>using the iterated re-weighted least squares (IWLS) process.</p>
+<p>Observations with weights (used in the IWLS process) less than 0.12 are modified as missing values. An alternative wage is predicted from the fitted robust linear regression model for these censored values and stored in another variable. The threshold of the weights was determined by visualising the effect of different thresholds using the shiny app found <a href="https://ebsmonash.shinyapps.io/yowie_app/">here</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span>
@@ -147,6 +159,25 @@
 <span class="co"># join back the `wages_rlm_dat` to `wages_demog_hs`</span>
 
 <span class="va">wages_after</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">wages_before</span>, <span class="va">wages_rlm_dat</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">wages_after</span>
+<span class="co">#&gt; # A tibble: 103,994 × 18</span>
+<span class="co">#&gt;       id  year mean_hourly_wage total_hours number_of_jobs is_wm dob_month</span>
+<span class="co">#&gt;    &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;       &lt;int&gt;          &lt;dbl&gt; &lt;lgl&gt;     &lt;int&gt;</span>
+<span class="co">#&gt;  1     2  1979             3.85          35              1 FALSE         1</span>
+<span class="co">#&gt;  2     2  1980             4.57          NA              1 FALSE         1</span>
+<span class="co">#&gt;  3     2  1981             5.14          NA              1 FALSE         1</span>
+<span class="co">#&gt;  4     2  1982             5.71          35              1 FALSE         1</span>
+<span class="co">#&gt;  5     2  1983             5.71          NA              1 FALSE         1</span>
+<span class="co">#&gt;  6     2  1984             5.14          NA              1 FALSE         1</span>
+<span class="co">#&gt;  7     2  1985             7.71          NA              1 FALSE         1</span>
+<span class="co">#&gt;  8     2  1986             7.69          NA              1 FALSE         1</span>
+<span class="co">#&gt;  9     2  1987             8.79          NA              1 FALSE         1</span>
+<span class="co">#&gt; 10     2  1988             6.67          NA              2 FALSE         1</span>
+<span class="co">#&gt; # … with 103,984 more rows, and 11 more variables: dob_year &lt;int&gt;,</span>
+<span class="co">#&gt; #   dob_conflict &lt;lgl&gt;, race &lt;fct&gt;, gender &lt;fct&gt;, yr_hgc &lt;dbl&gt;, hgc_i &lt;int&gt;,</span>
+<span class="co">#&gt; #   hgc &lt;chr&gt;, age_1979 &lt;dbl&gt;, years_in_workforce &lt;dbl&gt;, wages_rlm &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   is_pred &lt;lgl&gt;</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
