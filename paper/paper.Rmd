@@ -417,7 +417,7 @@ The entire analysis is conducted using `R` [@R] in `rstudio` using these package
 
 - **R Package `yowie`**:`yowie` is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed [here](https://github.com/numbats/yowie).
 
-- **shiny app**: An web interactive `shiny` app to customize the weight threshold. This app could be accessed [here](https://ebsmonash.shinyapps.io/yowie_app/).
+- **shiny app**: An interactive `shiny` web app to visualise the effect of selecting different weight threshold for substituting the wages data to its predicted value from a fit of the robust linear regression model. This app could be accessed [here](https://ebsmonash.shinyapps.io/yowie_app/) with the source code provided [here](https://github.com/numbats/yowie/tree/master/app).
 
 
 
