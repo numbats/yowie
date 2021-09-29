@@ -133,10 +133,6 @@ as_tibble(full_demographics)
 
 ```{r tidy-hours}
 ```
-```{r}
-as_tibble(rates_all)
-as_tibble(hours_wages)
-```
 
 
 ```{r tidy-rate}
@@ -144,8 +140,8 @@ as_tibble(hours_wages)
 
 ```{r}
 as_tibble(rates_all)
+as_tibble(hours_wages)
 ```
-
 
 ```{r tidy-nojob}
 ```
