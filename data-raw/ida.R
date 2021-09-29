@@ -137,9 +137,8 @@ plot_high <- ggplot(filter(wages_high2, id == 39)) +
                      breaks = seq(1980, 2020, 10),
                      #labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
-  ylab("Hourly wage ($)") +
   theme_bw() +
-  labs("(C)")
+  labs(tag = "(C)", y = "Hourly wage ($)")
 
 #spag + feature + feature_bp + plot_high + plot_layout(nrow = 1, guides = "collect") &
 #  theme(legend.position = "bottom")

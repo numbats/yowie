@@ -400,7 +400,7 @@ Various difficulties were encountered in trying to refresh the data, which inclu
 
 Ultimately, the refreshed data is reasonably similar to the original, but unsatisfactorily far from it. The last step required would be to inflation-adjust wages, but this is better to do with each wave of new data added, so that it is relative to the last date in the data. 
 
-Some readers may disagree with our decisions made to produce the refreshed textbook data and may have better insight than us in producing a more appropriate textbook data. We do not assert that we have produced the best textbook data, but rather we describe our journey to provide a reasonable textbook data. All code and documentation are provided for transparency and future updates of `yowie` package may contain additional versions of the data if we come to have better understanding of a valid data. 
+Some readers may disagree with our decisions made to produce the refreshed textbook data and may have better insight than us in producing a more appropriate textbook data. We do not assert that we have produced the best textbook data, but rather we describe our journey to provide a reasonable textbook data set. All code and documentation are provided for transparency, and future updates of the `yowie` package may contain additional variables, or filters of the full set, if it is deemed important. 
 
 Finally, for the data providers we recommend that a validation system with clear rules is added on data entry, and that alternative output formats, such as a tidy format would help users make better use of the resource. The problem with many of the wages records is that there are implausible values, or confusion on how to record wages for multiple jobs. These values could be validated with simple checks at data entry. Providing an open data resource also is accompanied with the responsibility that the data, especially data that is as valuable as this, is reliable. Users need to be able to trust the data. 
 
@@ -417,9 +417,9 @@ The entire analysis is conducted using `R` [@R] in RStudio IDE using these packa
 # Supplementary Materials 
 
 
-- **Codes** : R script to reproduce data tidying and cleaning are available in this [page](https://numbats.github.io/yowie/articles/process-data.html).
+- **Codes**: R script to reproduce data tidying and cleaning are available in this [page](https://numbats.github.io/yowie/articles/process-data.html).
 
-- **R Package `yowie`**:`yowie` is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed [here](https://github.com/numbats/yowie).
+- **R Package**:`yowie` is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed [here](https://github.com/numbats/yowie).
 
 - **shiny app**: An interactive `shiny` web app to visualise the effect of selecting different weight threshold for substituting the wages data to its predicted value from a fit of the robust linear regression model. This app could be accessed [here](https://ebsmonash.shinyapps.io/yowie_app/) with the source code provided [here](https://github.com/numbats/yowie/tree/master/app).
 
