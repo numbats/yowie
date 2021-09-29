@@ -93,7 +93,7 @@ spag <- wages_before %>%
                      breaks = seq(1980, 2020, 10),
                      #labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
-  ggtitle("A") +
+  labs(tag = "(A)") +
   theme_bw() +
   ylab("Hourly wage ($)") #+
   #theme(plot.title = element_text(size = 10))
@@ -109,7 +109,7 @@ wages_feat_long <- wages_three_feat %>%
 
 feature <- ggplot(wages_feat_long) +
   geom_density(aes(x = value, colour = feature, fill = feature), alpha = 0.3) +
-  ggtitle("B") +
+  labs(tag = "(B)") +
   theme_bw() +
   theme(#plot.title = element_text(size = 10),
         #axis.text.x = element_text(angle = 10, size = 6),
@@ -120,12 +120,10 @@ feature_bp <- ggplot(wages_feat_long,
                          fill = feature, color = feature)) +
   geom_boxplot() +
   theme_bw() +
-  #ggtitle("C") +
-  ggtitle("B")  +
+  labs(tag = "(B)")  +
   ylab("Hourly wage ($)") +
   xlab("Feature") +
-  theme(legend.position = "none") #,
-  #      plot.title = element_text(size = 10))
+  theme(legend.position = "none")
 
 plot_high <- ggplot(filter(wages_high2, id == 39)) +
   geom_line(aes(x = year,
@@ -141,10 +139,7 @@ plot_high <- ggplot(filter(wages_high2, id == 39)) +
                      minor_breaks = seq(1980, 2020, 5)) +
   ylab("Hourly wage ($)") +
   theme_bw() +
-  ggtitle("C") #+
-  #theme(axis.text.x = element_text(angle = 10, size = 6),
-   #     plot.title = element_text(size = 10))
-  #ggtitle("D")
+  labs("(C)")
 
 #spag + feature + feature_bp + plot_high + plot_layout(nrow = 1, guides = "collect") &
 #  theme(legend.position = "bottom")
@@ -187,8 +182,7 @@ ggplot(wages_compare) +
   #xlab("Year") +
   ylab("Hourly wage ($)") +
 #  scale_colour_brewer("", palette = "Dark2", direction = -1,
-  scale_colour_grey("",
-                        labels = c("Before", "After"))
+  scale_colour_grey("", labels = c("Before", "After"))
 #  scale_color_hue(labels = c("Before", "After"))
 
 ## ---- fixed-feature-plot
@@ -202,7 +196,7 @@ spag2 <- wages_cleaned %>%
                      labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
   theme_bw() +
-  ggtitle("A") +
+  labs(tag = "(A)") +
   theme(plot.title = element_text(size = 10)) +
   ylab("Hourly wage ($)")
 
@@ -221,7 +215,7 @@ wages_feat_long_rlm <- wages_three_feat_rlm %>%
 
 feature2 <- ggplot(wages_feat_long_rlm) +
   geom_density(aes(x = value, colour = feature, fill = feature), alpha = 0.3) +
-  ggtitle("B)") +
+  labs(tag = "(B)") +
   theme_bw() +
   theme(plot.title = element_text(size = 10)) +
   xlab("value (log10)")
@@ -232,12 +226,10 @@ feature2_bp <- ggplot(wages_feat_long_rlm,
                          fill = feature, color = feature)) +
   geom_boxplot() +
   theme_bw() +
-  #ggtitle("C") +
-  ggtitle("B")  +
-  ylab("Hourly wage ($)") +
-  xlab("Feature") +
-  theme(legend.position = "none")#,
-  #      plot.title = element_text(size = 10))
+  labs(x = "Feature",
+       y = "Hourly wage ($)",
+       tag = "(B)") +
+  theme(legend.position = "none")
 
 plot_high_after <- ggplot(filter(wages_cleaned, id == 39)) +
   geom_line(aes(x = year,
@@ -252,10 +244,7 @@ plot_high_after <- ggplot(filter(wages_cleaned, id == 39)) +
                      labels = c("80", "90", "00", "10", "20"),
                      minor_breaks = seq(1980, 2020, 5)) +
   theme_bw() +
-  #theme(axis.text.x = element_text(angle = 10, size = 6),
-  #      plot.title = element_text(size = 10)) +
-  ylab("Hourly wage ($)") +
-  ggtitle("C")
+  labs(tag = "(C)", y = "Hourly wage ($)")
 
 
 spag2 + feature2_bp + plot_high_after

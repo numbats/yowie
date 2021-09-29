@@ -7,7 +7,7 @@ sw_wages <- sw %>%
              y = ln_wages)) +
   geom_line(aes(group = id), alpha = 0.1) +
   geom_smooth(se = FALSE, colour = "pink") +
-  ggtitle("A original") +
+  labs(tag = "(A)", title = "Original") +
   theme_bw() +
   ylab("Hourly wage ($, natural log)") +
   xlab("Experience in years") +
@@ -26,7 +26,7 @@ sw_wages_mod <- sw %>%
              linetype = hgc)) +
   geom_smooth(method = "lm", se = FALSE,
               colour = "black") +
-  ggtitle("A original") +
+  labs(tag = "(A)", title = "Original") +
   scale_linetype("") +
   theme_bw() +
   ylab("Hourly wage ($, natural log)") +
@@ -53,7 +53,7 @@ do_ref <- do %>%
              y = lnwage)) +
   geom_line(aes(group = id), alpha = 0.1) +
   geom_smooth(se = FALSE, colour = "pink") +
-  ggtitle("B refreshed data") +
+  labs(tag = "(B)", title = "Refreshed data") +
   theme_bw() +
   ylab("Hourly wage ($, natural log)") +
   xlab("Year of data collection") +
@@ -67,7 +67,7 @@ do_ref_mod <- do %>%
              linetype = hgc12)) +
   geom_smooth(method = "lm", se = FALSE,
               colour = "black") +
-  ggtitle("B refreshed data") +
+  labs(title = "Refreshed data", tag = "(B)") +
   scale_linetype("") +
   theme_bw() +
   ylab("Hourly wage ($, natural log)") +
@@ -128,7 +128,7 @@ sw_wages_agree <- sw_agree %>%
              y = ln_wages)) +
   geom_line(aes(group = id),alpha = 0.1) +
   geom_smooth(se = FALSE) +
-  ggtitle("A") +
+  labs(tag = "(A)") +
   theme_bw() +
   ylab("ln(Hourly wage) ($)") +
   xlab("Experience (years)") +
@@ -141,7 +141,7 @@ do_ref_agree <- do_agree %>%
              y = lnwage)) +
   geom_line(aes(group = id), alpha = 0.1) +
   geom_smooth(se = FALSE) +
-  ggtitle("B") +
+  labs(tag = "B") +
   theme_bw() +
   ylab("ln(Hourly wage) ($)") +
   xlab("Year") +

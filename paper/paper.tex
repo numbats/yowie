@@ -110,7 +110,7 @@ The National Longitudinal Survey of Youth (NLSY79) is a prominent open data sour
 \end{abstract}
 
 \keywords{
-    Data cleaning; Data tidying; Longitudinal data; NLSY79; Open data; Initial data analysis; Outlier detection; Robust linear regression
+    Data cleaning; Data tidying; Reproducible workflow; Longitudinal data; NLSY79; Initial data analysis;
   }
 
 \hypertarget{intro}{%
@@ -235,18 +235,18 @@ The raw data, \texttt{new\_data\_qnames}, is organised such that each row corres
 #>   [list output truncated]
 \end{verbatim}
 
-According to Wickham (2014), tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the \texttt{tidyverse} suite of packages (Wickham et al. 2019), \texttt{tidyr} (Wickham 2020b) to pivot the data into long form, \texttt{dplyr} (Wickham et al. 2020), and \texttt{stringr} (Wickham 2019) for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data. The code for tidying the data are demonstrated at \url{https://numbats.github.io/yowie/articles/raw-to-input-data.html} but also described in the subsequent subsections.
+According to Wickham (2014), tidy data sets comply with three rules: (i) each variable forms a column, (ii) each observation forms a row, and (iii) each type of observational unit forms a table. The raw data does not comply these rules, thus we re-arrange and wrangle the data into tidy data form, columns corresponding to individual ID, year, job number, wage in dollars and the demographic variables. This is done using the \texttt{tidyverse} suite of packages (Wickham et al. 2019), \texttt{tidyr} (Wickham 2020) to pivot the data into long form, \texttt{dplyr} (Wickham et al. 2020), and \texttt{stringr} (Wickham 2019) for creating new variables, and levels of factors by text wrangling. The long form of the data makes it possible to do these data transformations efficiently, and it is an intermediate step towards the final target data. The code for tidying the data are demonstrated at \url{https://numbats.github.io/yowie/articles/raw-to-input-data.html} but also described in the subsequent subsections.
 
 \hypertarget{tidydemog}{%
 \subsubsection{Tidying demographic variables}\label{tidydemog}}
 
-In our final target data, we wish to include the demographic variables with variable names specified in brackets: gender (\texttt{gender}), race (\texttt{race}), age (\texttt{age}), highest grade completed (\texttt{hgc}) and the corresponding year this grade was completed (\texttt{yr\_hgc}).
+In our final target data, we wish to include the demographic variables with variable names specified in brackets: gender (\texttt{gender}), race (\texttt{race}), age (\texttt{age\_1979}), highest grade completed (\texttt{hgc}), highest grade completed in terms of years, e.g.~9th grade = 9, 3rd year college = 15, (\texttt{hgc\_i}) and the corresponding year this grade was completed (\texttt{yr\_hgc}).
 
 For gender and race, we only rename the column names. It is worth noting that using these two variable needs special attention. Gender, as reported in the data, only has two categories, which is recognised today as inadequate. Gender is not binary. Further, race is as reported in the database. When doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.
 
 The \texttt{new\_data\_qnames} contains the variables \texttt{Q1-3\_A\textasciitilde{}Y\_1979} and \texttt{Q1-3\_A\textasciitilde{}Y\_1981} which records two versions of the birth year of the respondent; this is also the case for the record of birth month (\texttt{Q1-3\_A\textasciitilde{}M\_1979} and \texttt{Q1-3\_A\textasciitilde{}M\_1981}). The record contains two versions of birth year and birth month as the survey recorded this in 1979 and 1981. We checked for consistency for the two versions and found no discrepancy where the responses were recorded in both 1979 and 1981. The age was then calculated using the birth year.
 
-The next step is tidying the highest grade completed (\texttt{hgc}) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018. Thus, we just use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.
+The next step is tidying the highest grade completed (\texttt{hgc}) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.
 
 Furthermore, \texttt{hgc} is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for deriving this variable is also available at \url{https://numbats.github.io/yowie/articles/raw-to-input-data.html}.
 
@@ -354,12 +354,12 @@ We take 36 samples randomly from the data and plot them, as shown in Figure \ref
 
 The anomalies are also found in the total hours of work, where some observations work for 420 hours a week in total. According to Pergamit et al. (2001), one of the flaws of the NLSY79 employment data is that the NLSY79 collects the information of the working hours since the last interview. Thus, it might be challenging for the respondents to track the within-job hours' changes between survey years, especially for the respondents with fluctuated working hours or seasonal jobs. It even has been more challenging since 1994, where the respondents had to recall two years periods. This shortcoming might also contribute to the fluctuation of one's wages data.
 
-\hypertarget{replacing-extreme-values}{%
-\subsubsection{Replacing extreme values}\label{replacing-extreme-values}}
+\hypertarget{censor}{%
+\subsubsection{Replacing extreme values}\label{censor}}
 
 As part of the IDA, which is the model formulation, we build a robust linear regression model to treat the extreme values in the data. Robust linear regression yields an estimation robust to the influence of noise or contamination (Koller 2016). It also aims to detect the contamination by weighting each observation based on how ``well-behaved'' they are, known as robustness weight. Observations with lower robustness weight are suggested as an outlier by this method (Koller 2016).
 
-Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (Wickham 2020b) and \texttt{purrr} (Henry and Wickham 2020), respectively.
+Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (Wickham 2020) and \texttt{purrr} (Henry and Wickham 2020), respectively.
 
 We build the model using the \texttt{rlm} function from \texttt{MASS} package (Venables and Ripley 2002). We set the \texttt{mean\_hourly\_wage} and \texttt{year} as the dependent and predictor, respectively. Furthermore, we use M-Estimation with Huber weighting, where the observation with a slight residual gets a weight of 1, while the larger the residual, the smaller the weight (less than 1) (UCLA: Statistical Consulting Group 2021). However, the challenging part of detecting the anomaly using the robustness weight is determining the weight threshold in which the observations are considered outliers. Moreover, it should be noted that not all the outliers are due to an error. Instead, it might be that one had reasonably increasing or decreasing wages in a particular period.
 
@@ -376,7 +376,7 @@ Figure \ref{fig:compare-plot} shows the mean hourly wage before and after the ex
 \caption{Comparison between the original (black dots) and the corrected (solid grey) mean hourly wage for a sample of individuals. A robust linear model prediction was used to correct mean hourly wages value. We can see that some extreme spikes, corresponding to implausible wages, have been replaced with values more similar to wages in neighboring years, but otherwise the profiles are not changed. Some spikes might remain when wage vaues are plausible.}\label{fig:compare-plot}
 \end{figure}
 
-Further, \ref{fig:fixed-feature-plot} A shows that after eliminating the extreme values, the highest value has decreased to be around \$350. The spikes are still observed but not as extreme as the original data set. In Figure \ref{fig:fixed-feature-plot} B, we plot the three features of mean hourly wages, namely the minimum, median, and maximum value. We still can see some extreme values in maximum wages, but consider it as a natural variability of the data. In \ref{fig:fixed-feature-plot} C, we can see that after imputing the extreme value in ID=39, we can see how the the wages change over the years more clearly.
+Further, Figure \ref{fig:fixed-feature-plot} A shows that after eliminating the extreme values, the highest value has decreased to be around \$350. The spikes are still observed but not as extreme as the original data set. In Figure \ref{fig:fixed-feature-plot} B, we plot the three features of mean hourly wages, namely the minimum, median, and maximum value. We still can see some extreme values in maximum wages, but consider it as a natural variability of the data. In Figure \ref{fig:fixed-feature-plot} C, we can see that after imputing the extreme value in ID=39, we can see how the the wages change over the years more clearly.
 
 \begin{figure}
 
@@ -419,6 +419,8 @@ Now is the time to see how close we have come to the original textbook data. The
 
 There are two aspects of the original data that make a direct comparison difficult. The time variable provided is ``experience in the workforce.'' It is not clear how this is calculated. One would expect that there is a record of the day the individual first started a job, and this is used to adjust the year of collection. We have not been able to find this information in the database. Secondly, wages were inflation-adjusted to 1990 prices, which is not done for the refreshed data.
 
+The treatment of unlikely wages differ in the refreshed data. In the original data by Singer and Willett (2003), wages greater than \$75 are set to be missing. However, in recent context, this value is too low to be set as the maximum threshold. We opted to use the weights from a robust linear regression to determine what should be set as missing value as described in Section \ref{censor}.
+
 Figure \ref{fig:plotting-sw-do} shows a comparison of the two sets. (A direct ID matching is not possible.) There are 888 individuals in the original and 1,188 individuals in the refreshed data. This suggests some individuals were removed in the original data.
 In addition, in the original set the racial break down was 246 black, 204 hispanic and 438 white, while in the refreshed data there are 346 black, 219 hispanic and 623 white, so the proportions have not been exactly reproduced. On education, in the refreshed data there are very few individuals with less than a 12th grade education, which varies from the original. In the original data there were 366 individuals with up to 8th grade and 522 9th-12th grade, as compared to 967 with 12th grade in the refreshed data.
 
@@ -429,7 +431,7 @@ This paper has described the stages to take a particular open data set and make 
 
 The data cleaning process is documented and the code has been made available. These provide the opportunity to again refresh the textbook data as updated data is published in the NLSY79 database.
 Determining the appropriate robustness weight to threshold the anomalous observations is documented, and a \texttt{shiny} (Chang et al. 2020) app is provided to assist.
-The current subset is made available in a new R package, called yowie.
+The current subset is made available in a new R package, called \texttt{yowie}.
 
 Various difficulties were encountered in trying to refresh the data, which include:
 
@@ -438,7 +440,7 @@ Various difficulties were encountered in trying to refresh the data, which inclu
 \item
   determining which records should be downloaded from the database.
 \item
-  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour. Further for original data, wages greater than 75 dollars were set to be missing. However, in recent context, this value might be too low to be set as the maximum threshold.
+  there are many errors in the data, e.g.~hourly wages greater than \$30,000 per hour.
 \item
   there is no explicit variable in the database recording high school dropout, which means we needed to compare date of 12th grade with the individual's age.
 \item
@@ -454,7 +456,7 @@ Finally, for the data providers we recommend that a validation system with clear
 
 We would like to thank Aarathy Babu for the insight and discussion during the writing of this paper.
 
-The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{rstudio} using these packages: \texttt{tidyverse} (Wickham et al. 2019), \texttt{ggplot2} (Wickham 2016), \texttt{dplyr} (Wickham et al. 2020), \texttt{readr} (Wickham and Hester 2020), \texttt{tidyr} (Wickham 2020b), \texttt{stringr} (Wickham 2019), \texttt{purrr} (Henry and Wickham 2020), \texttt{broom} (Robinson, Hayes, and Couch 2021), \texttt{brolgar} (Tierney, Cook, and Prvan 2020), \texttt{patchwork} (Pedersen 2020), \texttt{kableExtra} (Zhu 2019), \texttt{MASS} (Venables and Ripley 2002), \texttt{janitor} (Firke 2020), \texttt{DiagrammeR} (Iannone 2020), \texttt{rsvg} (Ooms 2020), \texttt{webshot} (Chang 2019), \texttt{mgcv} (Wood 2003), \texttt{tsibble} (Wang, Cook, and Hyndman 2020), and \texttt{modelr} (Wickham 2020a). The paper are generated using \texttt{knitr} (Xie 2014), \texttt{rmarkdown} (Xie, Dervieux, and Riederer 2020), and \texttt{rticles} (Allaire et al. 2021).
+The entire analysis is conducted using \texttt{R} (R Core Team 2020) in RStudio IDE using these packages: \texttt{tidyverse} (Wickham et al. 2019), \texttt{ggplot2} (Wickham 2016), \texttt{dplyr} (Wickham et al. 2020), \texttt{readr} (Wickham and Hester 2020), \texttt{tidyr} (Wickham 2020), \texttt{stringr} (Wickham 2019), \texttt{purrr} (Henry and Wickham 2020), \texttt{brolgar} (Tierney, Cook, and Prvan 2020), \texttt{patchwork} (Pedersen 2020), \texttt{kableExtra} (Zhu 2019), \texttt{MASS} (Venables and Ripley 2002), \texttt{janitor} (Firke 2020), and \texttt{tsibble} (Wang, Cook, and Hyndman 2020). The paper are generated using \texttt{knitr} (Xie 2014) and \texttt{rmarkdown} (Xie, Dervieux, and Riederer 2020).
 
 \hypertarget{supplementary-materials}{%
 \section{Supplementary Materials}\label{supplementary-materials}}
@@ -465,7 +467,7 @@ The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{
 \item
   \textbf{R Package \texttt{yowie}}:\texttt{yowie} is a data container R package that contains 3 datasets, namely the high school mean hourly wage data, high school dropouts mean hourly wage data, and demographic data of the NLSY79 cohort. This package could be accessed \href{https://github.com/numbats/yowie}{here}.
 \item
-  \textbf{shiny app}: An web interactive \texttt{shiny} app to customize the weight threshold. This app could be accessed \href{https://github.com/numbats/wages-refresh/tree/main/app}{here}.
+  \textbf{shiny app}: An interactive \texttt{shiny} web app to visualise the effect of selecting different weight threshold for substituting the wages data to its predicted value from a fit of the robust linear regression model. This app could be accessed \href{https://ebsmonash.shinyapps.io/yowie_app/}{here} with the source code provided \href{https://github.com/numbats/yowie/tree/master/app}{here}.
 \end{itemize}
 
 \hypertarget{references}{%
@@ -474,12 +476,6 @@ The entire analysis is conducted using \texttt{R} (R Core Team 2020) in \texttt{
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\hypertarget{ref-rticles}{}%
-Allaire, JJ, Yihui Xie, R Foundation, Hadley Wickham, Journal of Statistical Software, Ramnath Vaidyanathan, Association for Computing Machinery, et al. 2021. \emph{Rticles: Article Formats for r Markdown}. \url{https://CRAN.R-project.org/package=rticles}.
-
-\leavevmode\hypertarget{ref-webshot}{}%
-Chang, Winston. 2019. \emph{Webshot: Take Screenshots of Web Pages}. \url{https://CRAN.R-project.org/package=webshot}.
-
 \leavevmode\hypertarget{ref-shiny}{}%
 Chang, Winston, Joe Cheng, JJ Allaire, Yihui Xie, and Jonathan McPherson. 2020. \emph{Shiny: Web Application Framework for r}. \url{https://CRAN.R-project.org/package=shiny}.
 
@@ -507,14 +503,8 @@ Huebner, Marianne, Werner Vach, and Saskia le Cessie. 2016. {``A Systematic Appr
 \leavevmode\hypertarget{ref-HuebnerMarianne2020Haar}{}%
 Huebner, Marianne, Werner Vach, Saskia le Cessie, Carsten Oliver Schmidt, and Lara Lusa. 2020. {``Hidden Analyses: A Review of Reporting Practice and Recommendations for More Transparent Reporting of Initial Data Analyses.''} \emph{BMC Medical Research Methodology} 20 (1): 61--61.
 
-\leavevmode\hypertarget{ref-DiagrammeR}{}%
-Iannone, Richard. 2020. \emph{DiagrammeR: Graph/Network Visualization}. \url{https://CRAN.R-project.org/package=DiagrammeR}.
-
 \leavevmode\hypertarget{ref-KollerManuel2016rARP}{}%
 Koller, Manuel. 2016. {``Robustlmm: An r Package for Robust Estimation of Linear Mixed-Effects Models.''} \emph{Journal of Statistical Software} 75 (6): 1--24.
-
-\leavevmode\hypertarget{ref-rsvg}{}%
-Ooms, Jeroen. 2020. \emph{Rsvg: Render SVG Images into PDF, PNG, PostScript, or Bitmap Arrays}. \url{https://CRAN.R-project.org/package=rsvg}.
 
 \leavevmode\hypertarget{ref-opendata}{}%
 Open Knowledge Foundation. 2021. {``Open Definition. Defining Open in Open Data, Open Content, and Open Knowledge.''} 2021. \url{http://opendefinition.org/od/2.1/en/}.
@@ -527,9 +517,6 @@ Pergamit, Michael R., Charles R. Pierret, Donna S. Rothstein, and Jonathan R. Ve
 
 \leavevmode\hypertarget{ref-R}{}%
 R Core Team. 2020. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing. \url{https://www.R-project.org/}.
-
-\leavevmode\hypertarget{ref-broom}{}%
-Robinson, David, Alex Hayes, and Simon Couch. 2021. \emph{Broom: Convert Statistical Objects into Tidy Tibbles}. \url{https://CRAN.R-project.org/package=broom}.
 
 \leavevmode\hypertarget{ref-SingerJudithD2003Alda}{}%
 Singer, Judith D, and John B Willett. 2003. \emph{Applied Longitudinal Data Analysis: Modeling Change and Event Occurrence}. Oxford u.a: Oxford Univ. Pr.
@@ -567,11 +554,8 @@ Wickham, Hadley. 2011. {``The Split-Apply-Combine Strategy for Data Analysis.''}
 \leavevmode\hypertarget{ref-stringr}{}%
 ---------. 2019. \emph{Stringr: Simple, Consistent Wrappers for Common String Operations}. \url{https://CRAN.R-project.org/package=stringr}.
 
-\leavevmode\hypertarget{ref-modelr}{}%
----------. 2020a. \emph{Modelr: Modelling Functions That Work with the Pipe}. \url{https://CRAN.R-project.org/package=modelr}.
-
 \leavevmode\hypertarget{ref-tidyr}{}%
----------. 2020b. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
+---------. 2020. \emph{Tidyr: Tidy Messy Data}. \url{https://CRAN.R-project.org/package=tidyr}.
 
 \leavevmode\hypertarget{ref-tidyverse}{}%
 Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D'Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. {``Welcome to the {tidyverse}.''} \emph{Journal of Open Source Software} 4 (43): 1686. \url{https://doi.org/10.21105/joss.01686}.
@@ -581,9 +565,6 @@ Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. \emph
 
 \leavevmode\hypertarget{ref-readr}{}%
 Wickham, Hadley, and Jim Hester. 2020. \emph{Readr: Read Rectangular Text Data}. \url{https://CRAN.R-project.org/package=readr}.
-
-\leavevmode\hypertarget{ref-mgcv}{}%
-Wood, S. N. 2003. {``Thin-Plate Regression Splines.''} \emph{Journal of the Royal Statistical Society (B)} 65 (1): 95--114.
 
 \leavevmode\hypertarget{ref-knitr}{}%
 Xie, Yihui. 2014. {``Knitr: A Comprehensive Tool for Reproducible Research in {R}.''} In \emph{Implementing Reproducible Computational Research}, edited by Victoria Stodden, Friedrich Leisch, and Roger D. Peng. Chapman; Hall/CRC. \url{http://www.crcpress.com/product/isbn/9781466561595}.

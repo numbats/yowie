@@ -274,7 +274,7 @@ The next step is that explore the mean hourly wage data. In this case, we only e
 We take 36 samples randomly from the data and plot them, as shown in Figure \ref{fig:sample-plot}. It implies that these respondents have a lot of variability in wages, for example, the IDs in panel numbers 5, 7, and 11. The plot also implies that the samples have a different pattern of mean hourly wages. Some have had flat wages for years but had a sudden increase in one particular year, then it gone down again, while the others experienced an upsurge in their wage, for instance, the IDs in panel 9. However, when checking the summary plots (Figure \ref{fig:feature-plot}), we found that some observations had exceptionally high wages. Some of them, for example respondents in Figure \ref {fig:feature-plot} C had experienced unusual wages only in certain year. 
 
 
-```{r feature-plot, fig.cap = "Summary plots to check the cleaned data reveal more cleaning is necessary: longitudinal profiles of wages for all individuals 1979-2018 (A), boxplots of minimum, median, and maximum wages of each individual (B), and one individual (id=39) with an unusual wage relative to their years of data (C). Some values of hourly wages are unbelievable, and some individuals have extemely unusual wages in some years.", fig.width=10, fig.height=4, out.width="100%"}
+```{r feature-plot, fig.cap = "Summary plots to check the cleaned data reveal more cleaning is necessary: longitudinal profiles of wages for all individuals 1979-2018 (A), boxplots of minimum, median, and maximum wages of each individual (B), and one individual (id=39) with an unusual wage relative to their years of data (C). Some values of hourly wages are unbelievable, and some individuals have extemely unusual wages in some years.", fig.width=10, fig.height=4, out.width="100%", cache = FALSE}
 ```
 
 ```{r high-wages}
@@ -287,7 +287,7 @@ We take 36 samples randomly from the data and plot them, as shown in Figure \ref
 The anomalies are also found in the total hours of work, where some observations work for 420 hours a week in total. According to @MichaelRPergamit2001DWTN, one of the flaws of the NLSY79 employment data is that the NLSY79 collects the information of the working hours since the last interview. Thus, it might be challenging for the respondents to track the within-job hours' changes between survey years, especially for the respondents with fluctuated working hours or seasonal jobs. It even has been more challenging since 1994, where the respondents had to recall two years periods. This shortcoming might also contribute to the fluctuation of one's wages data. 
 
 
-### Replacing extreme values
+### Replacing extreme values {#censor}
 
 As part of the IDA, which is the model formulation, we build a robust linear regression model to treat the extreme values in the data. Robust linear regression yields an estimation robust to the influence of noise or contamination [@KollerManuel2016rARP]. It also aims to detect the contamination by weighting each observation based on how "well-behaved" they are, known as robustness weight. Observations with lower robustness weight are suggested as an outlier by this method [@KollerManuel2016rARP]. 
 
@@ -311,10 +311,10 @@ Figure \ref{fig:compare-plot} shows the mean hourly wage before and after the ex
 ```{r compare-plot, fig.cap="Comparison between the original (black dots) and the corrected (solid grey) mean hourly wage for a sample of individuals. A robust linear model prediction was used to correct mean hourly wages value. We can see that some extreme spikes, corresponding to implausible wages, have been replaced with values more similar to wages in neighboring years, but otherwise the profiles are not changed. Some spikes might remain when wage vaues are plausible.", fig.height=8, fig.width=10, out.width="90%"}
 ```
 
-Further, \ref{fig:fixed-feature-plot} A shows that after eliminating the extreme values, the highest value has decreased to be around $350. The spikes are still observed but not as extreme as the original data set. In Figure \ref{fig:fixed-feature-plot} B, we plot the three features of mean hourly wages, namely the minimum, median, and maximum value. We still can see some extreme values in maximum wages, but consider it as a natural variability of the data. In \ref{fig:fixed-feature-plot} C, we can see that after imputing the extreme value in ID=39, we can see how the the wages change over the years more clearly. 
+Further, Figure \ref{fig:fixed-feature-plot} A shows that after eliminating the extreme values, the highest value has decreased to be around $350. The spikes are still observed but not as extreme as the original data set. In Figure \ref{fig:fixed-feature-plot} B, we plot the three features of mean hourly wages, namely the minimum, median, and maximum value. We still can see some extreme values in maximum wages, but consider it as a natural variability of the data. In Figure \ref{fig:fixed-feature-plot} C, we can see that after imputing the extreme value in ID=39, we can see how the the wages change over the years more clearly. 
 
 
-```{r fixed-feature-plot, fig.cap = "Re-make of the summary plots of the fully processed data suggest that it is now in a reasonable state: longitudinal profiles of wages for all individuals 1979-2018 (A), boxplots of minimum, median, and maximum wages of each individual (B), and one individual with an unusual wage relative to their years of data (C). ", fig.width=10, fig.height=4, out.width="100%"}
+```{r fixed-feature-plot, fig.cap = "Re-make of the summary plots of the fully processed data suggest that it is now in a reasonable state: longitudinal profiles of wages for all individuals 1979-2018 (A), boxplots of minimum, median, and maximum wages of each individual (B), and one individual with an unusual wage relative to their years of data (C). ", fig.width=10, fig.height=4, out.width="100%", cache = FALSE}
 ```
 
 
@@ -354,10 +354,12 @@ From this stage forward, we assume that we already have valid data. We also subs
 Now is the time to see how close we have come to the original textbook data. The original set contains wages of high school dropouts wages [@SingerJudithD2003Alda] from 1979 through to 1994. The refreshed data set for comparison is also wages on high school drop outs, over 1979 to 2018. The original set is available in the R package `brolgar` and the refreshed data is available in the R package `yowie`. 
 
 
-```{r plotting-sw-do, fig.cap = "Comparison of original textbook example (A) with refreshed data (B). The original data was inflation-adjusted to 1990 prices and the individual's time of collection was converted to a length of experience in the workforce, which make it difficult to precisely compare the two sets.", fig.width = 9, fig.height = 5, out.width = "100%"}
+```{r plotting-sw-do, fig.cap = "Comparison of original textbook example (A) with refreshed data (B). The original data was inflation-adjusted to 1990 prices and the individual's time of collection was converted to a length of experience in the workforce, which make it difficult to precisely compare the two sets.", fig.width = 9, fig.height = 5, out.width = "100%", cache = FALSE}
 ```
 
-There are two aspects of the original data that make a direct comparison difficult. The time variable provided is "experience in the workforce". It is not clear how this is calculated. One would expect that there is a record of the day the individual first started a job, and this is used to adjust the year of collection. We have not been able to find this information in the database. Secondly, wages were inflation-adjusted to 1990 prices, which is not done for the refreshed data. 
+There are two aspects of the original data that make a direct comparison difficult. The time variable provided is "experience in the workforce". It is not clear how this is calculated. One would expect that there is a record of the day the individual first started a job, and this is used to adjust the year of collection. We have not been able to find this information in the database. Secondly, wages were inflation-adjusted to 1990 prices, which is not done for the refreshed data.  
+
+The treatment of unlikely wages differ in the refreshed data. In the original data by @SingerJudithD2003Alda, wages greater than $75 are set to be missing. However, in recent context, this value is too low to be set as the maximum threshold. We opted to use the weights from a robust linear regression to determine what should be set as missing value as described in Section \@ref(censor).
 
 Figure \ref{fig:plotting-sw-do} shows a comparison of the two sets. (A direct ID matching is not possible.) There are 888 individuals in the original and 1,188 individuals in the refreshed data. This suggests some individuals were removed in the original data.
 In addition, in the original set the racial break down was 246 black, 204 hispanic and 438 white, while in the refreshed data there are 346 black, 219 hispanic and 623 white, so the proportions have not been exactly reproduced. On education, in the refreshed data there are very few individuals with less than a 12th grade education, which varies from the original. In the original data there were 366 individuals with up to 8th grade and 522 9th-12th grade, as compared to 967 with 12th grade in the refreshed data. 
@@ -387,12 +389,12 @@ This paper has described the stages to take a particular open data set and make 
 
 The data cleaning process is documented and the code has been made available. These provide the opportunity to again refresh the textbook data as updated data is published in the NLSY79 database.
 Determining the appropriate robustness weight to threshold the anomalous observations is documented, and a `shiny`  [@shiny] app is provided to assist. 
-The current subset is made available in a new R package, called yowie.
+The current subset is made available in a new R package, called `yowie`.
 
 Various difficulties were encountered in trying to refresh the data, which include: 
 
 - determining which records should be downloaded from the database.
-- there are many errors in the data, e.g. hourly wages greater than $30,000 per hour. Further for original data, wages greater than 75 dollars were set to be missing. However, in recent context, this value might be too low to be set as the maximum threshold. 
+- there are many errors in the data, e.g. hourly wages greater than $30,000 per hour.
 - there is no explicit variable in the database recording high school dropout, which means we needed to compare date of 12th grade with the individual's age.
 - calculating experience in the workforce, would require knowing the time of first job within the first year the individual was recorded. 
 
