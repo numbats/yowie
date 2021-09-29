@@ -80,10 +80,10 @@ demog_education <- new_data_qnames %>%
 # Get the highest year completed
 highest_year <- demog_education %>%
   group_by(id) %>%
-  mutate(hgc_i = max(grade)) %>%
-  filter(hgc_i == grade) %>%
-  filter(year == first(year)) %>%
-  rename(yr_hgc = year) %>%
+  filter(grade == max(grade),
+         year == min(year)) %>%
+  rename(yr_hgc = year,
+         hgc_i = grade) %>%
   select(id, yr_hgc, hgc_i) %>%
   ungroup() %>%
   mutate(hgc = case_when(hgc_i == 0 ~ "NONE",
@@ -189,9 +189,9 @@ mean_hourly_wage <- eligible_wages %>%
   mutate(year = as.numeric(year)) %>%
   ungroup() %>%
   rename(mean_hourly_wage = wages) %>%
-  mutate(is_wm = ifelse(flag1 == 1, TRUE,
-                        FALSE)) %>%
+  mutate(is_wm = flag1 == 1) %>%
   select(-flag1)
+
 head(mean_hourly_wage, n = 10)
 
 ## ---- wages-demog-hs

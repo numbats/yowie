@@ -51,12 +51,19 @@ the location of the file.
 ```
 </details>
 
-The above source code creates a data set `new_data_qnames`.
+<br>
+
+The above source code creates a data set `new_data_qnames` and `categories_qnames`.
 As shown below, the column names contain information on the job number
 (HRP1 = job 1, HRP2 = job 2, ..., HRP5 = job 5) and the year information.
 
 ```{r untidy-data, echo = -1}
 ```
+
+```{r}
+str(categories_qnames, list.len = 20)
+```
+
 
 # Tidy the date of birth data
 
@@ -64,13 +71,13 @@ The month and year of birth is recorded in 1979 and 1981 for each individual.
 The records in 1981 are missing for some individuals so we take the month and year of
 birth from 1979 records.
 
-Where the record is present for both 1979 and 1981, we check that the record matches.
+Where the record is present for both 1979 and 1981, we check that the record matches. 
 
 ```{r dob-tidy}
 ```
 
 ```{r, echo = FALSE, eval = !has_dob_conflict, results = "asis"}
-"All birth month and year recorded in 1979 and 1981 match."
+cat("All birth month and year recorded in 1979 and 1981 match.")
 ```
 ```{r, echo = has_dob_conflict, eval = has_dob_conflict}
 cat("The birth record does not match for the following individuals.
@@ -79,33 +86,66 @@ dob_tidy %>%
   filter(dob_conflict)
 ```
 
+```{r}
+as_tibble(dob_tidy)
+```
+
+
 # Getting the race and sex data
 
 ```{r demog-tidy}
 ```
+
+```{r}
+as_tibble(demog_tidy)
+```
+
 
 # Tidying the education data
 
 ```{r demog-ed}
 ```
 
+```{r}
+as_tibble(demog_education)
+```
+
+
 ## Getting the highest year completed
 
 ```{r tidy-hgc}
 ```
+```{r}
+as_tibble(highest_year)
+```
+
 
 # Combinining hte data 
 
 ```{r full-demog}
 ```
+```{r}
+as_tibble(full_demographics)
+```
+
 
 # Tidying the employment information
 
 ```{r tidy-hours}
 ```
+```{r}
+as_tibble(rates_all)
+as_tibble(hours_wages)
+```
+
 
 ```{r tidy-rate}
 ```
+
+```{r}
+as_tibble(rates_all)
+```
+
 
 ```{r tidy-nojob}
 ```
@@ -115,5 +155,8 @@ dob_tidy %>%
 ```{r wages-demog-hs}
 ```
 
-
+```{r}
+as_tibble(wages_demog)
+as_tibble(wages_before)
+```
 

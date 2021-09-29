@@ -17678,10 +17678,10 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 </details><p>The above source code creates a data set <code>new_data_qnames</code>. As shown below, the column names contain information on the job number (HRP1 = job 1, HRP2 = job 2, …, HRP5 = job 5) and the year information.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
-         <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"HRP"</span><span class="op">)</span> <span class="op">&amp;</span>
-           <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1979"</span>, <span class="st">"1980"</span><span class="op">)</span><span class="op">)</span>,
-         <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
+         <span class="fu">starts_with</span><span class="op">(</span><span class="st">"HRP"</span><span class="op">)</span> <span class="op">&amp;</span>
+           <span class="fu">ends_with</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1979"</span>, <span class="st">"1980"</span><span class="op">)</span><span class="op">)</span>,
+         <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span>list.len <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    12686 obs. of  686 variables:</span>
 <span class="co">#&gt;  $ CASEID_1979                  : int  1 2 3 4 5 6 7 8 9 10 ...</span>
@@ -17695,27 +17695,130 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt;  $ HRP3_1980                    : int  NA NA 380 NA NA NA 290 NA NA NA ...</span>
 <span class="co">#&gt;  $ HRP4_1980                    : int  NA NA NA NA NA NA NA NA NA NA ...</span>
 <span class="co">#&gt;   [list output truncated]</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">categories_qnames</span><span class="op">)</span>
+<span class="co">#&gt; 'data.frame':    12686 obs. of  686 variables:</span>
+<span class="co">#&gt;  $ CASEID_1979                  : int  1 2 3 4 5 6 7 8 9 10 ...</span>
+<span class="co">#&gt;  $ Q1-3_A~M_1979                : Factor w/ 18 levels "0: &lt; 1","1","2",..: 10 2 9 9 8 11 7 8 8 11 ...</span>
+<span class="co">#&gt;  $ Q1-3_A~Y_1979                : Factor w/ 18 levels "0 TO 56: &lt; 57",..: 3 4 6 7 4 5 9 3 8 5 ...</span>
+<span class="co">#&gt;  $ Q3-4_1979                    : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 11 10 14 13 9 13 10 10 ...</span>
+<span class="co">#&gt;  $ CPSHRP_1979                  : Factor w/ 12 levels "0","1 TO 99",..: 5 5 5 NA 5 NA NA NA 4 NA ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1979              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: 5 5 5 NA 3 NA NA 4 2 NA ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1979              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: 3 NA NA NA 6 6 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1979              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA 6 NA NA 2 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1979              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA 6 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1979              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1979                    : Factor w/ 12 levels "0","1 TO 99",..: 5 5 5 NA 5 NA NA NA 4 NA ...</span>
+<span class="co">#&gt;  $ HRP2_1979                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA 5 NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP3_1979                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA 4 NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1979                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA 4 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1979                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ SAMPLE_ID_1979               : Factor w/ 20 levels "CROSS MALE WHITE",..: 5 5 5 5 1 1 1 6 1 6 ...</span>
+<span class="co">#&gt;  $ SAMPLE_RACE_78SCRN           : Factor w/ 3 levels "HISPANIC","BLACK",..: 3 3 3 3 3 3 3 3 3 3 ...</span>
+<span class="co">#&gt;  $ SAMPLE_SEX_1979              : Factor w/ 2 levels "MALE","FEMALE": 2 2 2 2 1 1 1 2 1 2 ...</span>
+<span class="co">#&gt;  $ HGC_1979                     : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 11 10 14 13 9 13 10 10 ...</span>
+<span class="co">#&gt;  $ HGCREV79_1979                : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 11 10 14 13 9 13 10 10 ...</span>
+<span class="co">#&gt;  $ Q3-4_1980                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA NA 11 NA 15 14 10 NA 11 NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1980                  : Factor w/ 12 levels "0","1 TO 99",..: NA 6 5 NA 5 4 5 NA 4 5 ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1980              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA 5 NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1980                    : Factor w/ 12 levels "0","1 TO 99",..: NA 6 5 NA 5 4 5 5 4 5 ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1980              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA 6 NA 6 5 2 NA 3 NA ...</span>
+<span class="co">#&gt;  $ HRP2_1980                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA 5 NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1980              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA 5 NA NA NA 5 NA 4 NA ...</span>
+<span class="co">#&gt;  $ HRP3_1980                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA 5 NA NA NA 4 NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1980              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1980                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1980              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1980                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HGC_1980                     : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 NA 15 14 10 13 11 10 ...</span>
+<span class="co">#&gt;  $ HGCREV80_1980                : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 NA 15 14 10 13 11 10 ...</span>
+<span class="co">#&gt;  $ Q1-3_A~M_1981                : Factor w/ 18 levels "0: &lt; 1","1","2",..: 10 2 NA 9 8 11 7 8 8 11 ...</span>
+<span class="co">#&gt;  $ Q1-3_A~Y_1981                : Factor w/ 18 levels "0 TO 54: &lt; 55",..: 5 6 NA 9 6 7 11 5 10 7 ...</span>
+<span class="co">#&gt;  $ Q3-4_1981                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA NA NA NA 16 15 11 NA 12 NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1981                  : Factor w/ 12 levels "0","1 TO 99",..: 5 7 NA NA 5 NA 5 5 5 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1981              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA 6 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1981                    : Factor w/ 12 levels "0","1 TO 99",..: 5 7 NA NA 5 NA 5 5 5 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1981              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA 6 5 3 2 3 4 ...</span>
+<span class="co">#&gt;  $ HRP2_1981                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA 6 6 NA NA NA 5 ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1981              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA 2 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP3_1981                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1981              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1981                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1981              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1981                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HGC_1981                     : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 NA 10 16 15 11 13 12 10 ...</span>
+<span class="co">#&gt;  $ HGCREV81_1981                : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 NA 10 16 15 11 13 12 10 ...</span>
+<span class="co">#&gt;  $ Q3-4_1982                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA NA NA NA 17 16 12 NA 13 NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1982                  : Factor w/ 12 levels "0","1 TO 99",..: NA 7 6 5 6 5 NA 6 6 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1982              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA 5 6 4 6 3 4 5 6 6 ...</span>
+<span class="co">#&gt;  $ HRP1_1982                    : Factor w/ 12 levels "0","1 TO 99",..: NA 7 6 5 6 5 NA 6 6 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1982              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA 3 5 6 2 NA NA ...</span>
+<span class="co">#&gt;  $ HRP2_1982                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA 6 5 NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1982              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP3_1982                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1982              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1982                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1982              : Factor w/ 12 levels "0","1 TO 9","10 TO 19",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1982                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HGC_1982                     : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 10 17 16 12 13 13 10 ...</span>
+<span class="co">#&gt;  $ HGCREV82_1982                : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 10 17 16 12 13 13 10 ...</span>
+<span class="co">#&gt;  $ Q3-4_1983                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA NA NA NA 18 17 13 NA 13 NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1983                  : Factor w/ 12 levels "0","1 TO 99",..: NA 7 NA NA 6 5 NA 6 7 NA ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1983              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA 10 NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1983                    : Factor w/ 12 levels "0","1 TO 99",..: NA 7 NA NA 6 5 10 6 7 NA ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1983              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA 4 NA 2 NA 10 ...</span>
+<span class="co">#&gt;  $ HRP2_1983                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1983              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA 4 NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP3_1983                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1983              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1983                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1983              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1983                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HGC_1983                     : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 10 18 17 13 13 13 10 ...</span>
+<span class="co">#&gt;  $ HGCREV83_1983                : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 10 18 17 13 13 13 10 ...</span>
+<span class="co">#&gt;  $ Q3-4_1984                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA NA NA 14 19 NA NA NA 13 NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1984                  : Factor w/ 12 levels "0","1 TO 99",..: NA 7 NA NA 12 8 NA 7 6 8 ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1984              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1984                    : Factor w/ 12 levels "0","1 TO 99",..: NA 7 NA NA 12 8 NA 7 6 8 ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1984              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA 3 NA 3 10 5 ...</span>
+<span class="co">#&gt;  $ HRP2_1984                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1984              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP3_1984                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.04_1984              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP4_1984                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ QES-52A.05_1984              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP5_1984                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HGC_1984                     : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 14 19 17 13 13 13 10 ...</span>
+<span class="co">#&gt;  $ HGCREV84_1984                : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 10 11 14 19 17 13 13 13 10 ...</span>
+<span class="co">#&gt;  $ Q3-4_1985                    : Factor w/ 22 levels "NONE","1ST GRADE",..: NA 13 NA 14 NA 17 13 NA NA NA ...</span>
+<span class="co">#&gt;  $ CPSHRP_1985                  : Factor w/ 12 levels "0","1 TO 99",..: NA 9 7 NA NA 9 NA NA 5 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.01_1985              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;  $ HRP1_1985                    : Factor w/ 12 levels "0","1 TO 99",..: NA 9 7 NA NA 9 NA NA 5 6 ...</span>
+<span class="co">#&gt;  $ QES-52A.02_1985              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA 10 NA 10 NA 10 ...</span>
+<span class="co">#&gt;  $ HRP2_1985                    : Factor w/ 12 levels "0","1 TO 99",..: NA NA NA NA NA 8 NA 7 NA 7 ...</span>
+<span class="co">#&gt;  $ QES-52A.03_1985              : Factor w/ 12 levels "0","1 TO 4","5 TO 9",..: NA NA NA NA NA NA NA NA NA NA ...</span>
+<span class="co">#&gt;   [list output truncated]</span></code></pre></div>
 </div>
 <div id="tidy-the-date-of-birth-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tidy-the-date-of-birth-data" class="anchor"></a>Tidy the date of birth data</h1>
 <p>The month and year of birth is recorded in 1979 and 1981 for each individual. The records in 1981 are missing for some individuals so we take the month and year of birth from 1979 records.</p>
 <p>Where the record is present for both 1979 and 1981, we check that the record matches.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dob_tidy</span> <span class="op">&lt;-</span> <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
          year_1979 <span class="op">=</span> <span class="va">`Q1-3_A~Y_1979`</span>,
          year_1981 <span class="op">=</span> <span class="va">`Q1-3_A~Y_1981`</span>,
          month_1979 <span class="op">=</span> <span class="va">`Q1-3_A~M_1979`</span>,
          month_1981 <span class="op">=</span> <span class="va">`Q1-3_A~M_1981`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dob_year <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+  <span class="fu">mutate</span><span class="op">(</span>dob_year <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
                       <span class="co"># if the years recorded in both sets match, take 79 data</span>
                       <span class="va">year_1979</span> <span class="op">==</span> <span class="va">year_1981</span> <span class="op">~</span> <span class="va">year_1979</span>,
                       <span class="co"># if the year in the 81 set is missing, take the 79 data</span>
                       <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">year_1981</span><span class="op">)</span> <span class="op">~</span> <span class="va">year_1979</span>,
                       <span class="co"># if the sets don't match for dob year, take the 79 data</span>
                       <span class="va">year_1979</span> <span class="op">!=</span> <span class="va">year_1981</span> <span class="op">~</span> <span class="va">year_1979</span><span class="op">)</span>,
-         dob_month <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+         dob_month <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
                       <span class="co"># if months recorded in both sets match, take 79 data</span>
                       <span class="va">month_1979</span> <span class="op">==</span> <span class="va">month_1981</span> <span class="op">~</span> <span class="va">month_1979</span>,
                       <span class="co"># if month in 81 set is missing, take the 79 data</span>
@@ -17723,37 +17826,46 @@ Click here for the <strong>source file to read data</strong> (note this is quite
                       <span class="co"># if sets don't match for dob month, take the 79 data</span>
                       <span class="va">month_1979</span> <span class="op">!=</span> <span class="va">month_1981</span> <span class="op">~</span> <span class="va">month_1979</span><span class="op">)</span>,
          <span class="co"># flag if there is a conflict between dob recorded in 79 and 81</span>
-         dob_conflict <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+         dob_conflict <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
                       <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">month_1981</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span><span class="va">month_1979</span> <span class="op">!=</span> <span class="va">month_1981</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,
                       <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">year_1981</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span><span class="va">year_1979</span> <span class="op">!=</span> <span class="va">year_1981</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,
                       <span class="op">(</span><span class="va">year_1979</span> <span class="op">==</span> <span class="va">year_1981</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">month_1979</span> <span class="op">==</span> <span class="va">month_1981</span><span class="op">)</span> <span class="op">~</span> <span class="cn">FALSE</span>,
                       <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">month_1981</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">year_1981</span><span class="op">)</span> <span class="op">~</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">id</span>,
          <span class="va">dob_month</span>,
          <span class="va">dob_year</span>,
          <span class="va">dob_conflict</span><span class="op">)</span>
 
 <span class="va">has_dob_conflict</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">dob_tidy</span><span class="op">$</span><span class="va">dob_conflict</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>[1] “All birth month and year recorded in 1979 and 1981 match.”</p>
+<p>All birth month and year recorded in 1979 and 1981 match.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">dob_tidy</span><span class="op">)</span>
+<span class="co">#&gt;   id dob_month dob_year dob_conflict</span>
+<span class="co">#&gt; 1  1         9       58        FALSE</span>
+<span class="co">#&gt; 2  2         1       59        FALSE</span>
+<span class="co">#&gt; 3  3         8       61        FALSE</span>
+<span class="co">#&gt; 4  4         8       62        FALSE</span>
+<span class="co">#&gt; 5  5         7       59        FALSE</span>
+<span class="co">#&gt; 6  6        10       60        FALSE</span></code></pre></div>
 </div>
 <div id="getting-the-race-and-sex-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#getting-the-race-and-sex-data" class="anchor"></a>Getting the race and sex data</h1>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">demog_tidy</span> <span class="op">&lt;-</span> <span class="va">categories_qnames</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
          race <span class="op">=</span> <span class="va">SAMPLE_RACE_78SCRN</span>,
          gender <span class="op">=</span> <span class="va">SAMPLE_SEX_1979</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="tidying-the-education-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tidying-the-education-data" class="anchor"></a>Tidying the education data</h1>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">demog_education</span> <span class="op">&lt;-</span> <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
   <span class="co"># in 2018, the variable's name is Q3-4_2018, instead of HGC_2018</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>HGC_2018 <span class="op">=</span> <span class="va">`Q3-4_2018`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
-         <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"HGCREV"</span><span class="op">)</span>,
+  <span class="fu">rename</span><span class="op">(</span>HGC_2018 <span class="op">=</span> <span class="va">`Q3-4_2018`</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
+         <span class="fu">starts_with</span><span class="op">(</span><span class="st">"HGCREV"</span><span class="op">)</span>,
          <span class="st">"HGC_2012"</span>,
          <span class="st">"HGC_2014"</span>,
          <span class="st">"HGC_2016"</span>,
@@ -17762,22 +17874,22 @@ Click here for the <strong>source file to read data</strong> (note this is quite
                names_to <span class="op">=</span> <span class="st">"var"</span>,
                values_to <span class="op">=</span> <span class="st">"grade"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">separate</span><span class="op">(</span><span class="st">"var"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"year"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">var</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">var</span><span class="op">)</span></code></pre></div>
 <div id="getting-the-highest-year-completed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-the-highest-year-completed" class="anchor"></a>Getting the highest year completed</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the highest year completed</span>
 <span class="va">highest_year</span> <span class="op">&lt;-</span> <span class="va">demog_education</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hgc_i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">==</span> <span class="va">grade</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html">first</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>yr_hgc <span class="op">=</span> <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">yr_hgc</span>, <span class="va">hgc_i</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hgc <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"NONE"</span>,
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>hgc_i <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">grade</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">==</span> <span class="va">grade</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fu">first</span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>yr_hgc <span class="op">=</span> <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">yr_hgc</span>, <span class="va">hgc_i</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>hgc <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">hgc_i</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">~</span> <span class="st">"NONE"</span>,
                          <span class="va">hgc_i</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">~</span> <span class="st">"1ST GRADE"</span>,
                          <span class="va">hgc_i</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">~</span> <span class="st">"2ND GRADE"</span>,
                          <span class="va">hgc_i</span> <span class="op">==</span> <span class="fl">3</span> <span class="op">~</span> <span class="st">"3RD GRADE"</span>,
@@ -17792,99 +17904,99 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <div id="combinining-hte-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#combinining-hte-data" class="anchor"></a>Combinining hte data</h1>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">full_demographics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">dob_tidy</span>, <span class="va">demog_tidy</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">highest_year</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">full_demographics</span> <span class="op">&lt;-</span> <span class="fu">full_join</span><span class="op">(</span><span class="va">dob_tidy</span>, <span class="va">demog_tidy</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">full_join</span><span class="op">(</span><span class="va">highest_year</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="tidying-the-employment-information" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tidying-the-employment-information" class="anchor"></a>Tidying the employment information</h1>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make a list for years where we used the "QES-52A"</span>
 <span class="va">year_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1979</span><span class="op">:</span><span class="fl">1987</span>, <span class="fl">1993</span><span class="op">)</span>
 <span class="co"># function to get the hour of work</span>
 <span class="va">get_hour</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span><span class="op">(</span><span class="va">year</span> <span class="op">%in%</span> <span class="va">year_A</span><span class="op">)</span><span class="op">{</span>
     <span class="va">temp</span> <span class="op">&lt;-</span> <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
-             <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"QES-52A"</span><span class="op">)</span> <span class="op">&amp;</span>
-             <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
+             <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QES-52A"</span><span class="op">)</span> <span class="op">&amp;</span>
+             <span class="fu">ends_with</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span>
   <span class="kw">else</span><span class="op">{</span>
     <span class="va">temp</span> <span class="op">&lt;-</span> <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
-      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
-             <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"QES-52D"</span><span class="op">)</span> <span class="op">&amp;</span>
-             <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span>
+      <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
+             <span class="fu">starts_with</span><span class="op">(</span><span class="st">"QES-52D"</span><span class="op">)</span> <span class="op">&amp;</span>
+             <span class="fu">ends_with</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span>
   <span class="va">temp</span> <span class="op">%&gt;%</span>
     <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">!</span><span class="va">CASEID_1979</span>,
                  names_to <span class="op">=</span> <span class="st">"job"</span>,
                  values_to <span class="op">=</span> <span class="st">"hours_work"</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">separate</span><span class="op">(</span><span class="st">"job"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"job"</span>, <span class="st">"year"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="op">-</span><span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>job <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"job_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">job</span>, <span class="fl">9</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
+    <span class="fu">mutate</span><span class="op">(</span>job <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"job_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">job</span>, <span class="fl">9</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">rename</span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># getting the hours of work of all observations</span>
 <span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1979</span><span class="op">:</span><span class="fl">1994</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1996</span>, <span class="fl">2018</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">hours_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_hour</span><span class="op">)</span>
 
 <span class="va">get_rate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
-           <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"HRP"</span><span class="op">)</span> <span class="op">&amp;</span>
-              <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
+           <span class="fu">starts_with</span><span class="op">(</span><span class="st">"HRP"</span><span class="op">)</span> <span class="op">&amp;</span>
+              <span class="fu">ends_with</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">!</span><span class="va">CASEID_1979</span>, names_to <span class="op">=</span> <span class="st">"job"</span>, values_to <span class="op">=</span> <span class="st">"rate_per_hour"</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">separate</span><span class="op">(</span><span class="st">"job"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"job"</span>, <span class="st">"year"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="op">-</span><span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>job <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"job_0"</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">job</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
+    <span class="fu">mutate</span><span class="op">(</span>job <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"job_0"</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">job</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">rename</span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">rates_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_rate</span><span class="op">)</span>
 
 <span class="co"># join hours and rates variable</span>
-<span class="va">hours_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">rates_all</span>,
+<span class="va">hours_wages</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">rates_all</span>,
                          <span class="va">hours_all</span>,
                          by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span>, <span class="st">"job"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co"># set the 0 value in rate_per_hour as NA</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rate_per_hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">rate_per_hour</span> <span class="op">==</span> <span class="fl">0</span>, <span class="cn">NA</span>, <span class="va">rate_per_hour</span><span class="op">)</span>,
+  <span class="fu">mutate</span><span class="op">(</span>rate_per_hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">rate_per_hour</span> <span class="op">==</span> <span class="fl">0</span>, <span class="cn">NA</span>, <span class="va">rate_per_hour</span><span class="op">)</span>,
          hours_work <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">hours_work</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">hours_work</span> <span class="op">&gt;</span> <span class="fl">84</span>, <span class="cn">NA</span>, <span class="va">hours_work</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate number of jobs that a person has in one year</span>
 <span class="va">no_job</span> <span class="op">&lt;-</span> <span class="va">hours_wages</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>no_jobs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarise</span><span class="op">(</span>no_jobs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># filter the observations with available rate per hour</span>
 <span class="va">eligible_wages</span> <span class="op">&lt;-</span> <span class="va">hours_wages</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">no_job</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">no_job</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># calculate the mean_hourly_wage</span>
 <span class="co"># flag1 = code 1 for weighted mean</span>
 <span class="co"># code 0 for arithmetic mean</span>
 <span class="va">mean_hourly_wage</span> <span class="op">&lt;-</span> <span class="va">eligible_wages</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co">#calculate the weighted mean if the number of jobs &gt; 1</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">no_jobs</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">rate_per_hour</span><span class="op">/</span><span class="fl">100</span>,
+  <span class="fu">mutate</span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">no_jobs</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">rate_per_hour</span><span class="op">/</span><span class="fl">100</span>,
                         <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">rate_per_hour</span>, <span class="va">hours_work</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co">#give the flag if it the weighted mean</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>flag1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">no_jobs</span> <span class="op">!=</span> <span class="fl">1</span>, <span class="fl">1</span>,
+  <span class="fu">mutate</span><span class="op">(</span>flag1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">no_jobs</span> <span class="op">!=</span> <span class="fl">1</span>, <span class="fl">1</span>,
                         <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co">#calculate the arithmetic mean for the na</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
+  <span class="fu">mutate</span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span>,
                         <span class="va">wages</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span>,
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">id</span>, <span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">summarise</span><span class="op">(</span>wages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">wages</span><span class="op">)</span>,
             total_hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">hours_work</span><span class="op">)</span>,
             number_of_jobs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">no_jobs</span><span class="op">)</span>,
             flag1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">flag1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>mean_hourly_wage <span class="op">=</span> <span class="va">wages</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>is_wm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">flag1</span> <span class="op">==</span> <span class="fl">1</span>, <span class="cn">TRUE</span>,
+  <span class="fu">mutate</span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">rename</span><span class="op">(</span>mean_hourly_wage <span class="op">=</span> <span class="va">wages</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>is_wm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">flag1</span> <span class="op">==</span> <span class="fl">1</span>, <span class="cn">TRUE</span>,
                         <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">flag1</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">flag1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mean_hourly_wage</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 × 6</span>
 <span class="co">#&gt;       id  year mean_hourly_wage total_hours number_of_jobs is_wm</span>
@@ -17902,22 +18014,22 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <div id="subsetting-to-the-high-school-population" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subsetting-to-the-high-school-population" class="anchor"></a>Subsetting to the high school population</h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># join the wages information and the demographic information by case id.</span>
-<span class="va">wages_demog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">mean_hourly_wage</span>, <span class="va">full_demographics</span>, by<span class="op">=</span><span class="st">"id"</span><span class="op">)</span>
+<span class="va">wages_demog</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">mean_hourly_wage</span>, <span class="va">full_demographics</span>, by<span class="op">=</span><span class="st">"id"</span><span class="op">)</span>
 <span class="co"># calculate the years in work force and the age of the subjects in 1979</span>
 <span class="va">wages_demog</span> <span class="op">&lt;-</span> <span class="va">wages_demog</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>yr_hgc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">yr_hgc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>years_in_workforce <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="va">yr_hgc</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">mutate</span><span class="op">(</span>yr_hgc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">yr_hgc</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>years_in_workforce <span class="op">=</span> <span class="va">year</span> <span class="op">-</span> <span class="va">yr_hgc</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># filter only the id with high school education</span>
-<span class="va">wages_before</span> <span class="op">&lt;-</span> <span class="va">wages_demog</span>  <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"GRADE"</span>, <span class="va">hgc</span><span class="op">)</span><span class="op">)</span>
+<span class="va">wages_before</span> <span class="op">&lt;-</span> <span class="va">wages_demog</span>  <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"GRADE"</span>, <span class="va">hgc</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># calculate the number of observation</span>
 <span class="va">keep_me</span> <span class="op">&lt;-</span> <span class="va">wages_before</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span>
 <span class="va">wages_before</span> <span class="op">&lt;-</span> <span class="va">wages_before</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">%in%</span> <span class="va">keep_me</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">%in%</span> <span class="va">keep_me</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
