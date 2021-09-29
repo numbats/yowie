@@ -29,7 +29,6 @@ authors:
     location: "Perth, WA"
     email: ""
 bibliography: ../references.bib
-biblio-style: unsrt
 #preamble: >
 output: 
   bookdown::pdf_document2:
