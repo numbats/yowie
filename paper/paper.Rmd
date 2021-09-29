@@ -45,7 +45,7 @@ output:
     base_format: rticles::arxiv_article
 date: "24/02/2021"
 always_allow_html: true
-keywords: "Data cleaning; Data tidying; Longitudinal data; NLSY79; Open data; Initial data analysis; Outlier detection; Robust linear regression"
+keywords: "Data cleaning; Data tidying; Reproducible workflow; Longitudinal data; NLSY79; Initial data analysis;"
 ---
 
 ```{r setup, echo = FALSE, cache = FALSE, include = FALSE}
