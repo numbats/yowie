@@ -354,6 +354,8 @@ From this stage forward, we assume that we already have valid data. We also subs
 ```{r flow-chart-blind, fig.cap="(ref:flow-chart)", out.width="85%", eval = CENSOR}
 ```
 
+```{r flow-chart, fig.cap="(ref:flow-chart)", out.width="85%", eval = !CENSOR}
+```
 
 # Comparison of refreshed with the original data {#compare}
 
