@@ -356,3 +356,7 @@ include_graphics(here::here("paper/figures/flowchart.png"))
 #       [7]: 'yowie Package'
 #       ",
 #             height = 700)
+
+### ---- flow-chart-blind
+include_graphics(here::here("paper/figures/flowchart_blind.png"))
+
