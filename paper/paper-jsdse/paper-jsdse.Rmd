@@ -28,6 +28,7 @@ authors:
     affiliation: Perth, WA
     location: "Perth, WA"
     email: ""
+blind: 1 # 0 for no
 bibliography: ../references.bib
 #preamble: >
 output: 
