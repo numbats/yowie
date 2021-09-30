@@ -95,7 +95,7 @@
 
 \bigskip
 \begin{abstract}
-The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data is never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets, and the code to produce them are provided in an accompanying open source R package, called {[}CENSORED{]}. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks, and providing more convenient samples of the data to potential users.
+The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data are never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets and the code to produce them are provided in an accompanying open source R package, called {[}CENSORED{]}. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks and providing more convenient samples of the data to potential users.
 \end{abstract}
 
 \noindent%
@@ -148,9 +148,9 @@ M. van der Loo and de Jonge (2018) describe the notion of a ``statistical value 
 
 The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described in Figure \ref{fig:source-nav}.
 
-\begin{figure}[Ht]
+\begin{figure}[t]
 
-\begin{tcolorbox}
+\begin{tcolorbox}[title = Navigating the data source]
 \faDatabase\ NLSY79 (\url{https://www.nlsinfo.org/investigator/pages/search?s=NLSY79})\\
 \vspace{1mm}
 \faCheck\ The CASEID will be always be selected.  \\
@@ -192,7 +192,7 @@ For the remaining variables, we went to the "Variable Search" tab and select var
 \item[\faCloudDownload] To download all 686 variables selected, we then navigate to the tab "Save / Download" then select the tab "Advanced Download". We select the R Source code and Comma-delimited datafile of selected variables with Reference Number as column headers. We name the filename "NLSY79" and press the download button. There are also options to get control or dictionary files for SAS, SPSS and STATA. 
 \end{itemize}
 \end{tcolorbox}
-\caption{Above shows the steps taken to navigate the data source to download the raw data.\label{fig:source-nav}}
+\caption{The above documents the steps taken to select variables of interest and download the raw data.\label{fig:source-nav}}
 \end{figure}
 
 The downloaded data set comes as a zip file, containing the following set of files:
@@ -239,9 +239,9 @@ For gender and race, we only rename the column names. It is worth noting that us
 
 The \texttt{new\_data\_qnames} contains the variables \texttt{Q1-3\_A\textasciitilde{}Y\_1979} and \texttt{Q1-3\_A\textasciitilde{}Y\_1981} which records two versions of the birth year of the respondent; this is also the case for the record of birth month (\texttt{Q1-3\_A\textasciitilde{}M\_1979} and \texttt{Q1-3\_A\textasciitilde{}M\_1981}). The record contains two versions of birth year and birth month as the survey recorded this in 1979 and 1981. We checked for consistency for the two versions and found no discrepancy where the responses were recorded in both 1979 and 1981. The age was then calculated using the birth year.
 
-The next step is tidying the highest grade completed (\texttt{hgc}) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.
+The next step is tidying to obtain \texttt{hgc} and \texttt{yr\_hgc}. The highest grade completed are recorded in \texttt{new\_data\_qnames} as variables beginning with \texttt{Q3-4} and \texttt{HGC} with suffix of the year it was recorded. In addition the variables beginning with \texttt{HGCREV} contain the revised data. We choose to use this revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years.
 
-Furthermore, \texttt{hgc} is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for deriving this variable is also available at \url{CENSORED/articles/raw-to-input-data.html}.
+The \texttt{hgc} is measured and could be updated in each period of the survey. We chose to only retain the highest grade completed for each individual and derived the year when they completed it (\texttt{yr\_hgc}) by finding the minimum year with the highest completed grade.
 
 Finally, we get all of the demographic profiles of the NLSY79 cohort. We then save this data as \texttt{demog\_nlsy79}.
 
@@ -323,7 +323,7 @@ Total & 2,002 (15.78\%) & 3,174 (25.02\%) & 7,510 (59.20\%) & 12,686 (100.00\%)\
 \end{tabular}
 \end{table}
 
-The next step is that explore the mean hourly wage data. In this case, we only explore the wages data of up to \(12^{th}\) grade. Here, we use visualisation techniques to do IDA.
+The next step is that explore the mean hourly wage data. In this case, we only explore the wages data of up to \(12^{th}\) grade. Here, we use visualization techniques to do IDA.
 
 \begin{figure}
 
@@ -466,6 +466,11 @@ The entire analysis is conducted using \texttt{R} (R Core Team 2020) in RStudio 
 \item
   \textbf{shiny app}: An interactive \texttt{shiny} web app to visualise the effect of selecting different weight threshold for substituting the wages data to its predicted value from a fit of the robust linear regression model. This app could be accessed \href{CENSORED}{here} with the source code provided \href{CENSORED/tree/master/app}{here}.
 \end{itemize}
+
+\hypertarget{data-availability-statement}{%
+\section{Data Availability Statement}\label{data-availability-statement}}
+
+The authors confirm that the data supporting the findings of this study are available within the supplementary materials.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}

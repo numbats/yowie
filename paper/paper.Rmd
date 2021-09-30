@@ -217,12 +217,12 @@ The `new_data_qnames` contains the variables `Q1-3_A~Y_1979` and `Q1-3_A~Y_1981`
 ```{r demog-ed}
 ```
 
-The next step is tidying the highest grade completed (`hgc`) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.  
+The next step is tidying to obtain `hgc` and `yr_hgc`. The highest grade completed are recorded in `new_data_qnames` as variables beginning with `Q3-4` and `HGC` with suffix of the year it was recorded. In addition the variables beginning with `HGCREV` contain the revised data. We choose to use this revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years. 
 
 ```{r tidy-grade}
 ```
 
-Furthermore, `hgc` is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for deriving this variable is also available at \url{`r yowie_pkgdown`/articles/raw-to-input-data.html}.
+The `hgc` is measured and could be updated in each period of the survey. We chose to only retain the highest grade completed for each individual and derived the year when they completed it (`yr_hgc`) by finding the minimum year with the highest completed grade. 
 
 ```{r tidy-hgc}
 ```

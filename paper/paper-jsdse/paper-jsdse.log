@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  30 SEP 2021 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  30 SEP 2021 15:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -547,8 +547,7 @@ f
 File: l3backend-pdfmode.def 2020-05-05 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count291
 \l__pdf_internal_box=\box64
-)
-No file paper-jsdse.aux.
+) (./paper-jsdse.aux)
 \openout1 = `paper-jsdse.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
@@ -614,51 +613,185 @@ o-ducible work-flow; Lon-gi-tu-di-nal data; NLSY79;
 Non-PDF special ignored!
 <special> header=psfrag.pro
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-
-LaTeX Warning: Reference `database' on page 3 undefined on input line 122.
-
-
-LaTeX Warning: Reference `cleaning' on page 3 undefined on input line 122.
-
-
-LaTeX Warning: Reference `compare' on page 3 undefined on input line 122.
-
-
-LaTeX Warning: Reference `summary' on page 3 undefined on input line 122.
-
-[3]
-
-LaTeX Warning: Reference `getdata' on page 4 undefined on input line 144.
-
-
-LaTeX Warning: Reference `tidydemog' on page 4 undefined on input line 144.
-
-
-LaTeX Warning: Reference `tidyemp' on page 4 undefined on input line 144.
-
-
-LaTeX Warning: Reference `ida' on page 4 undefined on input line 144.
-
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
 [4]
+LaTeX Font Info:    Trying to load font information for U+fontawesomethree on i
+nput line 154.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/fontawesome/ufontawesomethree.fd
+File: ufontawesomethree.fd 2016/05/22 Font definitions for U/fontawesomethree.
+)
+LaTeX Font Info:    Trying to load font information for U+fontawesometwo on inp
+ut line 156.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/fontawesome/ufontawesometwo.fd
+File: ufontawesometwo.fd 2016/05/22 Font definitions for U/fontawesometwo.
+)
 
-LaTeX Warning: Reference `fig:source-nav' on page 5 undefined on input line 149
-.
+LaTeX Warning: Float too large for page by 71.55313pt on input line 196.
 
-Runaway argument?
-{figure}[Ht] 
-! Paragraph ended before \@float@HH was complete.
-<to be read again> 
-                   \par 
-l.152 
-       
+[5]
+Overfull \hbox (31.73026pt too wide) in paragraph at lines 219--219
+[]\OT1/cmtt/m/n/12 #>  $ HRP1_1979                    : int  328 385 365 NA 310
+ NA NA NA 214 NA ...[] 
+ []
+
+
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 220--220
+[]\OT1/cmtt/m/n/12 #>  $ HRP2_1979                    : int  NA NA NA NA 375 NA
+ NA NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 221--221
+[]\OT1/cmtt/m/n/12 #>  $ HRP3_1979                    : int  NA NA 275 NA NA NA
+ NA NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 222--222
+[]\OT1/cmtt/m/n/12 #>  $ HRP4_1979                    : int  NA NA NA NA NA 250
+ NA NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (0.85524pt too wide) in paragraph at lines 223--223
+[]\OT1/cmtt/m/n/12 #>  $ HRP5_1979                    : int  NA NA NA NA NA NA 
+NA NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (50.25526pt too wide) in paragraph at lines 224--224
+[]\OT1/cmtt/m/n/12 #>  $ HRP1_1980                    : int  NA 457 397 NA 333 
+275 300 394 200 318 ...[] 
+ []
+
+
+Overfull \hbox (7.03024pt too wide) in paragraph at lines 225--225
+[]\OT1/cmtt/m/n/12 #>  $ HRP2_1980                    : int  NA NA 367 NA NA NA
+ NA NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (13.20525pt too wide) in paragraph at lines 226--226
+[]\OT1/cmtt/m/n/12 #>  $ HRP3_1980                    : int  NA NA 380 NA NA NA
+ 290 NA NA NA ...[] 
+ []
+
+
+Overfull \hbox (0.85524pt too wide) in paragraph at lines 227--227
+[]\OT1/cmtt/m/n/12 #>  $ HRP4_1980                    : int  NA NA NA NA NA NA 
+NA NA NA NA ...[] 
+ []
+
+[6] [7]
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 2
+55.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 255.
+[8]
+Overfull \hbox (6.00642pt too wide) in paragraph at lines 312--324
+ [][] 
+ []
+
+<figures/sample-plot-1.pdf, id=86, 716.6775pt x 566.115pt>
+File: figures/sample-plot-1.pdf Graphic file (type pdf)
+<use figures/sample-plot-1.pdf>
+Package pdftex.def Info: figures/sample-plot-1.pdf  used on input line 330.
+(pdftex.def)             Requested size: 462.26999pt x 365.16296pt.
+[9] [10]
+<figures/feature-plot-1.pdf, id=103, 701.62125pt x 263.98625pt>
+File: figures/feature-plot-1.pdf Graphic file (type pdf)
+<use figures/feature-plot-1.pdf>
+Package pdftex.def Info: figures/feature-plot-1.pdf  used on input line 341.
+(pdftex.def)             Requested size: 462.26999pt x 173.93338pt.
+[11]
+<figures/compare-plot-1.pdf, id=112, 716.6775pt x 557.08125pt>
+File: figures/compare-plot-1.pdf Graphic file (type pdf)
+<use figures/compare-plot-1.pdf>
+Package pdftex.def Info: figures/compare-plot-1.pdf  used on input line 365.
+(pdftex.def)             Requested size: 416.04016pt x 323.39636pt.
+<figures/fixed-feature-plot-1.pdf, id=116, 701.62125pt x 263.98625pt>
+File: figures/fixed-feature-plot-1.pdf Graphic file (type pdf)
+<use figures/fixed-feature-plot-1.pdf>
+Package pdftex.def Info: figures/fixed-feature-plot-1.pdf  used on input line 3
+76.
+(pdftex.def)             Requested size: 462.26999pt x 173.93338pt.
+</Users/etan0038/yowie/paper/figures/flowchart.png, id=118, 1606.0pt x 2176.13p
+t>
+File: /Users/etan0038/yowie/paper/figures/flowchart.png Graphic file (type png)
+
+<use /Users/etan0038/yowie/paper/figures/flowchart.png>
+Package pdftex.def Info: /Users/etan0038/yowie/paper/figures/flowchart.png  use
+d on input line 394.
+(pdftex.def)             Requested size: 392.93231pt x 532.40941pt.
+
+LaTeX Warning: Float too large for page by 7.41624pt on input line 399.
+
+[12]
+<figures/plotting-sw-do-1.pdf, id=130, 629.35126pt x 330.23375pt>
+File: figures/plotting-sw-do-1.pdf Graphic file (type pdf)
+<use figures/plotting-sw-do-1.pdf>
+Package pdftex.def Info: figures/plotting-sw-do-1.pdf  used on input line 408.
+(pdftex.def)             Requested size: 462.26999pt x 242.56015pt.
+[13] [14] [15] [16]
+Overfull \hbox (14.43417pt too wide) in paragraph at lines 523--525
+[][]\OT1/cmr/m/n/12 Pedersen, Thomas Lin. 2020. \OT1/cmr/m/it/12 patch-work: Th
+e Com-poser of Plots\OT1/cmr/m/n/12 . []$\OT1/cmtt/m/n/12 https : / / CRAN . R-
+[]project .
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 5
+42.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 542.
+[17] [18]
+Overfull \hbox (33.67421pt too wide) in paragraph at lines 583--585
+\OT1/cmr/m/n/12 Ra-ton, Florida: Chap-man; Hall/CRC. []$\OT1/cmtt/m/n/12 https 
+: / / bookdown . org / yihui / rmarkdown-[]cookbook$[]\OT1/cmr/m/n/12 . 
+ []
+
+[19] [20] [21 <./figures/sample-plot-1.pdf>] [22 <./figures/feature-plot-1.pdf>
+] [23 <./figures/compare-plot-1.pdf>] [24 <./figures/fixed-feature-plot-1.pdf>]
+[25 </Users/etan0038/yowie/paper/figures/flowchart.png>] [26 <./figures/plottin
+g-sw-do-1.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 594.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 594.
+(./paper-jsdse.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 594.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 594.
+ ) 
 Here is how much of TeX's memory you used:
- 17984 strings out of 480488
- 329034 string characters out of 5899970
- 578423 words of memory out of 5000000
- 33660 multiletter control sequences out of 15000+600000
- 538996 words of font info for 47 fonts, out of 8000000 for 9000
+ 18256 strings out of 480488
+ 334277 string characters out of 5899970
+ 592925 words of memory out of 5000000
+ 33812 multiletter control sequences out of 15000+600000
+ 539827 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,5n,75p,1074b,315s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 59i,9n,75p,1073b,571s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/fontawesome/fontawesometw
+o.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/fontawesome/fontaweso
+methree.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-sup
+er-ts1.enc}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/fontawesome/F
+ontAwesome.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
+pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.p
+fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
+>
+Output written on paper-jsdse.pdf (26 pages, 951117 bytes).
+PDF statistics:
+ 448 PDF objects out of 1000 (max. 8388607)
+ 388 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 179 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-!  ==> Fatal error occurred, no output PDF file produced!

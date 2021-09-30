@@ -17721,9 +17721,12 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt;  $ HGCREV79_1979                : Factor w/ 22 levels "NONE","1ST GRADE",..: 13 10 11 10 14 13 9 13 10 10 ...</span>
 <span class="co">#&gt;   [list output truncated]</span></code></pre></div>
 </div>
-<div id="tidy-the-date-of-birth-data" class="section level1">
+<div id="demographic-variables" class="section level1">
 <h1 class="hasAnchor">
-<a href="#tidy-the-date-of-birth-data" class="anchor"></a>Tidy the date of birth data</h1>
+<a href="#demographic-variables" class="anchor"></a>Demographic variables</h1>
+<div id="tidying-the-date-of-birth-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#tidying-the-date-of-birth-data" class="anchor"></a>Tidying the date of birth data</h2>
 <p>The month and year of birth is recorded in 1979 and 1981 for each individual. The records in 1981 are missing for some individuals so we take the month and year of birth from 1979 records.</p>
 <p>Where the record is present for both 1979 and 1981, we check that the record matches.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -17777,9 +17780,9 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt; 10    10        10       60 FALSE       </span>
 <span class="co">#&gt; # … with 12,676 more rows</span></code></pre></div>
 </div>
-<div id="getting-the-race-and-sex-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#getting-the-race-and-sex-data" class="anchor"></a>Getting the race and sex data</h1>
+<div id="getting-the-race-and-sex-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#getting-the-race-and-sex-data" class="anchor"></a>Getting the race and sex data</h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">demog_tidy</span> <span class="op">&lt;-</span> <span class="va">categories_qnames</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span>,
@@ -17802,9 +17805,9 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt; 10    10 NON-BLACK, NON-HISPANIC FEMALE</span>
 <span class="co">#&gt; # … with 12,676 more rows</span></code></pre></div>
 </div>
-<div id="tidying-the-education-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#tidying-the-education-data" class="anchor"></a>Tidying the education data</h1>
+<div id="tidying-the-education-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#tidying-the-education-data" class="anchor"></a>Tidying the education data</h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">demog_education</span> <span class="op">&lt;-</span> <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
   <span class="co"># in 2018, the variable's name is Q3-4_2018, instead of HGC_2018</span>
@@ -17837,9 +17840,9 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt;  9     2 1985     12</span>
 <span class="co">#&gt; 10     2 1986     12</span>
 <span class="co">#&gt; # … with 257,365 more rows</span></code></pre></div>
-<div id="getting-the-highest-year-completed" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-the-highest-year-completed" class="anchor"></a>Getting the highest year completed</h2>
+<div id="getting-the-highest-year-completed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#getting-the-highest-year-completed" class="anchor"></a>Getting the highest year completed</h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get the highest year completed</span>
 <span class="va">highest_year</span> <span class="op">&lt;-</span> <span class="va">demog_education</span> <span class="op">%&gt;%</span>
@@ -17878,30 +17881,45 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt; # … with 3,597 more rows</span></code></pre></div>
 </div>
 </div>
-<div id="combinining-hte-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#combinining-hte-data" class="anchor"></a>Combinining hte data</h1>
+<div id="demog_nlsy79" class="section level2">
+<h2 class="hasAnchor">
+<a href="#demog_nlsy79" class="anchor"></a><code>demog_nlsy79</code>
+</h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">full_demographics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">dob_tidy</span>, <span class="va">demog_tidy</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">highest_year</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">demog_nlsy79</span> <span class="op">&lt;-</span> <span class="va">full_demographics</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_1979 <span class="op">=</span> <span class="fl">1979</span> <span class="op">-</span> <span class="op">(</span><span class="va">dob_year</span> <span class="op">+</span> <span class="fl">1900</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>,
+                <span class="va">age_1979</span>,
+                <span class="va">gender</span>,
+                <span class="va">race</span>,
+                <span class="va">hgc</span>,
+                <span class="va">hgc_i</span>,
+                <span class="va">yr_hgc</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>,
+         age_1979 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">age_1979</span><span class="op">)</span>,
+         hgc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">hgc</span><span class="op">)</span>,
+         yr_hgc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">yr_hgc</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">full_demographics</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 12,686 × 10</span>
-<span class="co">#&gt;       id dob_month dob_year dob_conflict race      gender yr_hgc hgc_i</span>
-<span class="co">#&gt;    &lt;int&gt;     &lt;int&gt;    &lt;int&gt; &lt;lgl&gt;        &lt;fct&gt;     &lt;fct&gt;  &lt;chr&gt;  &lt;int&gt;</span>
-<span class="co">#&gt;  1     1         9       58 FALSE        NON-BLAC… FEMALE 1979      12</span>
-<span class="co">#&gt;  2     2         1       59 FALSE        NON-BLAC… FEMALE &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  3     3         8       61 FALSE        NON-BLAC… FEMALE &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  4     4         8       62 FALSE        NON-BLAC… FEMALE &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  5     5         7       59 FALSE        NON-BLAC… MALE   &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  6     6        10       60 FALSE        NON-BLAC… MALE   &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  7     7         6       64 FALSE        NON-BLAC… MALE   &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  8     8         7       58 FALSE        NON-BLAC… FEMALE &lt;NA&gt;      NA</span>
-<span class="co">#&gt;  9     9         7       63 FALSE        NON-BLAC… MALE   &lt;NA&gt;      NA</span>
-<span class="co">#&gt; 10    10        10       60 FALSE        NON-BLAC… FEMALE 1979       9</span>
-<span class="co">#&gt; # … with 12,676 more rows, and 2 more variables: hgc &lt;chr&gt;,</span>
-<span class="co">#&gt; #   age_1979 &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">demog_nlsy79</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 12,686 × 7</span>
+<span class="co">#&gt;    id    age_1979 gender race                    hgc        hgc_i yr_hgc</span>
+<span class="co">#&gt;    &lt;fct&gt;    &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;                   &lt;fct&gt;      &lt;int&gt;  &lt;int&gt;</span>
+<span class="co">#&gt;  1 1           21 FEMALE NON-BLACK, NON-HISPANIC 12TH GRADE    12   1979</span>
+<span class="co">#&gt;  2 2           20 FEMALE NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  3 3           18 FEMALE NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  4 4           17 FEMALE NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  5 5           20 MALE   NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  6 6           19 MALE   NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  7 7           15 MALE   NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  8 8           21 FEMALE NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt;  9 9           16 MALE   NON-BLACK, NON-HISPANIC &lt;NA&gt;          NA     NA</span>
+<span class="co">#&gt; 10 10          19 FEMALE NON-BLACK, NON-HISPANIC 9TH GRADE      9   1979</span>
+<span class="co">#&gt; # … with 12,676 more rows</span></code></pre></div>
+</div>
 </div>
 <div id="tidying-the-employment-information" class="section level1">
 <h1 class="hasAnchor">

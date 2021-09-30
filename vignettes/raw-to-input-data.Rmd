@@ -64,8 +64,9 @@ As shown below, the column names contain information on the job number
 str(categories_qnames, list.len = 20)
 ```
 
+# Demographic variables
 
-# Tidy the date of birth data
+## Tidying the date of birth data
 
 The month and year of birth is recorded in 1979 and 1981 for each individual.
 The records in 1981 are missing for some individuals so we take the month and year of
@@ -91,7 +92,7 @@ as_tibble(dob_tidy)
 ```
 
 
-# Getting the race and sex data
+## Getting the race and sex data
 
 ```{r demog-tidy}
 ```
@@ -101,7 +102,7 @@ as_tibble(demog_tidy)
 ```
 
 
-# Tidying the education data
+## Tidying the education data
 
 ```{r demog-ed}
 ```
@@ -111,7 +112,7 @@ as_tibble(demog_education)
 ```
 
 
-## Getting the highest year completed
+### Getting the highest year completed
 
 ```{r tidy-hgc}
 ```
@@ -120,12 +121,12 @@ as_tibble(highest_year)
 ```
 
 
-# Combinining hte data 
+## `demog_nlsy79`
 
 ```{r full-demog}
 ```
 ```{r}
-as_tibble(full_demographics)
+as_tibble(demog_nlsy79)
 ```
 
 

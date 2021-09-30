@@ -102,6 +102,24 @@ full_demographics <- full_join(dob_tidy, demog_tidy, by = "id") %>%
   full_join(highest_year, by = "id") %>%
   mutate(age_1979 = 1979 - (dob_year + 1900))
 
+demog_nlsy79 <- full_demographics %>%
+  mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
+  dplyr::select(id,
+                age_1979,
+                gender,
+                race,
+                hgc,
+                hgc_i,
+                yr_hgc) %>%
+  mutate(id = as.factor(id),
+         age_1979 = as.integer(age_1979),
+         hgc = as.factor(hgc),
+         yr_hgc = as.integer(yr_hgc))
+
+
+## ---- save-demog-data
+usethis::use_data(demog_nlsy79, overwrite = TRUE)
+
 ## ---- tidy-hours
 # make a list for years where we used the "QES-52A"
 year_A <- c(1979:1987, 1993)
