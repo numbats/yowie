@@ -17946,13 +17946,29 @@ Click here for the <strong>source file to read data</strong> (note this is quite
     <span class="fu">separate</span><span class="op">(</span><span class="st">"job"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"job"</span>, <span class="st">"year"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="op">-</span><span class="fl">4</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>job <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"job_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">job</span>, <span class="fl">9</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># getting the hours of work of all observations</span>
-<span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1979</span><span class="op">:</span><span class="fl">1994</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1996</span>, <span class="fl">2018</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="va">hours_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_hour</span><span class="op">)</span>
+<span class="op">}</span>
 
-<span class="va">get_rate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span>
+<span class="co"># getting the hours of work of all observations</span>
+<span class="va">years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1979</span><span class="op">:</span><span class="fl">1994</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1996</span>, <span class="fl">2018</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="va">hours_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_hour</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">hours_all</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1,763,354 × 4</span>
+<span class="co">#&gt;       id job    year  hours_work</span>
+<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;</span>
+<span class="co">#&gt;  1     1 job_01 1979          38</span>
+<span class="co">#&gt;  2     1 job_02 1979          15</span>
+<span class="co">#&gt;  3     1 job_03 1979          NA</span>
+<span class="co">#&gt;  4     1 job_04 1979          NA</span>
+<span class="co">#&gt;  5     1 job_05 1979          NA</span>
+<span class="co">#&gt;  6     2 job_01 1979          35</span>
+<span class="co">#&gt;  7     2 job_02 1979          NA</span>
+<span class="co">#&gt;  8     2 job_03 1979          NA</span>
+<span class="co">#&gt;  9     2 job_04 1979          NA</span>
+<span class="co">#&gt; 10     2 job_05 1979          NA</span>
+<span class="co">#&gt; # … with 1,763,344 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">get_rate</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">new_data_qnames</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">CASEID_1979</span>,
            <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"HRP"</span><span class="op">)</span> <span class="op">&amp;</span>
@@ -17963,16 +17979,8 @@ Click here for the <strong>source file to read data</strong> (note this is quite
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">CASEID_1979</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="va">rates_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_rate</span><span class="op">)</span>
-
-<span class="co"># join hours and rates variable</span>
-<span class="va">hours_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">rates_all</span>,
-                         <span class="va">hours_all</span>,
-                         by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span>, <span class="st">"job"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co"># set the 0 value in rate_per_hour as NA</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rate_per_hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">rate_per_hour</span> <span class="op">==</span> <span class="fl">0</span>, <span class="cn">NA</span>, <span class="va">rate_per_hour</span><span class="op">)</span>,
-         hours_work <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">hours_work</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">hours_work</span> <span class="op">&gt;</span> <span class="fl">84</span>, <span class="cn">NA</span>, <span class="va">hours_work</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<span class="va">rates_all</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">years</span>, <span class="va">get_rate</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">rates_all</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1,776,040 × 4</span>
 <span class="co">#&gt;       id job    year  rate_per_hour</span>
@@ -17987,8 +17995,17 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt;  8     2 job_03 1979             NA</span>
 <span class="co">#&gt;  9     2 job_04 1979             NA</span>
 <span class="co">#&gt; 10     2 job_05 1979             NA</span>
-<span class="co">#&gt; # … with 1,776,030 more rows</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">hours_wages</span><span class="op">)</span>
+<span class="co">#&gt; # … with 1,776,030 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># join hours and rates variable</span>
+<span class="va">hours_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">rates_all</span>,
+                         <span class="va">hours_all</span>,
+                         by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"year"</span>, <span class="st">"job"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="co"># set the 0 value in rate_per_hour as NA</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>rate_per_hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">rate_per_hour</span> <span class="op">==</span> <span class="fl">0</span>, <span class="cn">NA</span>, <span class="va">rate_per_hour</span><span class="op">)</span>,
+         hours_work <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">hours_work</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">hours_work</span> <span class="op">&gt;</span> <span class="fl">84</span>, <span class="cn">NA</span>, <span class="va">hours_work</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">hours_wages</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1,776,040 × 5</span>
 <span class="co">#&gt;       id job    year  rate_per_hour hours_work</span>
 <span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;int&gt;      &lt;int&gt;</span>
@@ -18003,7 +18020,7 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <span class="co">#&gt;  9     2 job_04 1979             NA         NA</span>
 <span class="co">#&gt; 10     2 job_05 1979             NA         NA</span>
 <span class="co">#&gt; # … with 1,776,030 more rows</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># calculate number of jobs that a person has in one year</span>
 <span class="va">no_job</span> <span class="op">&lt;-</span> <span class="va">hours_wages</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rate_per_hour</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -18057,7 +18074,7 @@ Click here for the <strong>source file to read data</strong> (note this is quite
 <div id="subsetting-to-the-high-school-population" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subsetting-to-the-high-school-population" class="anchor"></a>Subsetting to the high school population</h2>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># join the wages information and the demographic information by case id.</span>
 <span class="va">wages_demog</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">mean_hourly_wage</span>, <span class="va">full_demographics</span>, by<span class="op">=</span><span class="st">"id"</span><span class="op">)</span>
 <span class="co"># calculate the years in work force and the age of the subjects in 1979</span>
@@ -18073,7 +18090,7 @@ Click here for the <strong>source file to read data</strong> (note this is quite
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span>
 <span class="va">wages_before</span> <span class="op">&lt;-</span> <span class="va">wages_before</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">%in%</span> <span class="va">keep_me</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">wages_demog</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 207,704 × 16</span>
 <span class="co">#&gt;       id  year mean_hourly_wage total_hours number_of_jobs is_wm dob_month</span>

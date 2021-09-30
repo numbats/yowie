@@ -144,12 +144,11 @@ get_hour <- function(year) {
     rename(id = CASEID_1979)
 }
 
-
-
-## ---- tidy-rate
 # getting the hours of work of all observations
 years <- c(1979:1994, seq(1996, 2018, by = 2))
 hours_all <- map_dfr(years, get_hour)
+
+## ---- tidy-rate
 
 get_rate <- function(year) {
   new_data_qnames %>%
@@ -163,6 +162,8 @@ get_rate <- function(year) {
 }
 
 rates_all <- map_dfr(years, get_rate)
+
+## ---- tidy-rate-hour
 
 # join hours and rates variable
 hours_wages <- left_join(rates_all,

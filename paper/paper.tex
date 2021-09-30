@@ -154,7 +154,7 @@ M. van der Loo and de Jonge (2018) describe the notion of a ``statistical value 
 \hypertarget{getdata}{%
 \subsection{Getting the data}\label{getdata}}
 
-The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described in \newline\Figure \ref{fig:source-nav}.
+The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described in Figure \ref{fig:source-nav}.
 
 \begin{figure}[t]
 
@@ -247,24 +247,30 @@ For gender and race, we only rename the column names. It is worth noting that us
 
 The \texttt{new\_data\_qnames} contains the variables \texttt{Q1-3\_A\textasciitilde{}Y\_1979} and \texttt{Q1-3\_A\textasciitilde{}Y\_1981} which records two versions of the birth year of the respondent; this is also the case for the record of birth month (\texttt{Q1-3\_A\textasciitilde{}M\_1979} and \texttt{Q1-3\_A\textasciitilde{}M\_1981}). The record contains two versions of birth year and birth month as the survey recorded this in 1979 and 1981. We checked for consistency for the two versions and found no discrepancy where the responses were recorded in both 1979 and 1981. The age was then calculated using the birth year.
 
-The next step is tidying the highest grade completed (\texttt{hgc}) variable. This variable came with several version in each year. We choose the revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years. The code for tidying this variable is provided in the supplementary materials.
+The next step is tidying to obtain \texttt{hgc} and \texttt{yr\_hgc}. The highest grade completed are recorded in \texttt{new\_data\_qnames} as variables beginning with \texttt{Q3-4} and \texttt{HGC} with suffix of the year it was recorded. In addition the variables beginning with \texttt{HGCREV} contain the revised data. We choose to use this revised May data because it seemed to have less missing and presumably has been checked. However, there is no revised May data for 2012, 2014, 2016, and 2018, thus, we use the ordinary May data for these years.
 
-Furthermore, \texttt{hgc} is measured and could be updated in each period of the survey. Hence, we only used the highest grade completed ever and derived the year when it is completed. The code for deriving this variable is also available at \url{CENSORED/articles/raw-to-input-data.html}.
+The \texttt{hgc} is measured and could be updated in each period of the survey. We chose to only retain the highest grade completed for each individual and derived the year when they completed it (\texttt{yr\_hgc}) by finding the minimum year with the highest completed grade.
 
 Finally, we get all of the demographic profiles of the NLSY79 cohort. We then save this data as \texttt{demog\_nlsy79}.
 
 \hypertarget{tidyemp}{%
 \subsubsection{Tidying employment variables}\label{tidyemp}}
 
-The employment data comprises of three variables, i.e., \texttt{total\ hours\ of\ work\ per\ week}, \texttt{number\ of\ jobs\ that\ an\ individual\ has}, and \texttt{mean\ hourly\ wage}.
+Our target variables for the employment are to obtain respondent's mean hourly wage (\texttt{mean\_hourly\_wage}), the number of jobs (\texttt{number\_of\_jobs}) and the total hours of work per week (\texttt{total\_hours}) for each survey year. As the data only reports up to 5 jobs for each respondent, the maximum number of jobs is capped at 5.
 
-\texttt{hours\ worked\ per\ week} initially has only one version per job, no choice from 1979 to 1987 (QES-52A). From 1988 onward, when we had more options, we chose the variable for total hours, including time spent working from home (QES-52D). However, in 1993, this variable did not have all the five D variables (the first one and the last one were missing), so we used QES-52A variable instead. In addition, 2008 only had jobs 1-4 for the QES-52D variable (whereas the other years had 1-5), so we use these.
+From 1979 to 1987, \texttt{new\_data\_qnames} only contain one version of hours worked per week for each job (in the variables with names starting with \texttt{QES-52A}). From 1988 onward, we selected the total hours worked per week, including hours working from home (\texttt{QES-52D}). However, in 1993, this variable was missing for the first and last job so we selected to use \texttt{QES-52A} instead. In addition, 2008 only had jobs 1-4 for the \texttt{QES-52D} variable, so we use only these.
 
-The same way was also deployed to tidy the rate of wage by year and by ID. The difference is that the hourly rate has only one version of each year. The hours of work and the hourly rate are then joined to calculate the number of jobs that a respondent has and their mean hourly wage. Some observations have 0 in their hourly rate and work hours, which is considered an invalid value. Thus, these observations are set to be NA. Besides, there are some observations with unusual hours of work. Here, we also censored the observations with \textgreater{} 84 hours of work a week to be NA.
+The hourly wages are in the variables beginning with \texttt{HRP} in \texttt{new\_data\_qnames}. As a respondent may have multiple jobs, the \texttt{mean\_hourly\_wage} is computed as a weighted average of the hourly wage for each job with the number of hours worked for each job as weights (provided that the information on number of hours is available); if number of hours worked for any job is missing, then the \texttt{mean\_hourly\_wage} is computed as a simple average of all available hourly wage. Prior to computing the mean hourly wage, we undertook a number of steps to treat unusual observations as described below:
 
-Since our ultimate goal is to calculate the mean hourly wage, the number of jobs is calculated based on the availability of the \texttt{rate\_per\_hour} information. For example, the number of jobs of ID 1, based on \texttt{hours\_work}, is 2. However, since the information of hourly rate of \texttt{job\_02} is not available, the number of jobs is considered as 1.
+\begin{itemize}
+\tightlist
+\item
+  If the hourly rate is recorded as 0, we set wage as missing.
+\item
+  If the total hours of worked for the corresponding job is greater than 84 hours, we set the wage and hour worked as missing.
+\end{itemize}
 
-Further, we calculated the mean hourly wage for each ID in each year using a weighted mean with the hours of work as the weight. However, there is a lot of missing value in \texttt{hours\_work} variable. In that case, we only calculated the mean hourly wage based on the arithmetic/regular mean method. Hence, we created a new variable to flag whether the mean hourly wage is weighted or regular. Additionally, if an ID only had one job, we directly used their hourly wages information and flagged it as arithmetic mean.
+The number of jobs (\texttt{number\_of\_jobs}) for each respondent per year is computed from the number of non-missing values of hourly wage \emph{and} hours worked. If either the hourly wage or hours worked is missing, we do not tally this.
 
 \begin{verbatim}
 #> # A tibble: 10 x 6
@@ -282,7 +288,7 @@ Further, we calculated the mean hourly wage for each ID in each year using a wei
 #> 10     2  1986             7.69          NA              1 FALSE
 \end{verbatim}
 
-The employment and demographic variables are then joined. We also filtered the data to only have the cohort who completed the education up to 12th grade and participated at least five rounds in the survey and save it to an object called \texttt{wages}.
+The employment and demographic variables are then joined. This data are further filtered to the cohort who completed the education up to 12th grade and participated at least five rounds in the survey. We save the resultant wage data on this cohort as \texttt{wages}.
 
 \hypertarget{ida}{%
 \subsection{Initial data analysis}\label{ida}}
@@ -399,11 +405,11 @@ Figure \ref{fig:flow-chart} summarizes the steps taken to go from raw to input t
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.85\linewidth]{/Users/etan0038/yowie/paper/figures/flowchart} 
+{\centering \includegraphics[width=0.85\linewidth]{/Users/etan0038/yowie/paper/figures/flowchart_blind} 
 
 }
 
-\caption{The stages of data cleaning from the raw data to get three datasets contained \texttt{[CENSORED]}. ``\# of individuals'' means the number of respondents included in each stage, while ``\# of observations'' means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (M. P. J. van der Loo and de Jonge 2021). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
+\caption{The stages of data cleaning from the raw data to get three datasets contained \texttt{[CENSORED]}. ``\# of individuals'' means the number of respondents included in each stage, while ``\# of observations'' means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (M. P. J. van der Loo and de Jonge 2021). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart-blind}
 \end{figure}
 
 \hypertarget{compare}{%

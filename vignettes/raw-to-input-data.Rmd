@@ -135,12 +135,21 @@ as_tibble(demog_nlsy79)
 ```{r tidy-hours}
 ```
 
+```{r}
+as_tibble(hours_all)
+```
 
 ```{r tidy-rate}
 ```
 
 ```{r}
 as_tibble(rates_all)
+```
+
+```{r tidy-rate-hour}
+```
+
+```{r}
 as_tibble(hours_wages)
 ```
 

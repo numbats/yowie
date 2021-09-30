@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  30 SEP 2021 15:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  30 SEP 2021 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -696,8 +696,7 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen280
 \c@nlinenum=\count300
 \TeXr@lab=\toks43
-)
-No file paper.aux.
+) (./paper.aux)
 \openout1 = `paper.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 102.
@@ -803,6 +802,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 102.
 LaTeX Info: Redefining \pageref on input line 102.
 LaTeX Info: Redefining \nameref on input line 102.
+(./paper.out) (./paper.out)
 \@outlinefile=\write6
 \openout6 = `paper.out'.
 
@@ -903,42 +903,171 @@ LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
 [1
 
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    Trying to load font information for U+fontawesomethree on i
+nput line 162.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/fontawesome/ufontawesomethree.fd
+File: ufontawesomethree.fd 2016/05/22 Font definitions for U/fontawesomethree.
+)
+LaTeX Font Info:    Trying to load font information for U+fontawesometwo on inp
+ut line 164.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/fontawesome/ufontawesometwo.fd
+File: ufontawesometwo.fd 2016/05/22 Font definitions for U/fontawesometwo.
+)
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
+11.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [3]
+Underfull \vbox (badness 1968) has occurred while \output is active []
 
-LaTeX Warning: Reference `database' on page 2 undefined on input line 130.
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.247 
+      ] [5]
+<figures/sample-plot-1.pdf, id=134, 716.6775pt x 566.115pt>
+File: figures/sample-plot-1.pdf Graphic file (type pdf)
+<use figures/sample-plot-1.pdf>
+Package pdftex.def Info: figures/sample-plot-1.pdf  used on input line 344.
+(pdftex.def)             Requested size: 469.75499pt x 371.0715pt.
+<figures/feature-plot-1.pdf, id=138, 701.62125pt x 263.98625pt>
+File: figures/feature-plot-1.pdf Graphic file (type pdf)
+<use figures/feature-plot-1.pdf>
+Package pdftex.def Info: figures/feature-plot-1.pdf  used on input line 355.
+(pdftex.def)             Requested size: 469.75499pt x 176.74901pt.
+[6pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.363 
+      pdfTeX warning (ext4): destination with the same identifier (name{table.2
+}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.363 
+      ] [7pdfTeX warning (ext4): destination with the same identifier (name{fig
+ure.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.363 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.363 
+       <./figures/sample-plot-1.pdf> <./figures/feature-plot-1.pdf>]
+<figures/compare-plot-1.pdf, id=178, 716.6775pt x 557.08125pt>
+File: figures/compare-plot-1.pdf Graphic file (type pdf)
+<use figures/compare-plot-1.pdf>
+Package pdftex.def Info: figures/compare-plot-1.pdf  used on input line 379.
+(pdftex.def)             Requested size: 422.77661pt x 328.63258pt.
+<figures/fixed-feature-plot-1.pdf, id=182, 701.62125pt x 263.98625pt>
+File: figures/fixed-feature-plot-1.pdf Graphic file (type pdf)
+<use figures/fixed-feature-plot-1.pdf>
+Package pdftex.def Info: figures/fixed-feature-plot-1.pdf  used on input line 3
+90.
+(pdftex.def)             Requested size: 469.75499pt x 176.74901pt.
+
+LaTeX Warning: Reference `fig:flow-chart' on page 8 undefined on input line 402
+.
+
+</Users/etan0038/yowie/paper/figures/flowchart_blind.png, id=183, 1606.0pt x 20
+69.7325pt>
+File: /Users/etan0038/yowie/paper/figures/flowchart_blind.png Graphic file (typ
+e png)
+<use /Users/etan0038/yowie/paper/figures/flowchart_blind.png>
+Package pdftex.def Info: /Users/etan0038/yowie/paper/figures/flowchart_blind.pn
+g  used on input line 408.
+(pdftex.def)             Requested size: 399.2946pt x 514.58952pt.
+<figures/plotting-sw-do-1.pdf, id=185, 629.35126pt x 330.23375pt>
+File: figures/plotting-sw-do-1.pdf Graphic file (type pdf)
+<use figures/plotting-sw-do-1.pdf>
+Package pdftex.def Info: figures/plotting-sw-do-1.pdf  used on input line 422.
+(pdftex.def)             Requested size: 469.75499pt x 246.49054pt.
+[8] [9pdfTeX warning (ext4): destination with the same identifier (name{figure.
+4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.430 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.430 
+       <./figures/compare-plot-1.pdf> <./figures/fixed-feature-plot-1.pdf>] [10
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
+s been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.430 
+       </Users/etan0038/yowie/paper/figures/flowchart_blind.png>]
+Underfull \vbox (badness 1286) has occurred while \output is active []
+
+[11pdfTeX warning (ext4): destination with the same identifier (name{figure.7})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.445 V
+       arious difficulties were encountered in trying to refresh the data, w...
+ <./figures/plotting-sw-do-1.pdf>] [12]
+Underfull \vbox (badness 2582) has occurred while \output is active []
+
+[13]
+No file paper.bbl.
+[14]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 609.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 609.
+(./paper.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 609.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 609.
+Package rerunfilecheck Info: File `paper.out' has not changed.
+(rerunfilecheck)             Checksum: 4DA0A43809238A5007BEC7EE46A6086C;1052.
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
-LaTeX Warning: Reference `cleaning' on page 2 undefined on input line 130.
+LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Reference `compare' on page 2 undefined on input line 130.
-
-
-LaTeX Warning: Reference `summary' on page 2 undefined on input line 130.
-
-[2]
-
-LaTeX Warning: Reference `getdata' on page 3 undefined on input line 152.
-
-
-LaTeX Warning: Reference `tidydemog' on page 3 undefined on input line 152.
-
-
-LaTeX Warning: Reference `tidyemp' on page 3 undefined on input line 152.
-
-
-LaTeX Warning: Reference `ida' on page 3 undefined on input line 152.
-
-! Undefined control sequence.
-l.157 ...navigated as described in \newline\Figure
-                                                   \ref{fig:source-nav}. 
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 609.
+ ) 
 Here is how much of TeX's memory you used:
- 21308 strings out of 480488
- 392598 string characters out of 5899970
- 772611 words of memory out of 5000000
- 36801 multiletter control sequences out of 15000+600000
- 574228 words of font info for 83 fonts, out of 8000000 for 9000
+ 21641 strings out of 480488
+ 399056 string characters out of 5899970
+ 782108 words of memory out of 5000000
+ 36963 multiletter control sequences out of 15000+600000
+ 582072 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,11n,75p,1067b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 59i,12n,75p,1067b,561s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/lo
+cal/texlive/2019/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/20
+19/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2019/texmf-dist/
+fonts/enc/dvips/fontawesome/fontawesometwo.enc}{/usr/local/texlive/2019/texmf-d
+ist/fonts/enc/dvips/fontawesome/fontawesomethree.enc}{/usr/local/texlive/2019/t
+exmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2019/texmf-dist/fon
+ts/type1/public/fontawesome/FontAwesome.pfb></usr/local/texlive/2019/texmf-dist
+/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/typ
+e1/public/lm/lmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/
+lm/lmbxi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmcsc1
+0.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></us
+r/local/texlive/2019/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/tex
+live/2019/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2019/t
+exmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2019/texmf-dist/
+fonts/type1/public/lm/lmtt10.pfb>
+Output written on paper.pdf (14 pages, 873838 bytes).
+PDF statistics:
+ 395 PDF objects out of 1000 (max. 8388607)
+ 348 compressed objects within 4 object streams
+ 95 named destinations out of 1000 (max. 500000)
+ 15027 words of extra memory for PDF output out of 17280 (max. 10000000)
 
-!  ==> Fatal error occurred, no output PDF file produced!
