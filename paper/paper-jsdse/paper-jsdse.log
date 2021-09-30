@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  30 SEP 2021 09:50
+=======
 This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.13)  30 SEP 2021 09:29
+>>>>>>> 79ab5d6849c56ba3d0bc835c01a80c44b8544951
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -730,8 +734,22 @@ File: figures/plotting-sw-do-1.pdf Graphic file (type pdf)
 Package pdftex.def Info: figures/plotting-sw-do-1.pdf  used on input line 403.
 (pdftex.def)             Requested size: 462.26999pt x 242.56015pt.
 [15] [16 <./figures/compare-plot-1.pdf>] [17 <./figures/fixed-feature-plot-1.pd
+<<<<<<< HEAD
+f>] [18 </Users/etan0038/yowie/paper/figures/flowchart.png>] [19 <./figures/plo
+tting-sw-do-1.pdf>] [20]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 460.
+[21] [22]
+Overfull \hbox (14.43417pt too wide) in paragraph at lines 507--509
+[][]\OT1/cmr/m/n/12 Pedersen, Thomas Lin. 2020. \OT1/cmr/m/it/12 patch-work: Th
+e Com-poser of Plots\OT1/cmr/m/n/12 . []$\OT1/cmtt/m/n/12 https : / / CRAN . R-
+[]project .
+ []
+
+=======
 f>] [18 </Users/cookd/Rpackages/yowie/paper/figures/flowchart.png>] [19 <./figu
 res/plotting-sw-do-1.pdf>] [20] [21] [22]
+>>>>>>> 79ab5d6849c56ba3d0bc835c01a80c44b8544951
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 5
 26.
 (/usr/local/texlive/2020/texmf-dist/tex/latex/base/omscmr.fd
@@ -762,6 +780,30 @@ Here is how much of TeX's memory you used:
  33650 multiletter control sequences out of 15000+600000
  542130 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
+<<<<<<< HEAD
+ 59i,11n,75p,1093b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/fontawesome/fontawesometwo
+.enc}{/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/fontawesome/fontawesom
+ethree.enc}</usr/local/texlive/2019/texmf-dist/fonts/type1/public/fontawesome/F
+ontAwesome.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
+pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pf
+b></usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb>
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></
+usr/local/texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on paper-jsdse.pdf (24 pages, 974454 bytes).
+PDF statistics:
+ 436 PDF objects out of 1000 (max. 8388607)
+ 375 compressed objects within 4 object streams
+=======
  59i,11n,75p,1093b,494s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/fontawesome/fontawesometwo
@@ -784,6 +826,7 @@ Output written on paper-jsdse.pdf (24 pages, 877540 bytes).
 PDF statistics:
  439 PDF objects out of 1000 (max. 8388607)
  378 compressed objects within 4 object streams
+>>>>>>> 79ab5d6849c56ba3d0bc835c01a80c44b8544951
  99 named destinations out of 1000 (max. 500000)
  171 words of extra memory for PDF output out of 10000 (max. 10000000)
 
