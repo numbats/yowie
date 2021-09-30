@@ -3,7 +3,7 @@ from: Dewi Amaliah
 fromqualifications: Master of Business Analytics
 fromWWW: "[https://numbats.github.io/yowie/](numbats.github.io/yowie/)"
 fromemail: dlamaleeah@gmail.com
-fromphone: "+61 3 9905 2608"
+fromphone: "+61 435 444 025"
 fromsignature: sigfile.png
 toname: Prof. Nick Horton
 toaddress: Editor, JSDSE 
