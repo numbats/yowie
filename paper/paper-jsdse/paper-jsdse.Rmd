@@ -45,15 +45,14 @@ paper <- here::here("paper/paper.Rmd")
 meta <- rmarkdown::yaml_front_matter(paper)
 ```
 
+
+```{r, child = "../paper.Rmd"}
+```
+
 ---
 title: "`r meta$title`"
 abstract: >
   `r meta$abstract`
 keywords: `r meta$keywords`
 ---
-
-
-
-```{r, child = "../paper.Rmd"}
-```
 
