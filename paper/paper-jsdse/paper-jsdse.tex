@@ -289,7 +289,7 @@ According to Huebner Marianne, Vach, and Cessie (2016), initial data analysis (I
 
 In this paper, we conduct an IDA or a preliminary data analysis to assess the consistency of the data with the cohort information that the NLSY provides. In addition, we also aim to find the anomaly in the wages values using this approach. We mainly use graphical summaries to do the IDA using \texttt{ggplot2} (Wickham 2016) and \texttt{brolgar} (Tierney, Cook, and Prvan 2020).
 
-As stated previously, the respondents' ages ranged from 12 to 22 when first interviewed in 1979. Hence, we validate whether all of the respondents were in this range. Additionally, the \href{https://www.nlsinfo.org/content/cohorts/nlsy79/intro-to-the-sample/nlsy79-sample-introduction}{NLSY} also provides the number of the survey cohort by their gender (6,403 males and 6,283 females) and race (7,510 Non-Black/Non-Hispanic; 3,174 Black; 2,002 Hispanic). To validate this, we used the \texttt{demog\_nlsy79}, i.e., the data with the survey years 1979 sample. Table \ref{tab:age-table} and Table \ref{tab:gender-race-table} suggest that the demographic data we had is consistent with the sample information in the database.
+As stated previously, the respondents' ages ranged from 12 to 22 when first interviewed in 1979. Hence, we validate whether all of the respondents were in this range. Additionally, the \href{https://www.nlsinfo.org/content/cohorts/nlsy79/intro-to-the-sample/nlsy79-sample-introduction}{NLSY} also provides the number of the survey cohort by their gender (6,403 males and 6,283 females) and race (7,510 Non-Black/Non-Hispanic; 3,174 Black; 2,002 Hispanic). To validate this, we used the \texttt{demog\_nlsy79}, i.e., the data with the survey years 1979 sample. Tables \ref{tab:age-table} and \ref{tab:gender-race-table} suggest that the demographic data we had is consistent with the sample information in the database.
 
 \begin{table}
 
@@ -329,7 +329,7 @@ Total & 2,002 (15.78\%) & 3,174 (25.02\%) & 7,510 (59.20\%) & 12,686 (100.00\%)\
 \end{tabular}
 \end{table}
 
-The next step is that explore the mean hourly wage data. In this case, we only explore the wages data of up to \(12^{th}\) grade. Here, we use visualization techniques to do IDA.
+In the next step, we explore the mean hourly wage data. In this case, we only explore the wages data of respondents that have the highest completed grade of up to \(12^{th}\) grade. We employ visualization techniques to perform the IDA as described next.
 
 \begin{figure}
 
@@ -358,7 +358,7 @@ The anomalies are also found in the total hours of work, where some observations
 
 As part of the IDA, which is the model formulation, we build a robust linear regression model to treat the extreme values in the data. Robust linear regression yields an estimation robust to the influence of noise or contamination (Koller 2016). It also aims to detect the contamination by weighting each observation based on how ``well-behaved'' they are, known as robustness weight. Observations with lower robustness weight are suggested as an outlier by this method (Koller 2016).
 
-Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (Wickham 2020) and \texttt{purrr} (Henry and Wickham 2020), respectively.
+Since we work with longitudinal data, we build the model for each ID instead of the overall data. The robust mixed model could be the best model to be employed in this case. However, this method is too computationally and memory expensive, especially for a large data set, like the NLSY79 data. Thus, the model for each ID is built utilizing the \texttt{nest} and \texttt{map} function from \texttt{tidyr} (Wickham 2020) and \texttt{purrr} (Henry and Wickham 2020), respectively. The full code for this is shown at \url{CENSORED/articles/input-to-valid-data.html} but also described in detail next.
 
 We build the model using the \texttt{rlm} function from \texttt{MASS} package (Venables and Ripley 2002). We set the \texttt{mean\_hourly\_wage} and \texttt{year} as the dependent and predictor, respectively. Furthermore, we use M-Estimation with Huber weighting, where the observation with a slight residual gets a weight of 1, while the larger the residual, the smaller the weight (less than 1) (UCLA: Statistical Consulting Group 2021). However, the challenging part of detecting the anomaly using the robustness weight is determining the weight threshold in which the observations are considered outliers. Moreover, it should be noted that not all the outliers are due to an error. Instead, it might be that one had reasonably increasing or decreasing wages in a particular period.
 
