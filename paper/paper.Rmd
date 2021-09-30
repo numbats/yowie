@@ -350,7 +350,7 @@ From this stage forward, we assume that we already have valid data. We also subs
 
 (ref:flow-chart) The stages of data cleaning from the raw data to get three datasets contained `r yowie`. "# of individuals" means the number of respondents included in each stage, while "# of observations" means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain [@validate]. Pink, blue, and green represents the raw, input, and valid data, respectively.
 
-```{r flow-chart, fig.cap="(ref:flow-chart)", out.width="85%"}
+```{r flow-chart-blind, fig.cap="(ref:flow-chart)", out.width="85%", eval = CENSOR}
 ```
 
 
