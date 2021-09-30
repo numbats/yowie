@@ -45,7 +45,7 @@ date: "24/02/2021"
 always_allow_html: true
 keywords: "Data cleaning; Data tidying; Reproducible workflow; Longitudinal data; NLSY79; Initial data analysis;"
 abstract: > 
- The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data is never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets, and the code to produce them are provided in an accompanying open source R package, called [CENSORED]. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks, and providing more convenient samples of the data to potential users. 
+ The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data are never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets and the code to produce them are provided in an accompanying open source R package, called [CENSORED]. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks and providing more convenient samples of the data to potential users. 
 ---
 
 ```{r censor, include = FALSE}
@@ -122,7 +122,7 @@ in @SingerJudithD2003Alda, we define high school dropouts as respondents who onl
 
 # Data cleaning {#cleaning}
 
-@LooMarkvander2018Sdcw describe the notion of a "statistical value chain" where the production stages of data cleaning process are earmarked as raw data (data from the data source), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables).  In this section, we outline the steps to download the raw data (Section \@ref(getdata)) and then tidying the raw data into input data, specifically for wages data (Section \@ref(tidywages)), demographic variables (Section \@ref(tidydemog)) and the employment variables (Section \@ref(tidyemp)), so that the resulting input data can be used downstream for validating the data as described in Section \@ref(ida).
+@LooMarkvander2018Sdcw describe the notion of a "statistical value chain" where the production stages of data cleaning process are earmarked as raw data (data from the data source), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables).  In this section, we outline the steps to download the raw data (Section \@ref(getdata)) and then tidying the raw data into input data, specifically for wages data (Section \@ref(tidyemp)), demographic variables (Section \@ref(tidydemog)) and the employment variables (Section \@ref(tidyemp)), so that the resulting input data can be used downstream for validating the data as described in Section \@ref(ida).
 
 ## Getting the data {#getdata}
 
@@ -272,7 +272,7 @@ As stated previously, the respondents' ages ranged from 12 to 22 when first inte
 ```{r gender-race-table}
 ```
 
-The next step is that explore the mean hourly wage data. In this case, we only explore the wages data of up to $12^{th}$ grade.  Here, we use visualisation techniques to do IDA. 
+The next step is that explore the mean hourly wage data. In this case, we only explore the wages data of up to $12^{th}$ grade.  Here, we use visualization techniques to do IDA. 
 
 ```{r summarytable, eval=FALSE}
 ```
@@ -435,5 +435,8 @@ The entire analysis is conducted using `R` [@R] in RStudio IDE using these packa
 - **shiny app**: An interactive `shiny` web app to visualise the effect of selecting different weight threshold for substituting the wages data to its predicted value from a fit of the robust linear regression model. This app could be accessed [here](`r yowie_shiny`) with the source code provided [here](`r yowie_repo`/tree/master/app).
 
 
+# Data Availability Statement
+
+The authors confirm that the data supporting the findings of this study are available within the supplementary materials.
 
 # References
