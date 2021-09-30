@@ -115,27 +115,31 @@ There are two ways to conduct the interview of the NLSY79, which are face-to-fac
 
 ## Target data {#target}
 
-The NLSY79 data used in @SingerJudithD2003Alda. contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported.
+The NLSY79 data used in @SingerJudithD2003Alda contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported.
 
 <!-- Since no specific criteria on high school dropouts was defined
 in @SingerJudithD2003Alda, we define high school dropouts as respondents who only completed either 9th to 11th grade, or who completed 12th when their age is at least 19 years old (meaning that the individual may have dropped out of high school but returned at a later time to complete high school education). XXX This should probably go further down in the flow. -->
 
 # Data cleaning {#cleaning}
 
-@LooMarkvander2018Sdcw describe the notion of a "statistical value chain" where the production stages of data cleaning process are earmarked as raw data (data from the data source), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables).  In this section, we outline the steps to download the raw data (Section \@ref(getdata)) and then tidying the raw data into input data, specifically for wages data (Section \@ref(tidywages)), demographic variables (Section \@ref(tidydemog)) and the employment variables (Section \@ref(tidyemp)), so that the resulting input data can be used downstream for validating the data as described in Section \@ref(ida).
+@LooMarkvander2018Sdcw describe the notion of a "statistical value chain" where the production stages of data cleaning process are earmarked as raw data (data as arrived to the desk of an analyst), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables).  In this section, we outline the steps to download the raw data (Section \@ref(getdata)) and then tidying the raw data into input data, specifically for the demographic variables (Section \@ref(tidydemog)) and the employment variables (Section \@ref(tidyemp)), so that the resulting input data can be used downstream for validating the data as described in Section \@ref(ida).
+
+
+
 
 ## Getting the data {#getdata}
 
-The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described below.
 
+The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described in Figure \ref{fig:source-nav}.
 
+\begin{figure}[t]
 
-::: {.tcolorbox data-latex="[label=\"box:data\", title=Navigating the data source to download the raw data]" }
-\faDatabase\ NLSY79 (\url{https://www.nlsinfo.org/investigator/pages/search?s=NLSY79})  
+\begin{tcolorbox}[title = Navigating the data source]
+\faDatabase\ NLSY79 (\url{https://www.nlsinfo.org/investigator/pages/search?s=NLSY79})\\
 \vspace{1mm}
-\faCheck\ The CASEID will be always be selected.  
+\faCheck\ The CASEID will be always be selected.  \\
 \vspace{1mm}
-\faCheck\ The 3 recommended demographic variable (sample ID, race and sex) were selected.  
+\faCheck\ The 3 recommended demographic variable (sample ID, race and sex) were selected.  \\
 \vspace{1mm}
 For the remaining variables, we went to the "Variable Search" tab and select variables as follows
 \begin{itemize}
@@ -171,8 +175,9 @@ For the remaining variables, we went to the "Variable Search" tab and select var
 \begin{itemize}
 \item[\faCloudDownload] To download all 686 variables selected, we then navigate to the tab "Save / Download" then select the tab "Advanced Download". We select the R Source code and Comma-delimited datafile of selected variables with Reference Number as column headers. We name the filename "NLSY79" and press the download button. There are also options to get control or dictionary files for SAS, SPSS and STATA. 
 \end{itemize}
-:::
-
+\end{tcolorbox}
+\caption{The above documents the steps taken to select variables of interest and download the raw data.\label{fig:source-nav}}
+\end{figure}
       
 The downloaded data set comes as a zip file, containing the following set of files:
 

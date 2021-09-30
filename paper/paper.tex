@@ -106,7 +106,7 @@
 
 
 \begin{abstract}
-The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data is never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets, and the code to produce them are provided in an accompanying open source R package, called \texttt{[CENSORED]}. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks, and providing more convenient samples of the data to potential users.
+The National Longitudinal Survey of Youth (NLSY79) is a prominent open data source that has been important for educational purposes and multidisciplinary research on longitudinal data. Subsets of this data can be found in numerous textbooks and research articles. However, the steps and decisions taken to get from the raw data to the textbook data is never clearly articulated. This article describes our journey when trying to re-create a textbook example data set from the original database, with the goal being to refresh the textbook data more regularly. Thus, this paper demonstrates the process -- extracting, tidying, cleaning, and exploring with documentation -- to make refreshed data available for education or research. Three new data sets, and the code to produce them are provided in an accompanying open source R package, called {[}CENSORED{]}. As a result of this process, some recommendations are also made for the NLSY79 curators for incorporating data quality checks, and providing more convenient samples of the data to potential users.
 \end{abstract}
 
 \keywords{
@@ -123,9 +123,9 @@ Despite it's importance, this IDA stage is often undervalued and neglected (Chat
 
 This paper demonstrates the steps of IDA, and documents the process, for a prominent open data source, National Longitudinal Survey of Youth 1979, henceforth referred to NLSY79. This data has been playing an important role in research in various disciplines, including but are not limited to economics, sociology, education, public policy, and public health for more than a quarter of the century (Pergamit et al. 2001). In addition, this is considered a carefully designed longitudinal survey with high retention rates, making it suitable for life course research (Pergamit et al. 2001; Cooksey 2017). According to Cooksey (2017), thousands of articles, and hundreds of book chapters and monographs have utilized this data. Moreover, the NLSY79 is considered the most widely used and most important cohort in the survey data (Pergamit et al. 2001).
 
-Singer and Willett (2003) used the wages and other variables of high school dropouts from the NLSY79 data as an example data set to illustrate longitudinal data modeling of wages on workforce experience, with covariates education and race. Our aim is to refresh this textbook data with data from 1994 through to the latest data reported in 2018. Here, we investigate the process of getting from the raw NLSY79 data to a textbook data set as similar as possible to that provided by Singer and Willett (2003). We should also note that race is a variable in the original data set, and for compatibility it is also provided with the refreshed data, for the purposes of studying racism, not race (Fullilove 1998),
+Singer and Willett (2003) used the wages and other variables of high school dropouts from the NLSY79 data as an example data set to illustrate longitudinal data modeling of wages on workforce experience, with covariates education and race. Our aim is to refresh this textbook data with data from 1994 through to the latest data reported in 2018, a purpose that is consistent with Grimshaw (2015)'s statistics education goal of embracing authentic data experiences. Here, we investigate the process of getting from the raw NLSY79 data to a textbook data set as similar as possible to that provided by Singer and Willett (2003). We should also note that race is a variable in the original data set, and for compatibility it is also provided with the refreshed data, for the purposes of studying racism, not race (Fullilove 1998),
 
-Our process of cleaning builds heavily on the tidyverse approach (Wickham et al. 2019). The data is first organised into ``tidy data'' (Wickham 2014) and then further wrangled using the data pipeline and split-apply-combine approach (Wickham 2011). The resulting data is provided in a new R package called \texttt{yowie} which includes the code so that the process is reproducible, and could be used to further refresh the data as new records are made available in the NLSY79 database.
+Our process of cleaning builds heavily on the tidyverse approach (Wickham et al. 2019). The data is first organised into ``tidy data'' (Wickham 2014) and then further wrangled using the data pipeline and split-apply-combine approach (Wickham 2011). (Tidy data shouldn't be confused with ``tame data'' which Kim, Ismay, and Chunn (2018) coined to refer to text book data sets suitable for teaching, particularly teaching statistics.) The resulting (tame) data is provided in a new R package called \texttt{yowie} which includes the code so that the process is reproducible, and could be used to further refresh the data as new records are made available in the NLSY79 database.
 
 This paper is structured in the following way. Section \ref{database} describes the NLSY79 data source. Section \ref{cleaning} presents the steps of cleaning the data, including getting and tidying the data from the NLSY79 and IDA to find and repair anomalies. Our final subset is compared the old textbook subset in Section \ref{compare}. Finally, Section \ref{summary} summarizes the contribution and makes recommendations for the NLSY79 data curators.
 
@@ -144,28 +144,28 @@ There are two ways to conduct the interview of the NLSY79, which are face-to-fac
 \hypertarget{target}{%
 \subsection{Target data}\label{target}}
 
-The NLSY79 data used in Singer and Willett (2003). contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported.
+The NLSY79 data used in Singer and Willett (2003) contains the longitudinal measurements on yearly mean hourly wages with years of workforce experience, and demographic variables education and race, from 1979 through to 1994. In addition, the cohort is restricted to male high-school dropouts who first participated in the study at age 14-17 years. Thus the target data set is to collect the same variables for the extended time frame of 1994 through to 2018, the most recent year reported.
 
 \hypertarget{cleaning}{%
 \section{Data cleaning}\label{cleaning}}
 
-M. van der Loo and de Jonge (2018) describe the notion of a ``statistical value chain'' where the production stages of data cleaning process are earmarked as raw data (data from the data source), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables). In this section, we outline the steps to download the raw data (Section \ref{getdata}) and then tidying the raw data into input data, specifically for wages data (Section \ref{tidywages}), demographic variables (Section \ref{tidydemog}) and the employment variables (Section \ref{tidyemp}), so that the resulting input data can be used downstream for validating the data as described in Section \ref{ida}.
+M. van der Loo and de Jonge (2018) describe the notion of a ``statistical value chain'' where the production stages of data cleaning process are earmarked as raw data (data as arrived to the desk of an analyst), input data (data organised with correct type and identified variables) and valid data (data that faithfully represent the variables). In this section, we outline the steps to download the raw data (Section \ref{getdata}) and then tidying the raw data into input data, specifically for the demographic variables (Section \ref{tidydemog}) and the employment variables (Section \ref{tidyemp}), so that the resulting input data can be used downstream for validating the data as described in Section \ref{ida}.
 
 \hypertarget{getdata}{%
 \subsection{Getting the data}\label{getdata}}
 
-The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described below.
+The NLSY79 data contains a large scope of variables but for our aim, the scope required is limited to demographic profiles and wages data. More specifically, we went to the NLSY79 database website at \url{https://www.nlsinfo.org/content/cohorts/nlsy79/get-data}, clicked on the direct link to NSLY79 data and navigated as described in Figure \ref{fig:source-nav}.
 
-\begin{tcolorbox}[label="box:data", title=Navigating the data source to download the raw data]
+\begin{figure}[t]
 
-\faDatabase~NLSY79 (\url{https://www.nlsinfo.org/investigator/pages/search?s=NLSY79})\\
+\begin{tcolorbox}[title = Navigating the data source]
+\faDatabase\ NLSY79 (\url{https://www.nlsinfo.org/investigator/pages/search?s=NLSY79})\\
 \vspace{1mm}
-\faCheck~The CASEID will be always be selected.\\
+\faCheck\ The CASEID will be always be selected.  \\
 \vspace{1mm}
-\faCheck~The 3 recommended demographic variable (sample ID, race and sex) were selected.\\
+\faCheck\ The 3 recommended demographic variable (sample ID, race and sex) were selected.  \\
 \vspace{1mm}
-For the remaining variables, we went to the ``Variable Search'' tab and select variables as follows
-
+For the remaining variables, we went to the "Variable Search" tab and select variables as follows
 \begin{itemize}
 \item[$\triangleright$] Education, Training and Achievement Scores
 \begin{itemize}
@@ -199,8 +199,9 @@ For the remaining variables, we went to the ``Variable Search'' tab and select v
 \begin{itemize}
 \item[\faCloudDownload] To download all 686 variables selected, we then navigate to the tab "Save / Download" then select the tab "Advanced Download". We select the R Source code and Comma-delimited datafile of selected variables with Reference Number as column headers. We name the filename "NLSY79" and press the download button. There are also options to get control or dictionary files for SAS, SPSS and STATA. 
 \end{itemize}
-
 \end{tcolorbox}
+\caption{The above documents the steps taken to select variables of interest and download the raw data.\label{fig:source-nav}}
+\end{figure}
 
 The downloaded data set comes as a zip file, containing the following set of files:
 
@@ -402,7 +403,7 @@ Figure \ref{fig:flow-chart} summarizes the steps taken to go from raw to input t
 
 }
 
-\caption{The stages of data cleaning from the raw data to get three datasets contained \texttt{[CENSORED]}. \# of individuals means the number of respondents included in each stage, while \# of observations means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (M. P. J. van der Loo and de Jonge 2021). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
+\caption{The stages of data cleaning from the raw data to get three datasets contained \texttt{[CENSORED]}. ``\# of individuals'' means the number of respondents included in each stage, while ``\# of observations'' means the number of rows in the data. The color represents the stage of data cleaning in statistical value chain (M. P. J. van der Loo and de Jonge 2021). Pink, blue, and green represents the raw, input, and valid data, respectively.}\label{fig:flow-chart}
 \end{figure}
 
 \hypertarget{compare}{%
@@ -499,7 +500,10 @@ Dasu, Tamraparni, and Theodore Johnson. 2003. \emph{Exploratory Data Mining and 
 Firke, Sam. 2020. \emph{{janitor: Simple Tools for Examining and Cleaning Dirty Data}}. \url{https://CRAN.R-project.org/package=janitor}.
 
 \leavevmode\hypertarget{ref-racismnotrace}{}%
-Fullilove, M. T. 1998. {``Comment: Abandoning "Race" as a Variable in Public Health Research--an Idea Whose Time Has Come.''} \emph{American Journal of Public Health} 88 (9): 1297--98.
+Fullilove, M. T. 1998. {``Comment: Abandoning ``Race" as a Variable in Public Health Research--an Idea Whose Time Has Come.''} \emph{American Journal of Public Health} 88 (9): 1297--98.
+
+\leavevmode\hypertarget{ref-grimshaw}{}%
+Grimshaw, Scott D. 2015. {``A Framework for Infusing Authentic Data Experiences Within Statistics Courses.''} \emph{The American Statistician} 69 (4): 307--14. \url{https://doi.org/10.1080/00031305.2015.1081106}.
 
 \leavevmode\hypertarget{ref-purrr}{}%
 Henry, Lionel, and Hadley Wickham. 2020. \emph{{purrr: Functional Programming Tools}}. \url{https://CRAN.R-project.org/package=purrr}.
@@ -509,6 +513,9 @@ Huebner, Marianne, Werner Vach, and Saskia le Cessie. 2016. {``A Systematic Appr
 
 \leavevmode\hypertarget{ref-HuebnerMarianne2020Haar}{}%
 Huebner, Marianne, Werner Vach, Saskia le Cessie, Carsten Oliver Schmidt, and Lara Lusa. 2020. {``Hidden Analyses: A Review of Reporting Practice and Recommendations for More Transparent Reporting of Initial Data Analyses.''} \emph{BMC Medical Research Methodology} 20 (1): 61--61.
+
+\leavevmode\hypertarget{ref-tamedata}{}%
+Kim, A. Y, C. Ismay, and J. Chunn. 2018. {``The Fivethirtyeight {R} Package: ``Tame Data" Principles for Introductory Statistics and Data Science Courses.''} \emph{Technology Innovations in Statistics Education} 11 (1). \url{https://doi.org/10.5070/T511103589}.
 
 \leavevmode\hypertarget{ref-KollerManuel2016rARP}{}%
 Koller, Manuel. 2016. {``{robustlmm: An R Package for Robust Estimation of Linear Mixed-Effects Models}.''} \emph{Journal of Statistical Software} 75 (6): 1--24.
