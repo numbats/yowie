@@ -9,7 +9,7 @@
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A tsibble with 103,994 rows and 15 variables:
+#' @format A tsibble with 103,994 rows and 16 variables:
 #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}
@@ -28,6 +28,9 @@
 #'   \item{yr_hgc}{The year when the highest grade completed.}
 #'   \item{njobs}{Number of jobs that an individual has.}
 #'   \item{hours}{The total number of hours the individual usually works per week.}
+#'   \item{stwork}{The year when the individual starting to work.}
+#'   \item{yr_workforce}{The length of time in the workforce in years (year - stwork).}
+#'   \item{exp}{Work experience, i.e., the number of years worked}
 #'   \item{is_wm}{Whether the mean hourly wage is weighted mean, using the hour work
 #'                as the weight, or regular/arithmetic mean. TRUE = is weighted mean.
 #'                FALSE = is regular mean.}

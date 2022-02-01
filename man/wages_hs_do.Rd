@@ -5,7 +5,7 @@
 \alias{wages_hs_do}
 \title{Wages Data of High School Dropout from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
-A tsibble contains 97,087 rows and 15 variables:
+A tsibble contains 22,075 rows and 16 variables:
 
 #' \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}
@@ -25,6 +25,9 @@ by the robust linear regression as part of data cleaning.}
 \item{yr_hgc}{The year when the highest grade completed.}
 \item{njobs}{Number of jobs that an individual has.}
 \item{hours}{The total number of hours the individual usually works per week.}
+\item{stwork}{The year when the individual starting to work.}
+\item{yr_workforce}{The length of time in the workforce in years (year - stwork).}
+\item{exp}{Work experience, i.e., the number of years worked}
 \item{is_wm}{Whether the mean hourly wage is weighted mean, using the hour work
 as the weight, or regular/arithmetic mean. TRUE = is weighted mean.
 FALSE = is regular mean.}

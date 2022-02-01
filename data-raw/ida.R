@@ -257,7 +257,7 @@ wages_clean <- wages_cleaned %>%
 # rename and select the wages in tidy
 wages <- wages_clean %>%
   select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc,
-                number_of_jobs, total_hours, is_wm, is_pred) %>%
+                number_of_jobs, total_hours, stwork_year, years_in_workforce, exp, is_wm, is_pred) %>%
   mutate(id = as.factor(id),
          hgc = as.factor(hgc),
          year = as.integer(year),
@@ -266,10 +266,15 @@ wages <- wages_clean %>%
          number_of_jobs = as.integer(number_of_jobs)) %>%
   rename(wage = mean_hourly_wage,
          njobs = number_of_jobs,
-         hours = total_hours) %>%
+         hours = total_hours,
+         stwork = stwork_year,
+         yr_wforce = years_in_workforce) %>%
   as_tsibble(key = id,
              index = year,
              regular = FALSE)
+
+# load the wages data to the package
+usethis::use_data(wages, overwrite = TRUE)
 
 # Create a data set for demographic variables
 demog_nlsy79 <- full_demographics %>%
@@ -296,11 +301,13 @@ wages_hs_do <- wages %>%
               age_hgc >= 19)) %>%
   filter(age_1979 <= 17,
          gender == "MALE") %>%
-  select(-dob,
-                -age_hgc) %>%
+  select(-dob, -age_hgc) %>%
   as_tsibble(key = id,
              index = year,
              regular = FALSE)
+
+# load the dropouts' wages data to the package
+usethis::use_data(wages_hs_do, overwrite = TRUE)
 
 ### ---- nrow
 a <- nrow(categories_qnames)
