@@ -1,5 +1,3 @@
-
-
 ## ---- load-pkgs
 library(tidyverse)
 select <- dplyr::select
@@ -55,32 +53,9 @@ demog_tidy <- categories_qnames %>%
          gender = SAMPLE_SEX_1979)
 
 ## ---- demog-ed
-demog_education <- new_data_qnames %>%
-  # in 2018, the variable's name is Q3-4_2018, instead of HGC_2018
-  rename(HGC_2018 = `Q3-4_2018`) %>%
+hgc_ever <- new_data_qnames %>%
   select(id = CASEID_1979,
-         starts_with("HGCREV"),
-         "HGC_2012",
-         "HGC_2014",
-         "HGC_2016",
-         "HGC_2018") %>%
-  pivot_longer(!id,
-               names_to = "var",
-               values_to = "grade") %>%
-  separate("var", c("var", "year"), sep = "_") %>%
-  filter(!is.na(grade)) %>%
-  select(-var)
-
-## ---- tidy-hgc
-# Get the highest year completed
-highest_year <- demog_education %>%
-  group_by(id) %>%
-  filter(grade == max(grade)) %>%
-  filter(year == min(year)) %>%
-  rename(yr_hgc = year,
-         hgc_i = grade) %>%
-  select(id, yr_hgc, hgc_i) %>%
-  ungroup() %>%
+         hgc_i = HGC_EVER_XRND) %>%
   mutate(hgc = case_when(hgc_i == 0 ~ "NONE",
                          hgc_i == 1 ~ "1ST GRADE",
                          hgc_i == 2 ~ "2ND GRADE",
@@ -89,8 +64,24 @@ highest_year <- demog_education %>%
                          hgc_i == 13 ~ "1ST YEAR COL",
                          hgc_i == 14 ~ "2ND YEAR COL",
                          hgc_i == 15 ~ "3RD YEAR COL",
-                         hgc_i == 95 ~ "UNGRADED",
-                         TRUE ~ paste0((hgc_i - 12), "TH YEAR COL")))
+                         TRUE ~ paste0((hgc_i - 12), "TH YEAR COL"))) %>%
+  mutate(hgc = ifelse(hgc == "NATH YEAR COL", NA, hgc))
+
+## ---- tidy-hgc
+
+# get the variable oh GED
+
+ged <- new_data_qnames %>%
+  select(id = CASEID_1979,
+         starts_with("Q3-8A"))%>%
+  pivot_longer(!id,
+               names_to = "var",
+               values_to = "dip_or_ged") %>%
+  filter(!is.na(dip_or_ged)) %>%
+  distinct(id, .keep_all = TRUE) %>%
+  select(id, dip_or_ged)
+
+highest_year <- left_join(hgc_ever, ged, by = "id")
 
 ## ---- full-demog
 full_demographics <- full_join(dob_tidy, demog_tidy, by = "id") %>%
@@ -105,11 +96,12 @@ demog_nlsy79 <- full_demographics %>%
                 race,
                 hgc,
                 hgc_i,
-                yr_hgc) %>%
+                dip_or_ged) %>%
   mutate(id = as.factor(id),
          age_1979 = as.integer(age_1979),
          hgc = as.factor(hgc),
-         yr_hgc = as.integer(yr_hgc))
+         ged = as.factor(dip_or_ged)) %>%
+  dplyr::select(-dip_or_ged)
 
 
 ## ---- save-demog-data
@@ -235,19 +227,15 @@ head(mean_hourly_wage, n = 10)
 # join the wages information and the demographic information by case id.
 wages_demog <- left_join(mean_hourly_wage, full_demographics, by="id") %>%
   left_join(stwork, by = "id") %>%
-  left_join(exp, by = c("id", "year"))
+  left_join(exp, by = c("id", "year")) %>%
+  mutate(years_in_workforce = year - stwork_year)
 
-# calculate the years in work force and the age of the subjects in 1979
-wages_demog <- wages_demog %>%
-  mutate(yr_hgc = as.numeric(yr_hgc)) %>%
-  mutate(years_in_workforce = year - stwork_year) %>%
-  mutate(age_1979 = 1979 - (dob_year + 1900))
-# filter only the id with high school education
-wages_before <- wages_demog  %>% filter(grepl("GRADE", hgc))
-# calculate the number of observation
-keep_me <- wages_before %>%
+# # filter only the id with high school education
+# wages_before <- wages_demog  %>% filter(grepl("GRADE", hgc))
+# # calculate the number of observation
+keep_me <- wages_demog %>%
   count(id) %>%
-  filter(n > 4)
+  filter(n >= 3)
 wages_before <- wages_before %>%
   filter(id %in% keep_me$id)
 

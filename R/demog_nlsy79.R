@@ -13,7 +13,7 @@
 #'  \item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
 #'  \item{hgc}{Highest grade completed.}
 #'  \item{hgc_i}{Integer of highest grade completed.}
-#'  \item{yr_hgc}{The year when the highest grade completed.}
+#'  \item{ged}{Wether the respondent had a high school diploma or Graduate Equivalency Degree (GED). 1: High school diploma; 2: GED; 3: Both}
 #' }
 #'
 #' @docType data

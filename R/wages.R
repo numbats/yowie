@@ -9,7 +9,7 @@
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A tsibble with 103,994 rows and 16 variables:
+#' @format A tsibble with 206,795 rows and 16 variables:
 #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}
 #'   \item{year}{The year the observation was taken. This could be the `index` of the data.}
@@ -25,7 +25,7 @@
 #'   \item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
 #'   \item{hgc}{Highest grade completed.}
 #'   \item{hgc_i}{Integer of highest grade completed.}
-#'   \item{yr_hgc}{The year when the highest grade completed.}
+#'   \item{ged}{Wether the respondent had a high school diploma or Graduate Equivalency Degree (GED). 1: High school diploma; 2: GED; 3: Both}
 #'   \item{njobs}{Number of jobs that an individual has.}
 #'   \item{hours}{The total number of hours the individual usually works per week.}
 #'   \item{stwork}{The year when the individual starting to work.}

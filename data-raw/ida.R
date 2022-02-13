@@ -256,13 +256,13 @@ wages_clean <- wages_cleaned %>%
 
 # rename and select the wages in tidy
 wages <- wages_clean %>%
-  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, yr_hgc,
+  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, ged = dip_or_ged,
                 number_of_jobs, total_hours, stwork_year, years_in_workforce, exp, is_wm, is_pred) %>%
   mutate(id = as.factor(id),
          hgc = as.factor(hgc),
          year = as.integer(year),
+         ged = as.factor(ged),
          age_1979 = as.integer(age_1979),
-         yr_hgc = as.integer(yr_hgc),
          number_of_jobs = as.integer(number_of_jobs)) %>%
   rename(wage = mean_hourly_wage,
          njobs = number_of_jobs,
@@ -284,27 +284,44 @@ demog_nlsy79 <- full_demographics %>%
          race,
          hgc,
          hgc_i,
-         yr_hgc) %>%
+         dip_or_ged) %>%
   mutate(id = as.factor(id),
          age_1979 = as.integer(age_1979),
          hgc = as.factor(hgc),
-         yr_hgc = as.integer(yr_hgc))
+         ged = as.factor(dip_or_ged))
 
 # Create a data set for the high school dropouts cohort
 wages_hs_do <- wages %>%
-  mutate(dob = 1979 - age_1979,
-         age_hgc = yr_hgc - dob) %>%
-  filter((hgc %in% c("9TH GRADE",
-                     "10TH GRADE",
-                     "11TH GRADE")) |
-           (hgc == "12TH GRADE" &
-              age_hgc >= 19)) %>%
+  filter(hgc_i < 12 | (hgc_i >= 12 & ged != 1)) %>%
   filter(age_1979 <= 17,
          gender == "MALE") %>%
-  select(-dob, -age_hgc) %>%
   as_tsibble(key = id,
              index = year,
              regular = FALSE)
+
+
+# investigate the dropouts IDs with the IDs in the original data
+`%!in%` <- Negate(`%in%`)
+
+not_in_sw <- sw %>% filter(id %!in% wages_hs_do$id) %>% distinct(id, .keep_all = TRUE)
+
+join <- left_join(not_in_sw, full_demographics, by = "id")
+
+# some IDs are more than 17 y.o
+join_more_17 <- join %>% filter(age_1979 > 17) #this IDs are not eligible
+
+# investigate ID less than 17 y.o (should be eligible)
+# if these IDs are in teh wages data, they will be also included in the dropouts database
+join_eligible <- join %>% filter(age_1979 <= 17) %>%
+  filter((hgc_i >= 12 & dip_or_ged != 1) |
+           is.na(dip_or_ged))
+
+# filter the wages data
+also_do <- wages %>% filter(id %in% join_eligible$id)
+
+# bind the initial dropouts data and the eligible data that are not captured in the first filtering
+wages_hs_do <- rbind(wages_hs_do, also_do)
+
 
 # load the dropouts' wages data to the package
 usethis::use_data(wages_hs_do, overwrite = TRUE)
