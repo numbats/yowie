@@ -10,7 +10,7 @@
 #'
 #' @source The U.S. Bureau of Labor Statistics. (2021, January 6). *National Longitudinal Survey of Youth 1979*. https://www.nlsinfo.org/content/cohorts/nlsy79/get-data
 #'
-#' @format A tsibble contains 11,475 rows and 16 variables:
+#' @format A tsibble contains 14,174 rows and 16 variables:
 #'
 #' #' \describe{
 #'   \item{id}{A unique individual's ID number. This is the `key` of the data.}

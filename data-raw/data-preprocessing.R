@@ -236,7 +236,7 @@ wages_demog <- left_join(mean_hourly_wage, full_demographics, by="id") %>%
 keep_me <- wages_demog %>%
   count(id) %>%
   filter(n >= 3)
-wages_before <- wages_before %>%
+wages_before <- wages_demog %>%
   filter(id %in% keep_me$id)
 
 ## ---- save-data
