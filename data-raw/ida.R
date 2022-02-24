@@ -256,19 +256,17 @@ wages_clean <- wages_cleaned %>%
 
 # rename and select the wages in tidy
 wages <- wages_clean %>%
-  select(id, year, mean_hourly_wage, age_1979, gender, race, hgc, hgc_i, ged = dip_or_ged,
-                number_of_jobs, total_hours, stwork_year, years_in_workforce, exp, is_wm, is_pred) %>%
+  select(id, year, mean_hourly_wage, age_1979, gender, race, grade, hgc, hgc_i, hgc_1979, ged = dip_or_ged,
+         number_of_jobs, total_hours, stwork, yr_wforce, exp, is_wm, is_pred) %>%
   mutate(id = as.factor(id),
          hgc = as.factor(hgc),
          year = as.integer(year),
-         ged = as.factor(ged),
          age_1979 = as.integer(age_1979),
+         ged = as.factor(ged),
          number_of_jobs = as.integer(number_of_jobs)) %>%
   rename(wage = mean_hourly_wage,
          njobs = number_of_jobs,
-         hours = total_hours,
-         stwork = stwork_year,
-         yr_wforce = years_in_workforce) %>%
+         hours = total_hours) %>%
   as_tsibble(key = id,
              index = year,
              regular = FALSE)

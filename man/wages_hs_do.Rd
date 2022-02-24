@@ -5,7 +5,7 @@
 \alias{wages_hs_do}
 \title{Wages Data of High School Dropout from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
-A tsibble contains 14,174 rows and 16 variables:
+A tsibble contains 14,174 rows and 18 variables:
 
 #' \describe{
 \item{id}{A unique individual's ID number. This is the \code{key} of the data.}
@@ -20,8 +20,10 @@ by the robust linear regression as part of data cleaning.}
 \item{age_1979}{The age of the subject in 1979.}
 \item{gender}{Gender of the subject, FEMALE and MALE.}
 \item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
+\item{grade}{Integer value of the highest grade completed corresponding to \code{year}.}
 \item{hgc}{Highest grade completed.}
 \item{hgc_i}{Integer of highest grade completed.}
+\item{hgc_1979}{The highest grade completed in 1979 (integer value).}
 \item{ged}{Wether the respondent had a high school diploma or Graduate Equivalency Degree (GED). 1: High school diploma; 2: GED; 3: Both}
 \item{njobs}{Number of jobs that an individual has.}
 \item{hours}{The total number of hours the individual usually works per week.}
@@ -42,9 +44,7 @@ A data set contains longitudinal data of mean hourly wages along with
 several demographic variables from the National Longitudinal Survey of Youth (NLSY79)
 held by the U.S. Bureau of Labor Statistics from Round 1 (1979 survey year)
 to Round 28 (2018 survey year). The cohort provided in this data set is high school
-dropouts, i.e., the male aged between 14 and 17 years and only completed either
-9th, 10th, 11th grade, or aged at least 19 years old when completed high school and participated
-in at least five rounds of surveys.
+dropouts in NLSY79 cohort and participated in at least 3 survey rounds.
 }
 \examples{
 # saving the data into a new object

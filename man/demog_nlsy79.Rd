@@ -5,7 +5,7 @@
 \alias{demog_nlsy79}
 \title{Demographic Data from the National Longitudinal Survey of Youth (NLSY79)}
 \format{
-A data frame contains 12,686 rows and 7 variables:
+A data frame contains 12,686 rows and 8 variables:
 \describe{
 \item{id}{A unique individual's ID number.}
 \item{age_1979}{The age of the subject in 1979.}
@@ -13,6 +13,7 @@ A data frame contains 12,686 rows and 7 variables:
 \item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
 \item{hgc}{Highest grade completed.}
 \item{hgc_i}{Integer of highest grade completed.}
+\item{hgc_1979}{The highest grade completed in 1979 (integer value).}
 \item{ged}{Wether the respondent had a high school diploma or Graduate Equivalency Degree (GED). 1: High school diploma; 2: GED; 3: Both}
 }
 }

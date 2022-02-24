@@ -146,6 +146,22 @@ as_tibble(hours_all)
 as_tibble(rates_all)
 ```
 
+```{r tidy-start-work}
+```
+
+```{r}
+as_tibble(st_work)
+```
+
+
+```{r tidy-work-experience}
+```
+
+```{r}
+as_tibble)exp
+```
+
+
 ```{r tidy-rate-hour}
 ```
 
