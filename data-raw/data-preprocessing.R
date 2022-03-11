@@ -53,11 +53,11 @@ demog_tidy <- categories_qnames %>%
   select(id = CASEID_1979,
          race = SAMPLE_RACE_78SCRN,
          gender = SAMPLE_SEX_1979) %>%
-  mutate(race = as.factor(case_when(race == "NON-BLACK, NON-HISPANIC" ~ "NB, NH",
-                          race == "HISPANIC" ~ "H",
-                          race == "BLACK" ~ "B")),
-         gender = as.factor(case_when(gender == "FEMALE" ~ "F",
-                            gender == "MALE" ~ "M")))
+  mutate(race = as.factor(case_when(race == "NON-BLACK, NON-HISPANIC" ~ "n",
+                          race == "HISPANIC" ~ "h",
+                          race == "BLACK" ~ "b")),
+         gender = as.factor(case_when(gender == "FEMALE" ~ "f",
+                            gender == "MALE" ~ "m")))
 
 ## ---- demog-ed
 

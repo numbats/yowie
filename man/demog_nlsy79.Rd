@@ -9,8 +9,8 @@ A data frame contains 12,686 rows and 8 variables:
 \describe{
 \item{id}{A unique individual's ID number.}
 \item{age_1979}{The age of the subject in 1979.}
-\item{gender}{Gender of the subject: F = Female and M = Male.}
-\item{race}{Race of the subject: NB,NH = NON-BLACK,NON-HISPANIC; H = HISPANIC; B = BLACK.}
+\item{gender}{Gender of the subject: f = Female and m = Male.}
+\item{race}{Race of the subject: n = Non-Black,Non-Hispanic; h = Hispanic; b = Black.}
 \item{hgc}{Highest grade completed.}
 \item{hgc_i}{Integer of highest grade completed.}
 \item{hgc_1979}{The highest grade completed in 1979 (integer value).}
