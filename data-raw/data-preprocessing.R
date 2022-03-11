@@ -52,7 +52,12 @@ has_dob_conflict <- any(dob_tidy$dob_conflict, na.rm = TRUE)
 demog_tidy <- categories_qnames %>%
   select(id = CASEID_1979,
          race = SAMPLE_RACE_78SCRN,
-         gender = SAMPLE_SEX_1979)
+         gender = SAMPLE_SEX_1979) %>%
+  mutate(race = as.factor(case_when(race == "NON-BLACK, NON-HISPANIC" ~ "NB, NH",
+                          race == "HISPANIC" ~ "H",
+                          race == "BLACK" ~ "B")),
+         gender = as.factor(case_when(gender == "FEMALE" ~ "F",
+                            gender == "MALE" ~ "M")))
 
 ## ---- demog-ed
 

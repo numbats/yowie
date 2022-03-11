@@ -18,8 +18,8 @@ is available. The mean hourly wage could also be a predicted
 value if the original value is considered influential
 by the robust linear regression as part of data cleaning.}
 \item{age_1979}{The age of the subject in 1979.}
-\item{gender}{Gender of the subject, FEMALE and MALE.}
-\item{race}{Race of the subject, NON-BLACK,NON-HISPANIC; HISPANIC; BLACK.}
+\item{gender}{Gender of the subject: F = Female and M = Male.}
+\item{race}{Race of the subject: NB,NH = NON-BLACK,NON-HISPANIC; H = HISPANIC; B = BLACK.}
 \item{grade}{Integer value of the highest grade completed corresponding to \code{year}.}
 \item{hgc}{Highest grade completed.}
 \item{hgc_i}{Integer of highest grade completed.}
