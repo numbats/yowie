@@ -28,17 +28,17 @@ freq_formatting <- function(x) {
     mutate(across(where(is.numeric), ~scales::comma(.x, 1)))
 }
 
-gender_race_table <- full_demographics %>%
-  tabyl(gender, race) %>%
+sex_race_table <- full_demographics %>%
+  tabyl(sex, race) %>%
   adorn_totals(c("row", "col")) %>%
   adorn_percentages("row") %>%
   adorn_pct_formatting(digits = 2) %>%
   adorn_ns(., position = "front", ns = freq_formatting(.)) %>%
-  mutate(gender = str_to_title(gender))
+  mutate(sex = str_to_title(sex))
 
-kable(gender_race_table,
-      caption = "The contingency table for gender and race for the full NLSY79 data.",
-      col.names = c("Gender", "Hispanic", "Black", "Non-Black, Non-Hispanic", "Total"),
+kable(sex_race_table,
+      caption = "The contingency table for sex and race for the full NLSY79 data.",
+      col.names = c("Sex", "Hispanic", "Black", "Non-Black, Non-Hispanic", "Total"),
       booktabs = TRUE,
       linesep = "",
       align = "lrrrr") %>%
@@ -256,7 +256,7 @@ wages_clean <- wages_cleaned %>%
 
 # rename and select the wages in tidy
 wages <- wages_clean %>%
-  select(id, year, mean_hourly_wage, age_1979, gender, race, grade, hgc, hgc_i, hgc_1979, ged = dip_or_ged,
+  select(id, year, mean_hourly_wage, age_1979, sex, race, grade, hgc, hgc_i, hgc_1979, ged = dip_or_ged,
          number_of_jobs, total_hours, stwork, yr_wforce, exp, is_wm, is_pred) %>%
   mutate(id = as.factor(id),
          hgc = as.factor(hgc),
@@ -278,7 +278,7 @@ usethis::use_data(wages, overwrite = TRUE)
 demog_nlsy79 <- full_demographics %>%
   select(id,
          age_1979,
-         gender,
+         sex,
          race,
          hgc,
          hgc_i,
@@ -292,7 +292,7 @@ demog_nlsy79 <- full_demographics %>%
 wages_hs_do <- wages %>%
   filter(hgc_i < 12 | (hgc_i >= 12 & ged == 2)) %>%
   filter(age_1979 <= 17,
-         gender == "MALE") %>%
+         sex == "m") %>%
   as_tsibble(key = id,
              index = year,
              regular = FALSE)

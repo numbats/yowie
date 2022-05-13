@@ -52,12 +52,12 @@ has_dob_conflict <- any(dob_tidy$dob_conflict, na.rm = TRUE)
 demog_tidy <- categories_qnames %>%
   select(id = CASEID_1979,
          race = SAMPLE_RACE_78SCRN,
-         gender = SAMPLE_SEX_1979) %>%
-  mutate(race = as.factor(case_when(race == "NON-BLACK, NON-HISPANIC" ~ "n",
-                          race == "HISPANIC" ~ "h",
-                          race == "BLACK" ~ "b")),
-         gender = as.factor(case_when(gender == "FEMALE" ~ "f",
-                            gender == "MALE" ~ "m")))
+         sex = SAMPLE_SEX_1979) %>%
+  mutate(race = as.factor(case_when(race == "NON-BLACK, NON-HISPANIC" ~ "NBH",
+                          race == "HISPANIC" ~ "H",
+                          race == "BLACK" ~ "B")),
+         sex = as.factor(case_when(sex == "FEMALE" ~ "f",
+                            sex == "MALE" ~ "m")))
 
 ## ---- demog-ed
 
@@ -189,7 +189,7 @@ demog_nlsy79 <- full_demographics %>%
   mutate(age_1979 = 1979 - (dob_year + 1900)) %>%
   dplyr::select(id,
                 age_1979,
-                gender,
+                sex,
                 race,
                 hgc,
                 hgc_i,

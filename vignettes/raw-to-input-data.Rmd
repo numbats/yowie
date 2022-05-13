@@ -158,7 +158,7 @@ as_tibble(st_work)
 ```
 
 ```{r}
-as_tibble)exp
+as_tibble(exp)
 ```
 
 

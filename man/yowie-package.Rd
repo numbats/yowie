@@ -27,5 +27,11 @@ Authors:
   \item Emi Tanaka \email{emi.tanaka@monash.edu}
 }
 
+Other contributors:
+\itemize{
+  \item Kate Hyde \email{hyde.kate.a@gmail.com} [contributor]
+  \item Nicholas Tierney \email{nicholas.tierney@gmail.com} [contributor]
+}
+
 }
 \keyword{internal}

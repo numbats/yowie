@@ -21,8 +21,8 @@
 #'                           value if the original value is considered influential
 #'                           by the robust linear regression as part of data cleaning.}
 #'   \item{age_1979}{The age of the subject in 1979.}
-#'   \item{gender}{Gender of the subject: f = Female and m = Male.}
-#'   \item{race}{Race of the subject: n = Non-Black,Non-Hispanic; H = Hispanic; B = Black.}
+#'   \item{sex}{Sex of the subject: f = Female and m = Male.}
+#'   \item{race}{Race of the subject: NBH = Non-Black,Non-Hispanic; H = Hispanic; B = Black.}
 #'   \item{grade}{Integer value of the highest grade completed corresponding to `year`.}
 #'   \item{hgc}{Highest grade completed.}
 #'   \item{hgc_i}{Integer of highest grade completed.}

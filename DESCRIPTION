@@ -13,7 +13,16 @@ Authors@R:
            person(given = "Emi",
            family = "Tanaka",
            role = c("aut"),
-           email = "emi.tanaka@monash.edu")) 
+           email = "emi.tanaka@monash.edu"),
+           person(given = "Kate",
+           family = "Hyde",
+           role = c("ctb"),
+           email = "hyde.kate.a@gmail.com"),
+           person(given = "Nicholas",
+           family = "Tierney",
+           role = c("ctb"),
+           email = "nicholas.tierney@gmail.com")
+           ) 
 Description: Longitudinal wages datasets and several demographic variables from the National Longitudinal Survey of Youth from 1979 to 2018. There are three data sets in this package: The wages data from the NLSY79 cohort; The wages data of the high school dropouts and; The demographic data of NLSY79 cohort.
 License: GPL (>= 3)
 Encoding: UTF-8
