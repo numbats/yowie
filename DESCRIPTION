@@ -39,9 +39,11 @@ Suggests:
     knitr,
     markdown,
     rmarkdown,
-    dplyr,
     tidyr,
     forcats,
     janitor,
     kableExtra
-VignetteBuilder: knitr
+VignetteBuilder: rmarkdown
+Imports: 
+    magrittr,
+    dplyr

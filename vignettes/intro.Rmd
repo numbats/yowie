@@ -3,7 +3,7 @@ title: "Introduction to yowie"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to yowie}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{rmarkdown::render}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -41,25 +41,25 @@ library(dplyr)
 wages_hs_demog <- filter(demog_nlsy79, id %in% wages$id)
 
 # create cross tabulations from demographic data  
-gender_race_table <- wages_hs_demog %>%
-  tabyl(gender, race) %>%
+sex_race_table <- wages_hs_demog %>%
+  tabyl(sex, race) %>%
   adorn_totals(c("row", "col")) %>%
   adorn_percentages("row") %>%
   adorn_pct_formatting(digits = 2) %>%
   adorn_ns(position = "front") %>%
-  mutate(gender = ifelse(gender == "MALE", "Male",
-                         ifelse(gender == "FEMALE", "Female", "Total")))
+  mutate(sex = ifelse(sex == "m", "Male",
+                         ifelse(sex == "f", "Female", "Total")))
 
 # styling the table 
-kable(gender_race_table,
-      caption = "Gender and Race Distribution of the NLSY79 Samples",
-      col.names = c("Gender", "Hispanic", "Black", "Non-Black, Non-Hispanic", "Total")) %>%
+kable(sex_race_table,
+      caption = "Sex and Race Distribution of the NLSY79 Samples",
+      col.names = c("Sex", "Hispanic", "Black", "Non-Black, Non-Hispanic", "Total")) %>%
   kable_styling(latex_options = "striped") %>%
   add_header_above(c(" " = 1, "Race" = 3, " " = 1))
 ```
 
 
-There are more males as well as non-black and non-hispanic in the `wages_hs`. It is also worth noting that sample participated in the survey in various rounds. Most samples participated in 27 rounds of surveys. 
+There are more males as well as Non-Black and Non-Hispanic in the `wages_hs`. It is also worth noting that sample participated in the survey in various rounds. Most samples participated in 27 rounds of surveys. 
 
 
 ```{r}
@@ -79,18 +79,18 @@ wages_hs_df %>%
 
 ## Minimal examples of data exploration 
 
-This section shows the examples of `wages_hs` visualisation data based on gender, race, and education level using `ggplot2`. 
+This section shows the examples of `wages_hs` visualisation data based on sex, race, and education level using `ggplot2`. 
 
-**Note: The data contains two demographics, gender and race, which needs special attention. Gender is as reported in the data and only has two categories, which is recognised today as inadequate. Gender is not binary. Race is as reported in the database, and when doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.**
+**Note: The data contains two demographics, sex and race, which needs special attention. Sex is different with gender, and the use of these terms are sometimes interchangeable. Race is as reported in the database, and when doing analysis with this variable, one should keep in mind that the purpose is to study racism rather than race.**
 
 ```{r, message=FALSE}
-ggplot(wages, aes(x = year, y = log(wage), color = gender)) +
+ggplot(wages, aes(x = year, y = log(wage), color = sex)) +
   geom_point(alpha = 0.4) +
   geom_smooth(color = "black") +
-  facet_wrap(~gender) +
+  facet_wrap(~sex) +
   scale_color_manual(values = c("#04B4AE", "#BF00FF")) +
   theme(legend.position = "none") +
-  ggtitle("Wages based on gender, overlaid by GAM smoother") +
+  ggtitle("Wages based on sex, overlaid by GAM smoother") +
   ylab("log of mean hourly wage")
 ```
 
