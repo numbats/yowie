@@ -22,7 +22,7 @@ globalVariables("wage")
 #' }
 #'
 #' @export
-inflation_adjust <- function(base_year){
+adj_inflation <- function(base_year){
   filter <- dplyr::filter
   select <- dplyr::select
   summarise <- dplyr:: summarise
